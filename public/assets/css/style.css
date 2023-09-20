@@ -792,6 +792,28 @@ kbd {
 /*=====================
 All Extend Here
 =======================*/
+
+.logoutBtn {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 3px 20px;
+  display: block;
+  color: var(--color-heading);
+  margin: 0 10px;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background-color: white;
+  transition: var(--transition);
+  text-align: left;
+}
+
+.logoutBtn:hover {
+  color: var(--color-primary) !important;
+  background: var(--color-darker);
+}
+
 .color-primary {
   color: var(--color-primary) !important; }
 
@@ -1729,7 +1751,7 @@ textarea:-ms-input-placeholder {
   margin-top: -20px; }
 
 .edu-section-gap {
-  padding: 130px 0 !important; }
+  padding: 100px 0 !important; }
   @media only screen and (min-width: 768px) and (max-width: 991px) {
     .edu-section-gap {
       padding: 80px 0 !important; } }
@@ -14371,7 +14393,7 @@ Gallery Item
   background-image: url(../images/bg/home-two-banner.jpg);
   position: relative;
   z-index: 1;
-  min-height: 930px; }
+  min-height: 820px; }
   @media only screen and (max-width: 1199px) {
     .banner-style-2 {
       min-height: 800px; } }

@@ -13,17 +13,32 @@
                     <div class="col-lg-12  w-50">
                         <div class="login-form-box">
                             <h3 class="mb-30">Login</h3>
-                            <form class="login-form" action="#">
+                            {{-- Session status --}}
+                            <x-auth-session-status class="mb-4" :status="session('status')" />
+                            <form class="login-form" method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="input-box mb--30">
-                                    <input type="text" placeholder="Username or Email" />
+                                    <input id="email" type="email" name="email" :value="old('email')" required placeholder="Email" />
+                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />    
                                 </div>
                                 <div class="input-box mb--30">
-                                    <input type="password" placeholder="Password" />
+                                    <input id="password" placeholder="Password"
+                                    type="password"
+                                    name="password"
+                                    required autocomplete="current-password" />
+                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                 </div>
                                 <div class="comment-form-consent input-box mb--30">
-                                    <input id="checkbox-1" type="checkbox" />
-                                    <label for="checkbox-1">Remember Me</label>
+                                    <input id="remember_me" type="checkbox" name="remember">
+                                    <label for="remember_me">Remember Me</label>
+                                </div>
+                                <div class="flex items-center justify-end mt-4">
+                                    @if (Route::has('password.request'))
+                                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
+                                            {{ __('Forgot your password?') }}
+                                        </a>
+                                    @endif
+                    
                                 </div>
                                 <button class="rn-btn edu-btn w-100 mb--30" type="submit">
                                     <span>Login</span>

@@ -74,9 +74,6 @@
                         <div class="shape-image shape-image-1">
                             <img src="assets/images/shapes/shape-21-01.png" alt="Shape Thumb" />
                         </div>
-                        <div class="shape-image shape-image-2">
-                            <img src="assets/images/shapes/shape-35.png" alt="Shape Thumb" />
-                        </div>
                     </div>
                 </div>
             </div>

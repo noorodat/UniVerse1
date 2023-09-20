@@ -93,7 +93,7 @@
                                         <li><a href="purchase-guide.html">Purchase Guide</a></li>
                                         <li><a href="testimonial.html">Testimonial</a></li>
                                         <li><a href="coming-soon.html">Comming Soon</a></li>
-                                        <li><a href="{{route('go-login')}}">Login/Register</a></li>
+                                        <li><a href="{{route('login')}}">Login/Register</a></li>
                                         <li><a href="404.html">404 Error</a></li>
                                     </ul>
                                 </li>
@@ -135,9 +135,33 @@
                                 <div class="quote-icon quote-search">
                                     <button class="search-trigger"><i class="ri-search-line"></i></button>
                                 </div>
-                                <div class="quote-icon quote-user">
-                                    <a href="{{route('go-login')}}"><i class="ri-user-line"></i></a>
-                                </div>
+                                @if (Auth::id())
+                                    <nav class="mainmenu-nav d-none d-lg-block">
+                                        <ul class="mainmenu">
+                                            <li class="has-droupdown">
+                                                <a href="{{route('profile.edit')}}">
+                                                    {{Auth::user()->name}}
+                                                </a>
+                                                <ul class="submenu">
+                                                    <li>
+                                                        <a href="{{route('profile.edit')}}">Profile</a>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{route('logout')}}" method="POST">
+                                                            @csrf
+                                                            <a href="" style="text-align: left"><button class="logoutBtn w-100" type="submit">Logout</button></a>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                @else
+                                    <div class="quote-icon quote-user">
+                                        <a href="{{route('login')}}">Login</a>
+                                        {{-- <i class="ri-user-line"></i> --}}
+                                    </div>
+                                @endif
                                 <div class="hamberger quote-icon d-block d-xl-none">
                                     <button class="hamberger-button"><i class="ri-menu-line"></i></button>
                                 </div>

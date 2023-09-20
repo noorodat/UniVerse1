@@ -44,8 +44,3 @@ Route::get('/courses', function() {
 Route::get('/aboutus', function() {
     return view('/pages.about-us.index');
 })->name('go-aboutus');
-
-// Login page
-Route::get('/log', function() {
-    return view('/pages.login.index');
-})->name('go-login');

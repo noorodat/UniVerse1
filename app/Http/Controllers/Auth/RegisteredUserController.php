@@ -32,20 +32,37 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
+            'email' => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                'unique:'.User::class,
+                function ($attribute, $value, $fail) {
+                    // Define the allowed domain ending
+                    $allowedDomainEnding = 'edu.jo';
+            
+                    // Extract the email domain and check if it ends with 'edu.jo'
+                    $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
+                    if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
+                        $fail('Registration is limited to university students in Jordan');
+                    }
+                },
+            ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-
+    
         event(new Registered($user));
-
+    
         Auth::login($user);
-
+    
         return redirect(RouteServiceProvider::HOME);
     }
+    
 }
