@@ -18,22 +18,22 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- Page Title Here -->
-	<title>Akademi : School and Education Management Admin Dashboard Template</title>
+	<title>@yield('title')</title>
 
     <!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="dash-assets/images/favicon.png" >
-	<link href="dash-assets/vendor/wow-master/css/libs/animate.css" rel="stylesheet">
-	<link href="dash-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="dash-assets/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css">
-	<link rel="stylesheet" href="dash-assets/vendor/jquery-nice-select/css/nice-select.css">
-	<link href="dash-assets/vendor/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+	<link rel="shortcut icon" type="image/png" href="/dash-assets/images/favicon.png" >
+	<link href="/dash-assets/vendor/wow-master/css/libs/animate.css" rel="stylesheet">
+	<link href="/dash-assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="/dash-assets/vendor/bootstrap-select-country/css/bootstrap-select-country.min.css">
+	<link rel="stylesheet" href="/dash-assets/vendor/jquery-nice-select/css/nice-select.css">
+	<link href="/dash-assets/vendor/datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
 	
-	<link href="dash-assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+	<link href="/dash-assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
 	<!--swiper-slider-->
-	<link rel="stylesheet" href="dash-assets/vendor/swiper/css/swiper-bundle.min.css">
+	<link rel="stylesheet" href="/dash-assets/vendor/swiper/css/swiper-bundle.min.css">
 	<!-- Style css -->
 	<link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-    <link href="dash-assets/css/style.css" rel="stylesheet">
+    <link href="/dash-assets/css/style.css" rel="stylesheet">
 	
 </head>
 
@@ -61,7 +61,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="index.html" class="brand-logo">
+            <a href="{{route('go-dashboard')}}" class="brand-logo">
 				<svg class="logo-abbr" width="40" height="40" viewBox="0 0 48 54" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<rect y="3" width="48" height="48" rx="16" fill="#FB7D5B"/>
 					<path d="M28.964 35.536H19.532L18.02 40H11.576L20.72 14.728H27.848L36.992 40H30.476L28.964 35.536ZM27.38 30.784L24.248 21.532L21.152 30.784H27.38Z" fill="white"/>
@@ -1019,10 +1019,9 @@
 						<span class="nav-text">Student</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="student.html">Student</a></li>
+						<li><a href="{{route('go-dash-students')}}">Student</a></li>
 						<li><a href="student-detail.html">Student Detail</a></li>
-						<li><a href="add-student.html">Add New Student</a></li>
-						
+						<li><a href="add-student.html">Add New Student</a></li>						
 					</ul>
 
 					</li>
