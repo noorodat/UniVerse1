@@ -139,10 +139,11 @@
                                     <nav class="mainmenu-nav d-none d-lg-block">
                                         <ul class="mainmenu">
                                             <li class="has-droupdown">
-                                                <a href="{{route('profile.edit')}}">
-                                                    {{Auth::user()->name}}
-                                                </a>
+                                                <a href="{{route('profile.edit')}}"><i class="ri-user-line"></i></a>
                                                 <ul class="submenu">
+                                                    <li>
+                                                        <a id="userName">{{Auth::user()->name}}</a>
+                                                    </li>
                                                     <li>
                                                         <a href="{{route('profile.edit')}}">Profile</a>
                                                     </li>
