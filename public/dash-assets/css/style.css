@@ -28470,12 +28470,15 @@ tr .trans-td-list {
     height: 30px; }
 
 .icon-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 48px;
   height: 48px;
   line-height: 45px;
   text-align: center;
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   border-radius: 100%;
   -webkit-transition: all 0.8s;
   -ms-transition: all 0.8s;
