@@ -4,8 +4,6 @@
 
 @section('content')
  
- 
-
 
         <div class="login-register-page-wrapper edu-section-gap bg-color-white">
             <div class="container checkout-page-style">
@@ -14,6 +12,9 @@
                         <div class="login-form-box">
                             <h3 class="mb-30">Register</h3>
                             <form class="login-form" method="POST" action="{{ route('register') }}">
+                                <div class="input-box mb--30">
+                                    <input id="image" class="userImage" type="file" name="image"/>
+                                </div>
                                 <div class="input-box mb--30">
                                     <input id="name" class="" type="text" name="name" :value="old('name')" required autofocus autocomplete="name"  />
                                     <x-input-error :messages="$errors->get('name')" class="mt-2" />

@@ -50,12 +50,19 @@ class RegisteredUserController extends Controller
                 },
             ],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'major' => 'required',
+            'phone' => 'required|regex:/^\d{10}$/'
         ]);
-    
+
+        $imageName = 'defaultUserImage.png';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'major' => $request->major, // Get 'major' from the request
+            'phone' => $request->phone,
+            'image' => $imageName,
         ]);
     
         event(new Registered($user));
@@ -63,6 +70,12 @@ class RegisteredUserController extends Controller
         Auth::login($user);
     
         return redirect(RouteServiceProvider::HOME);
+    }
+
+    public function getAllStudents(): View
+    {
+        $allStudents = User::all();
+        return view('admin-dashboard/students.index', ['allStudents' => $allStudents]);
     }
     
 }

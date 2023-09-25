@@ -22,7 +22,14 @@
                                 <div class="input-box mb--30">
                                     <input id="email" class="" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="Email" />
                                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
-
+                                </div>
+                                <div class="input-box mb--30">
+                                    <input id="major" class="" type="text" name="major" placeholder="Major" />
+                                    <x-input-error :messages="$errors->get('major')" class="mt-2" />
+                                </div>
+                                <div class="input-box mb--30">
+                                    <input id="phone" class="" type="tel" name="phone" placeholder="Phone" />
+                                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                                 </div>
                                 <div class="input-box mb--30">
                                     <input id="password" class="block mt-1 w-full"

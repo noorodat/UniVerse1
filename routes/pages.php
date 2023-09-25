@@ -46,15 +46,3 @@ Route::get('/pricing', function() {
 
 /* @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ */
 
-/* --------------------- START DASHBOARD PAGES --------------------- */
-
-//  Dashboard home apge
-Route::get('/dashboard', function() {
-    return view('admin-dashboard.index');
-})->name('go-dashboard');
-
-// Students page
-Route::get('/dashboard/students', function() {
-    return view('admin-dashboard.students.index');
-})->name('go-dash-students');
-/* --------------------- END DASHBOARD PAGES --------------------- */
