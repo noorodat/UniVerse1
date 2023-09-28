@@ -47,7 +47,7 @@ class DashboardController extends Controller
     }
 
     public function update(Request $request) {
-        $this->store($request);
+
     }
 
 }
