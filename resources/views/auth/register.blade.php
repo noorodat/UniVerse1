@@ -43,7 +43,6 @@
                                     type="password"
                                     name="password_confirmation" required autocomplete="new-password" placeholder="Confirm password" />
                                     <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-
                                 </div>
                                 <button class="rn-btn edu-btn w-100 mb--30" type="submit">
                                     <span>Register</span>

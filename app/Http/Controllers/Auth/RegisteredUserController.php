@@ -15,6 +15,7 @@ use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
+    // Show students in the dashboard
     /**
      * Display the registration view.
      */
@@ -30,39 +31,21 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                'unique:'.User::class,
-                function ($attribute, $value, $fail) {
-                    // Define the allowed domain ending
-                    $allowedDomainEnding = 'edu.jo';
-            
-                    // Extract the email domain and check if it ends with 'edu.jo'
-                    $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
-                    if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
-                        $fail('Registration is limited to university students in Jordan');
-                    }
-                },
-            ],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'major' => 'required',
-            'phone' => 'required|regex:/^\d{10}$/'
-        ]);
 
-        $imageName = 'defaultUserImage.png';
+        // Helper function i created to validate the add student inputs
 
+        $imageName = uploadImage($request);
+
+        validateAddStudentInputs($request);
+
+    
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'major' => $request->major, // Get 'major' from the request
+            'major' => $request->major,
             'phone' => $request->phone,
-            'image' => $imageName,
+            'image' => $imageName
         ]);
     
         event(new Registered($user));
@@ -71,11 +54,19 @@ class RegisteredUserController extends Controller
     
         return redirect(RouteServiceProvider::HOME);
     }
+    
 
     public function getAllStudents(): View
     {
         $allStudents = User::all();
         return view('admin-dashboard/students.index', ['allStudents' => $allStudents]);
     }
+
+    public function getSingleStudent($id) {
+        $student = User::find($id);
+        return view('admin-dashboard.students.student-detail', compact('student'));
+    }
+
+    
     
 }

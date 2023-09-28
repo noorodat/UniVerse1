@@ -29,7 +29,7 @@
 											</div>
 										</div>
 										<div class="change-btn mt-2 mb-lg-0 mb-3">
-											<input type='file' class="form-control d-none" id="imageUpload" name="image">
+											<input value="{{$student->image}}" type='file' class="form-control d-none" id="imageUpload" name="image">
 											<label for="imageUpload" class="dlab-upload mb-0 btn btn-primary btn-sm">Choose File</label>
 											<a href="javascript:void(0)" class="btn btn-danger light remove-img ms-2 btn-sm">Remove</a>
 										</div>
@@ -41,19 +41,19 @@
                                             <div class="mb-3">
                                                 <label for="name" class="form-label text-primary">Name<span
                                                         class="required">*</span></label>
-                                                <input id="name" class="form-control" type="text" name="name"
+                                                <input value="{{$student->name}}" id="name" class="form-control" type="text" name="name"
                                                     :value="old('name')" required autofocus autocomplete="name"
-                                                    placeholder="Full name" />
+                                                    placeholder="Full name"/>
                                                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-primary">Major<span
                                                         class="required">*</span></label>
                                                 <div class="d-flex">
-                                                    <input id="major" class="form-control" type="text"
+                                                    <input value="{{$student->major}}" id="major" class="form-control" type="text"
                                                         name="major" placeholder="Major" />
                                                     <x-input-error :messages="$errors->get('major')" class="mt-2" />
-                                                    <input id="phone" class="form-control" type="tel"
+                                                    <input value="{{$student->phone}}" id="phone" class="form-control" type="tel"
                                                         name="phone" placeholder="Phone" />
                                                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                                                 </div>
@@ -61,22 +61,22 @@
                                             <div class="mb-3">
                                                 <label for="email" class="form-label text-primary">Email<span
                                                         class="required">*</span></label>
-                                                <input id="email" class="form-control" type="email" name="email"
+                                                <input value="{{$student->email}}" id="email" class="form-control" type="email" name="email"
                                                     :value="old('email')" required autocomplete="username"
                                                     placeholder="Email" />
                                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                                             </div>
                                             <div class="mb-3">
-                                                <label for="password" class="form-label text-primary">Password<span
-                                                        class="required">*</span></label>
+                                                <label for="password" class="form-label text-primary">Password (optional)<span
+                                                        class=""></span></label>
                                                 <input id="password" class="form-control" type="password"
                                                     name="password" required autocomplete="new-password"
                                                     placeholder="Password" />
                                                 <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                             </div>
                                             <div class="mb-3">
-                                                <label for="password" class="form-label text-primary">Password<span
-                                                        class="required">*</span></label>
+                                                <label for="password" class="form-label text-primary">Confirm password<span
+                                                        class=""></span></label>
                                                 <input id="password_confirmation" class="form-control" type="password"
                                                     name="password_confirmation" required autocomplete="new-password"
                                                     placeholder="Confirm password" />

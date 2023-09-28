@@ -1,7 +1,7 @@
 /*
     Table of Contents
 
-    Name                 : Akadmi
+    Nacontent-bodye                 : Akadmi
     Author               : DexignLab
     Author Portfolio     : https://themeforest.net/user/dexignlab/portfolio
     
@@ -13790,7 +13790,7 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
 
 .wallet-open.active .header .page-titles,
 .wallet-open.active .header .header-content {
-  padding-right: var(--right-space); }
+   }
   @media only screen and (max-width: 87.5rem) {
     .wallet-open.active .header .page-titles,
     .wallet-open.active .header .header-content {
@@ -13801,7 +13801,6 @@ Fixing Order => Base + Typography >> General Layout + Grid >> Page Layout + Comp
       padding-right: 12px; } }
 
 .wallet-open.active .content-body {
-  padding-right: calc(var(--right-space) - 1.75rem);
   -webkit-transition: all 0.5s;
   -ms-transition: all 0.5s;
   transition: all 0.5s; }
@@ -31105,3 +31104,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       color: #fff; }
 
 /*# sourceMappingURL=style.css.map */
+
+/* MY STYLES (NOORALDEEN) */
+
+.studentContactBox {
+  position: relative;
+  transition: 0.3s;
+}
+
+.studentContact {
+  position: absolute;
+  display: none;
+  background-color: #e6ebee;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 1000;
+  color: black;
+}
+
+.studentContactBox:hover .studentContact {
+  display: inline;
+}
