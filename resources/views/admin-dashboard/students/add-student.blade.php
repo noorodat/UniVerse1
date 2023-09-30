@@ -15,7 +15,6 @@
                         <h5 class="mb-0">Student Details</h5>
                     </div>
 					{{-- Show success message --}}
-					@include('admin-layouts.success-message')
                     <div class="card-body">
                         <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf

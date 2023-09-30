@@ -7,7 +7,17 @@ use App\Models\User;
 
 /* UPLOAD IMAGE */
 function uploadImage(Request $request) {
-    $imageName = 'defaultUserImage.png';
+
+    $userID = $request->userID;
+    $user = User::find($userID);
+
+    if($user) {
+        $imageName = $user->image;
+    }
+
+    else {
+        $imageName = 'defaultUserImage.png';
+    }
 
     if ($request->hasFile('image')) {
         $image = $request->file('image');

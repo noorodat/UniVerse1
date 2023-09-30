@@ -28,4 +28,7 @@ Route::get('/dashboard/add-student', function() {
 /* --------------------- START DASHBOARD FUNCTIONS --------------------- */
 // NOTE:: ADD INDEX PAGE TO SHOW THE DASHBOARD HOME PAGE
 Route::resource('student', DashboardController::class);
+// Update image coming from AJAX
+Route::post('/api/update-image', [DashboardController::class, 'removeImage']);
+
 
