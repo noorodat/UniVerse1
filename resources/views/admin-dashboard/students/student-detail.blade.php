@@ -11,6 +11,7 @@
         <div class="content-body">
 			<div class="container-fluid">
 				@include('admin-layouts.delete-student-popup')
+				@include('admin-layouts.make-instructor-popup')
 				<!-- Row -->
 				<div class="row">
 					<div class="col-xl-12">
@@ -38,7 +39,7 @@
 										</div>
 										<div>
 											<h2 class="mb-0">{{$student->name}}</h2>
-											<p class="text-primary font-w600">Student</p>
+											<p class="text-primary font-w600">{{$student->role}}</p>
 										</div>
 									</div>
 									<div class="dropdown custom-dropdown">
@@ -48,17 +49,16 @@
 											</svg>
 										</div>
 											<div class="dropdown-menu dropdown-menu-end" style="position: fixed !important">
-												<a class="dropdown-item" href="{{ route('student.edit', ['student' => $student]) }}">Edit</a>
-												<form method="POST" action="{{ route('student.destroy', $student->id) }}">
+												<form method="POST" action="{{ route('instructor.store', $student->id) }}">
 													@csrf
-													@method('DELETE')
+													<button data-bs-toggle="modal" data-bs-target="#exampleModal1{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+														Make instructor
+													</button>
+												</form>
+												<a class="dropdown-item" href="{{ route('student.edit', ['student' => $student]) }}">Edit</a>
 													<button data-bs-toggle="modal" data-bs-target="#exampleModal{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
 														Delete
 													</button>
-													{{-- <button class="w-100 dropdown-item" type="submit" style="border: none; outline: none; background-color: inherit; text-align: left">
-														Delete
-													</button> --}}
-												</form>
 											</div>
 									</div>
 								</div>

@@ -38,14 +38,16 @@ class RegisteredUserController extends Controller
 
         validateAddStudentInputs($request);
 
-    
+        $role = 'student';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'major' => $request->major,
             'phone' => $request->phone,
-            'image' => $imageName
+            'image' => $imageName,
+            'role' => $role,
         ]);
     
         event(new Registered($user));

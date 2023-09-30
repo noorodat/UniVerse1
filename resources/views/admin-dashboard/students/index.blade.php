@@ -46,6 +46,7 @@
 												</th>
 												<th>Name</th>
 												<th>Major</th>
+												<th>Role</th>
 												<th>Created at</th>
 												<th>Contact</th>
 												<th class="text-end">Action</th>
@@ -54,6 +55,7 @@
 										<tbody>
 											@foreach ($allStudents as $student)
 											@include('admin-layouts.delete-student-popup')
+											@include('admin-layouts.make-instructor-popup')
 											<tr>
 												<td>
 													<div class="checkbox me-0 align-self-center">
@@ -72,6 +74,9 @@
 												</td>
 												<td>
 													<div>{{$student->major}}</div>
+												</td>
+												<td>
+													<div>{{$student->role}}</div>
 												</td>
 												<td>
 													<div class="date">{{ $student->created_at->format('Y-m-d') }}</div>
@@ -100,17 +105,15 @@
 															</svg>
 														</div>
 														<div class="dropdown-menu dropdown-menu-end" style="position: fixed !important">
-															<a class="dropdown-item" href="{{ route('student.edit', ['student' => $student]) }}">Edit</a>
-															<form method="POST" action="{{ route('student.destroy', $student->id) }}">
+															<form method="POST" action="{{ route('instructor.store', $student->id) }}">
 																@csrf
-																@method('DELETE')
-																<button data-bs-toggle="modal" data-bs-target="#exampleModal{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+																<button data-bs-toggle="modal" data-bs-target="#exampleModal1{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+																	Make instructor
+																</button>
+															</form>
+															<a class="dropdown-item" href="{{ route('student.edit', ['student' => $student]) }}">Edit</a>																<button data-bs-toggle="modal" data-bs-target="#exampleModal{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
 																	Delete
 																</button>
-																{{-- <button class="w-100 dropdown-item" type="submit" style="border: none; outline: none; background-color: inherit; text-align: left">
-																	Delete
-																</button> --}}
-															</form>
 														</div>
 													</div>
 												</td>

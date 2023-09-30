@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Instructor;
 use Faker\Extension\Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,12 +13,21 @@ use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
-    // Add user function
+
+    public function index() {
+        return view('admin-dashboard.index');
+    }   
+
+    /* ############################ START STUDENT FUNCTIONS ############################ */
+
+    // Add student
     public function store(Request $request) {
 
         $this->validateAddStudentInputs($request);
 
         $imageName = $this->uploadUserImage($request);
+
+        $role = 'student';
 
         User::create([
             'name' => $request->name,
@@ -25,7 +35,8 @@ class DashboardController extends Controller
             'password' => Hash::make($request->password),
             'major' => $request->major,
             'phone' => $request->phone,
-            'image' => $imageName
+            'image' => $imageName,
+            'role' => $role
         ]);
 
         flash()->addSuccess('User created successfully');
@@ -33,6 +44,7 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
+    //Delete student
     public function destroy(Request $request) {
         $user = User::find($request->input('user_id'));
         if ($user) {
@@ -50,11 +62,12 @@ class DashboardController extends Controller
         }
     }
 
+    // Show edit student page
     public function edit(User $student) {
         return view('admin-dashboard.students.edit-student', compact('student'));
     }
 
-
+    // Update student
     public function update(Request $request) {
 
         $student = User::find($request->input('userID'));
@@ -99,6 +112,7 @@ class DashboardController extends Controller
     
     }
 
+    // Vaidate add student inputs
     public function validateAddStudentInputs(Request $request) {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -125,6 +139,7 @@ class DashboardController extends Controller
         ]);
     }
 
+    // Validate update student inputs
     public function validateUpdateStudentInputs(Request $request) {
         $user = User::find($request->input('userID'));
         $uniqueRule = $user->email !== $request->input('email') ? 'unique:'.User::class : '';
@@ -154,6 +169,7 @@ class DashboardController extends Controller
     }
     
 
+    // Upload user image
     public function uploadUserImage(Request $request) {
 
         $userID = $request->userID;
@@ -175,6 +191,7 @@ class DashboardController extends Controller
         return $imageName;
     }
 
+    // Remove image through AJAX request
     public function removeImage(Request $request) {
                 // Retrieve the user ID and default image name from the request JSON data
                 $userId = $request->input('userId');
@@ -192,5 +209,44 @@ class DashboardController extends Controller
                     return response()->json(['message' => 'User not found'], 404);
                 }
     }
+
+    
+    /* ############################ END STUDENT FUNCTIONS ############################ */
+
+    /* ------------------------------------------------------------------------------------------- */
+
+    /* ############################ START INSTRUCTOR FUNCTIONS ############################ */
+
+    public function indexInstructor() {
+        $instructors = Instructor::all();
+        return view('admin-dashboard.instructors.index', compact('instructors'));
+    }
+
+    public function makeInstructor(Request $request) {
+        $courses_number = 0;
+        $studentID = $request->user_id;
+
+        $user = User::find($studentID);
+
+        if($user) {
+            $user->role = 'instructor';
+            $user->save();
+        }
+        else {
+            flash()->addError('Student was not found');
+            return redirect()->back();
+        }
+
+        Instructor::create([
+            'courses_number' => $courses_number,
+            'user_id' => $studentID
+        ]);
+        
+        flash()->addSuccess('Operation done');
+        return redirect()->back();
+    }
+
+
+    /* ############################ END INSTRUCTOR FUNCTIONS ############################ */
 
 }

@@ -1374,7 +1374,7 @@
                             <span class="nav-text">Teacher</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="teacher.html">Teacher</a></li>
+                            <li><a href="{{route('go-instructors')}}">Teacher</a></li>
                             <li><a href="teacher-detail.html">Teacher Detail</a></li>
                             <li><a href="add-teacher.html">Add New Teacher</a></li>
 
