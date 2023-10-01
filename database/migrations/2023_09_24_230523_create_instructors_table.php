@@ -14,7 +14,7 @@ return new class extends Migration
             $table->integer('courses_number');
             $table->unsignedBigInteger('user_id')->unique();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

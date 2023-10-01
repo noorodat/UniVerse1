@@ -7,5 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
+
+    public $timestamps = false;
     use HasFactory;
+
+    protected $fillable = [
+        'image',
+        'title',
+        'description',
+        'number_of_courses'
+    ];
 }

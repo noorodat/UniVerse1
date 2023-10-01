@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Instructor;
 use Illuminate\Http\Request;
+use App\Models\Department;
 
 class InstructorController extends Controller
 {
@@ -28,7 +29,7 @@ class InstructorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
@@ -62,4 +63,5 @@ class InstructorController extends Controller
     {
         //
     }
+
 }

@@ -1365,18 +1365,30 @@
                         </a>
                         <ul aria-expanded="false">
                             <li><a href="{{ route('go-dash-students') }}">Students</a></li>
-                            <li><a href="{{route('go-add-student')}}">Add New Student</a></li>
+                            <li><a href="{{route('go-add-student')}}">Add Student</a></li>
                         </ul>
 
                     </li>
-                    <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                    <li>
+                        <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                             <i class="material-symbols-outlined">person</i>
-                            <span class="nav-text">Teacher</span>
+                            <span class="nav-text">Instructor</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{{route('go-instructors')}}">Teacher</a></li>
-                            <li><a href="teacher-detail.html">Teacher Detail</a></li>
-                            <li><a href="add-teacher.html">Add New Teacher</a></li>
+                            <li><a href="{{route('go-instructors')}}">Instructors</a></li>
+                            <li><a href="add-teacher.html">Add instructor</a></li>
+
+                        </ul>
+
+                    </li>
+                    <li>
+                        <a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
+                            <i class="material-symbols-outlined">account_balance</i>
+                            <span class="nav-text">Department</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('go-instructors')}}">Departments</a></li>
+                            <li><a href="{{route('go-add-department')}}">Add department</a></li>
 
                         </ul>
 

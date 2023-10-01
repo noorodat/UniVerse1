@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\DepartmentController;
 
 /* --------------------- START DASHBOARD PAGES --------------------- */
 
@@ -24,6 +25,12 @@ Route::get('/dashboard/add-student', function() {
 // Instructors page
 Route::get('/dashboard/instructors', [DashboardController::class, 'indexInstructor'])->name('go-instructors');
 
+// Add dpeartment page
+Route::get('/dashboard/add-department', function() {
+    return view('admin-dashboard.departments.add-department');
+})->name('go-add-department');
+
+
 
 /* --------------------- END DASHBOARD PAGES --------------------- */
 
@@ -32,7 +39,7 @@ Route::get('/dashboard/instructors', [DashboardController::class, 'indexInstruct
 // NOTE:: ADD INDEX PAGE TO SHOW THE DASHBOARD HOME PAGE
 Route::resource('student', DashboardController::class);
 
-Route::resource('instructor', DashboardController::class);
+Route::resource('department', DepartmentController::class);
 
 // Update image coming from AJAX
 Route::post('/api/update-image', [DashboardController::class, 'removeImage']);

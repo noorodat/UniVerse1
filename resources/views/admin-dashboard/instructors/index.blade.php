@@ -39,6 +39,7 @@
                                 <div class="row">
                                     <!--column-->
 									@foreach ($instructors as $instructor)
+									@include('admin-layouts.delete-instructor-popup')
 									<div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="card contact_list text-center">
                                             <div class="card-body">
@@ -59,8 +60,10 @@
 															</svg>
                                                         </a>
                                                         <div class="dropdown-menu dropdown-menu-end">
-                                                            <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                                            <a class="dropdown-item" href="javascript:void(0);">Edit</a>
+															<button data-bs-toggle="modal" data-bs-target="#exampleModal3{{$instructor->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+																Delete
+															</button>
+                                                            <a class="dropdown-item" href="{{ route('student.edit', ['student' => $instructor]) }}">Edit</a>
                                                         </div>
                                                     </div>
                                                 </div>

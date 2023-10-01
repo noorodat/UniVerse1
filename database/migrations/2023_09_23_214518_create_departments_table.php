@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('image');
+            $table->string('title');
+            $table->string('description');
+            $table->bigInteger('number_of_courses');
         });
     }
 
