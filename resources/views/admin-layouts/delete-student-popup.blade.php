@@ -1,3 +1,4 @@
+
 	<div class="modal fade" id="exampleModal{{$student->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-center">
 		<div class="modal-content">

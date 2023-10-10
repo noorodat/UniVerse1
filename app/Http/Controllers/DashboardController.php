@@ -223,10 +223,16 @@ class DashboardController extends Controller
     }
 
     public function makeInstructor(Request $request) {
+
         $courses_number = 0;
         $studentID = $request->user_id;
 
         $user = User::find($studentID);
+
+        if($user->role === 'instructor') {
+            flash()->addError($user->name . ' is already an instructor');
+            return redirect()->back();
+        }
 
         if($user) {
             $user->role = 'instructor';

@@ -1387,7 +1387,7 @@
                             <span class="nav-text">Department</span>
                         </a>
                         <ul aria-expanded="false">
-                            <li><a href="{{route('go-instructors')}}">Departments</a></li>
+                            <li><a href="{{route('department.index')}}">Departments</a></li>
                             <li><a href="{{route('go-add-department')}}">Add department</a></li>
 
                         </ul>

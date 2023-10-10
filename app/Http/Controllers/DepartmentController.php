@@ -15,7 +15,8 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        //
+        $departments = Department::all();
+        return view('admin-dashboard.departments.index', compact('departments'));
     }
 
     /**
@@ -63,7 +64,7 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        //
+        return view('admin-dashboard.departments.edit-department', compact('department'));
     }
 
     /**
@@ -71,7 +72,19 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        if (!$this->validateAddDepartmentInputs($request)) {
+            return redirect()->back();
+        } 
+
+        $department->update([
+            'image' => $request->input('icon'),
+            'title' => $request->input('title'),
+            'description' => $request->input('description'),
+        ]);
+
+        flash()->addSuccess($department->title . " department updated");
+
+        return redirect()->back();
     }
 
     /**
@@ -79,14 +92,16 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        $department->delete();
+        flash()->addSuccess($department->title . ' Department deleted');
+        return redirect()->back();
     }
 
     public function validateAddDepartmentInputs(Request $request)
     {
         // Define validation rules
         $rules = [
-            'icon' => 'required|regex:/<i [^>]*>.*<\/i>/',
+            'icon' => 'required|string',
             'title' => 'required|max:50',
             'description' => 'required|max:100',
         ];

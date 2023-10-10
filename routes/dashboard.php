@@ -47,6 +47,9 @@ Route::post('/api/update-image', [DashboardController::class, 'removeImage']);
 // Make instructor
 Route::post('/students/{student}/make-instructor', [DashboardController::class, 'makeInstructor'])->name('makeInstructor');
 
+Route::resource('instructor', InstructorController::class);
+Route::resource('department', DepartmentController::class);
+
 
 
 

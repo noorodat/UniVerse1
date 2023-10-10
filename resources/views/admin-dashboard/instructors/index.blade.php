@@ -39,7 +39,7 @@
                                 <div class="row">
                                     <!--column-->
 									@foreach ($instructors as $instructor)
-									@include('admin-layouts.delete-instructor-popup')
+									@include('admin-layouts.delete-popup')
 									<div class="col-xl-3 col-lg-4 col-sm-6">
                                         <div class="card contact_list text-center">
                                             <div class="card-body">

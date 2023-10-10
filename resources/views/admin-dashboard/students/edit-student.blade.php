@@ -51,7 +51,7 @@
                                                 <input value="{{$student->name}}" id="name" class="form-control" type="text" name="name"
                                                     :value="old('name')"  autofocus autocomplete="name"
                                                     placeholder="Full name"/>
-                                                <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                                <span style="color: red"><x-input-error :messages="$errors->get('name')" class="mt-2" /></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-primary">Major<span
@@ -59,10 +59,10 @@
                                                 <div class="d-flex">
                                                     <input value="{{$student->major}}" id="major" class="form-control" type="text"
                                                         name="major" placeholder="Major" />
-                                                    <x-input-error :messages="$errors->get('major')" class="mt-2" />
+                                                    <span style="color: red"><x-input-error :messages="$errors->get('major')" class="mt-2" /></span>
                                                     <input value="{{$student->phone}}" id="phone" class="form-control" type="tel"
                                                         name="phone" placeholder="Phone" />
-                                                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
+                                                    <span style="color: red"><x-input-error :messages="$errors->get('phone')" class="mt-2" /></span>
                                                 </div>
                                             </div>
                                             <div class="mb-3">
@@ -71,7 +71,7 @@
                                                 <input value="{{$student->email}}" id="email" class="form-control" type="email" name="email"
                                                     :value="old('email')"  autocomplete="username"
                                                     placeholder="Email" />
-                                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                                <span style="color: red"><x-input-error :messages="$errors->get('email')" class="mt-2" /></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password" class="form-label text-primary">New Password (optional)<span
@@ -79,7 +79,7 @@
                                                 <input id="password" class="form-control" type="password"
                                                     name="password"  autocomplete="new-password"
                                                     placeholder="Password" />
-                                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                                <span style="color: red"><x-input-error :messages="$errors->get('password')" class="mt-2" /></span>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="password_confirmation" class="form-label text-primary">Confirm password<span
@@ -87,7 +87,7 @@
                                                 <input id="password_confirmation" class="form-control" type="password"
                                                     name="password_confirmation"  autocomplete="new-password"
                                                     placeholder="Confirm password" />
-                                                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                                <span style="color: red"><x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" /></span>
                                             </div>
                                         </div>
                                     </div>
