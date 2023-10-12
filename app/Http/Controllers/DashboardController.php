@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Auth\PasswordController;
+use App\Models\Department;
+use App\Models\Course;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rules\Password;
 
@@ -254,5 +256,26 @@ class DashboardController extends Controller
 
 
     /* ############################ END INSTRUCTOR FUNCTIONS ############################ */
+
+
+     /* ############################ START COURSE FUNCTIONS ############################ */
+
+     public function indexCourse() {
+
+        $courses = Course::all();
+        return view('admin-dashboard.courses.index', compact('courses'));
+
+     }
+
+     public function addDashCoursePage() {
+
+        $departments = Department::all();
+        $instructors = Instructor::all();
+
+        return view('admin-dashboard.courses.add-course', compact('departments', 'instructors'));
+
+     }
+
+     /* ############################ END COURSE FUNCTIONS ############################ */
 
 }

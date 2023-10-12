@@ -15,6 +15,11 @@ class Department extends Model
         'image',
         'title',
         'description',
-        'number_of_courses'
+        'number_of_courses',
     ];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'department_id');
+    }
 }

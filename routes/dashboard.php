@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\CourseController;
 
 /* --------------------- START DASHBOARD PAGES --------------------- */
 
@@ -30,6 +31,13 @@ Route::get('/dashboard/add-department', function() {
     return view('admin-dashboard.departments.add-department');
 })->name('go-add-department');
 
+// Courses page
+Route::get('/dashboard/courses', [DashboardController::class, 'indexCourse'])->name('go-dash-course');
+
+// Add course page
+Route::get('/dashboard/add-course', [DashboardController::class, 'addDashCoursePage'])->name('go-add-dash-course');
+
+
 
 
 /* --------------------- END DASHBOARD PAGES --------------------- */
@@ -49,6 +57,7 @@ Route::post('/students/{student}/make-instructor', [DashboardController::class, 
 
 Route::resource('instructor', InstructorController::class);
 Route::resource('department', DepartmentController::class);
+Route::resource('course', CourseController::class);
 
 
 

@@ -12,9 +12,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('courses_number');
+            $table->boolean('restricted');
             $table->unsignedBigInteger('user_id')->unique();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

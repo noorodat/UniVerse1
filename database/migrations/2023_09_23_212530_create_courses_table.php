@@ -18,8 +18,10 @@ return new class extends Migration
             $table->string('status');
 
             $table->unsignedBigInteger('instructor_id');
+            $table->unsignedBigInteger('department_id');
             
-            $table->foreign('instructor_id')->references('id')->on('instructors')->onDelete('cascade');            
+            $table->foreign('instructor_id')->references('id')->on('instructors');          
+            $table->foreign('department_id')->references('id')->on('departments');        
         });
     }
 

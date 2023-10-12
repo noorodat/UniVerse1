@@ -1389,10 +1389,19 @@
                         <ul aria-expanded="false">
                             <li><a href="{{route('department.index')}}">Departments</a></li>
                             <li><a href="{{route('go-add-department')}}">Add department</a></li>
-
                         </ul>
-
                     </li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void(0);" aria-expanded="false">
+                            <i class="material-symbols-outlined">import_contacts</i>
+                            <span class="nav-text">Courses</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{{route('go-dash-course')}}">Courses</a></li>
+                            <li><a href="{{route('go-add-dash-course')}}">Add course</a></li>
+                        </ul>
+                    </li>
+
                     <li><a class="has-arrow " href="javascript:void(0);" aria-expanded="false">
                             <i class="material-icons">folder</i>
                             <span class="nav-text">File Manager</span>
