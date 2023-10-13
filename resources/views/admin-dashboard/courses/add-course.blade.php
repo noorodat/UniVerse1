@@ -6,6 +6,8 @@
 @section('title', 'Add-Course')
 
 
+{{-- {{dd($instructors)}} --}}
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row">
@@ -16,7 +18,7 @@
                     </div>
 					{{-- Show success message --}}
                     <div class="card-body">
-                        <form action="{{ route('student.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('add-dash-course') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-xl-3 col-lg-4">
@@ -24,7 +26,7 @@
 									<div class="avatar-upload">
 										<div class="avatar-preview">
 											<div id="imagePreview"
-												style="background-image: url({{ asset('assets/images/student/defaultUserImage.png') }});">
+												style="background-image: url({{ asset('assets/images/course/defaultCuorseImage.png') }});">
 											</div>
 										</div>
 										<div class="change-btn mt-2 mb-lg-0 mb-3">
@@ -40,7 +42,7 @@
                                             <div class="mb-3">
                                                 <label for="name" class="form-label text-primary">Title<span
                                                         class="required">*</span></label>
-                                                <input id="name" class="form-control" type="text" name="name"
+                                                <input id="name" class="form-control" type="text" name="title"
                                                     :value="old('name')" required autofocus autocomplete="name"
                                                     placeholder="Course title" />
                                             </div>
@@ -49,36 +51,20 @@
                                                         class="required">*</span></label>
                                                     <select name="department" class="form-control" id="department">
                                                         <option value="" disabled selected>Select a departmnet</option>
+                                                        @foreach ($departments as $department)
+                                                            <option value="{{$department->id}}">{{$department->title}}</option>
+                                                        @endforeach
                                                     </select>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label text-primary">instructor<span
                                                         class="required">*</span></label>
-                                                    <select name="department" class="form-control" id="department">
+                                                    <select name="instructor" class="form-control" id="department">
                                                         <option value="" disabled selected>Assign to an instructor</option>
+                                                        @foreach ($instructors as $instructor)
+                                                            <option value="{{$instructor->id}}">{{$instructor->user->name}}</option>
+                                                        @endforeach
                                                     </select>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="email" class="form-label text-primary">Email<span
-                                                        class="required">*</span></label>
-                                                <input id="email" class="form-control" type="email" name="email"
-                                                    :value="old('email')" required autocomplete="username"
-                                                    placeholder="Email" />
-                                                
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label text-primary">Password<span
-                                                        class="required">*</span></label>
-                                                <input id="password" class="form-control" type="password"
-                                                    name="password" required autocomplete="new-password"
-                                                    placeholder="Password" />
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label text-primary">Password<span
-                                                        class="required">*</span></label>
-                                                <input id="password_confirmation" class="form-control" type="password"
-                                                    name="password_confirmation" required autocomplete="new-password"
-                                                    placeholder="Confirm password" />
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +124,7 @@
     // Function to restore the default image and clear the file input value
     function restoreDefaultImage() {
         const imagePreview = document.getElementById('imagePreview');
-        imagePreview.style.backgroundImage = `url({{ asset('assets/images/student/defaultUserImage.png') }})`;
+        imagePreview.style.backgroundImage = `url({{ asset('assets/images/student/defaultCourseImage.png') }})`;
         const imageUpload = document.getElementById('imageUpload');
         imageUpload.value = ''; // Clear the file input value
     }

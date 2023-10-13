@@ -11,10 +11,17 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Models\Department;
 use App\Models\Course;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 class DashboardController extends Controller
 {
+
+    protected const DEFAULT_NUMBER_OF_COURSES = 0;
+    protected const DEFAULT_COURSE_DURATION = 0;
+    private const DEFAULT_COURSE_PRICE = 1;
+    private const DEFAULT_COURSE_STATUS = 1;
+    private const RESTRICTED = 0;
 
     public function index() {
         return view('admin-dashboard.index');
@@ -226,13 +233,14 @@ class DashboardController extends Controller
 
     public function makeInstructor(Request $request) {
 
-        $courses_number = 0;
         $studentID = $request->user_id;
 
         $user = User::find($studentID);
 
+        $userName = $user->name;
+
         if($user->role === 'instructor') {
-            flash()->addError($user->name . ' is already an instructor');
+            flash()->addError($userName . ' is already an instructor');
             return redirect()->back();
         }
 
@@ -246,11 +254,12 @@ class DashboardController extends Controller
         }
 
         Instructor::create([
-            'courses_number' => $courses_number,
-            'user_id' => $studentID
+            'courses_number' => self::DEFAULT_NUMBER_OF_COURSES,
+            'user_id' => $studentID,
+            'restricted' => self::RESTRICTED,
         ]);
         
-        flash()->addSuccess('Operation done');
+        flash()->addSuccess($userName . ' is now an instructor');
         return redirect()->back();
     }
 
@@ -275,6 +284,129 @@ class DashboardController extends Controller
         return view('admin-dashboard.courses.add-course', compact('departments', 'instructors'));
 
      }
+
+     public function addCourse(Request $request) {
+
+        $imageName = $this->uploadCourseImage($request);
+        
+
+        // Validate the course inputs
+        $validator = Validator::make($request->all(), [
+            'title' => ['required', 'string', 'max:80'],
+            'department' => ['required'],
+            'instructor' => ['required'],
+        ]);
+
+        if ($validator->fails()) {
+            flash()->addError('Some error happened, Try again');
+            // return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back();
+        }
+
+        $course_title = $request->input('title');
+        $instructorID = $request->input('instructor');
+
+
+        try {
+            Course::create([
+                'title' =>  $course_title,
+                'image' => $imageName,
+                'duration' => self::DEFAULT_COURSE_DURATION,
+                'price' => self::DEFAULT_COURSE_PRICE,
+                'status' => self::DEFAULT_COURSE_STATUS,
+                'instructor_id' => $instructorID,
+                'department_id' => $request->input('department'),
+            ]);
+
+            // Update the courses_number of the instructor
+            $instructor = Instructor::find($instructorID);
+            $instructor->courses_number += 1;
+            
+            $instructor->save();
+
+        } catch(\Exception $e) {
+            flash()->addError($e);
+            return redirect()->back();
+        }
+
+        flash()->addSuccess($course_title . ' course added successfully');
+        return redirect()->back();
+     }
+
+     public function deleteCourse($id) {
+
+        // Note: make the admin put their email and password to delete the course
+        $course = Course::find($id);
+
+        try {
+            $instructor_id = $course->instructor_id;
+
+            $instructor = Instructor::find($instructor_id);
+    
+            $instructor->courses_number -= 1;
+    
+            $instructor->save();
+
+            $course->delete();
+        } catch(\Exception $e) {
+            flash()->addError('Couldnt delete the course');
+            return redirect()->back();
+        }
+
+        flash()->addSuccess( $course->titl . " course deleted successfully");
+        return redirect()->back();
+     }
+
+    //  Upload the course image
+     public function uploadCourseImage(Request $request) {
+
+        $course_id = $request->CourseID;
+        $course = Course::find($course_id);
+    
+        if($course) {
+            $imageName = $course->image;
+        }
+    
+        else {
+            $imageName = 'defaultCourseImage.png';
+        }
+    
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        }
+        return $imageName;
+    }
+
+
+
+    // public function validateAddStudentInputs(Request $request) {
+    //     $request->validate([
+    //         'name' => ['required', 'string', 'max:255'],
+    //         'email' => [
+    //             'required',
+    //             'string',
+    //             'email',
+    //             'max:255',
+    //             'unique:'.User::class,
+    //             function ($attribute, $value, $fail) {
+    //                 // Define the allowed domain ending
+    //                 $allowedDomainEnding = 'edu.jo';
+            
+    //                 // Extract the email domain and check if it ends with 'edu.jo'
+    //                 $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
+    //                 if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
+    //                     $fail('Registration is limited to university students in Jordan');
+    //                 }
+    //             },
+    //         ],
+    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
+    //         'major' => 'required',
+    //         'phone' => 'required|regex:/^\d{10}$/',
+    //     ]);
+    // }
+    
 
      /* ############################ END COURSE FUNCTIONS ############################ */
 

@@ -55,7 +55,7 @@
 										</thead>
 										<tbody>
 											@foreach ($courses as $course)
-											{{-- @include('admin-layouts.delete-student-popup') --}}
+											@include('admin-layouts.delete-popup')
 											<tr>
 												<td>
 													<div class="checkbox me-0 align-self-center">
@@ -99,14 +99,8 @@
 															</svg>
 														</div>
 														<div class="dropdown-menu dropdown-menu-end" style="position: fixed !important">
-															<form method="POST" action="{{ route('instructor.store', $course->id) }}">
-																@csrf
-																<button data-bs-toggle="modal" data-bs-target="#exampleModal1{{$course->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
-																	Make instructor
-																</button>
-															</form>
-															<a class="dropdown-item" href="{{ route('student.edit', ['student' => $course]) }}">Edit</a>
-                                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal{{$course->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+															{{-- <a class="dropdown-item" href="{{ route('student.edit', ['student' => $course]) }}">Edit</a> --}}
+                                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal3{{$course->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
 																	Delete
 															</button>
 														</div>

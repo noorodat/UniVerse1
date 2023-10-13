@@ -7,7 +7,6 @@ use App\Models\User;
 
 /* UPLOAD IMAGE */
 function uploadImage(Request $request) {
-
     $userID = $request->userID;
     $user = User::find($userID);
 
