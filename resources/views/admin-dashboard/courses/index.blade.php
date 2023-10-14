@@ -45,6 +45,7 @@
 													<input type="checkbox" class="form-check-input" id="checkAll" required="">
 												</th>
 												<th>Title</th>
+												<th>Department</th>
 												<th>Duration</th>
 												<th>Price</th>
 												<th>Created at</th>
@@ -56,7 +57,7 @@
 										<tbody>
 											@foreach ($courses as $course)
 											@include('admin-layouts.delete-popup')
-											<tr>
+											<tr class="text-center">
 												<td>
 													<div class="checkbox me-0 align-self-center">
 														<div class="custom-control custom-checkbox ">
@@ -71,6 +72,9 @@
 														{{-- src="{{ url('/images/' . $cat->image) }}" --}}
 														<h4><a href="">{{ $course->title }}</a></h4>
 													</div>
+												</td>
+												<td>
+													<div>{{$course->department->title}}</div>
 												</td>
 												<td>
 													<div>{{$course->duration}} hrs</div>
@@ -99,7 +103,7 @@
 															</svg>
 														</div>
 														<div class="dropdown-menu dropdown-menu-end" style="position: fixed !important">
-															{{-- <a class="dropdown-item" href="{{ route('student.edit', ['student' => $course]) }}">Edit</a> --}}
+															<a class="dropdown-item" href="{{ route('edit-dash-course-page', ['course' => $course]) }}">Edit</a>
                                                             <button data-bs-toggle="modal" data-bs-target="#exampleModal3{{$course->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
 																	Delete
 															</button>

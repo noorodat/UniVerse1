@@ -357,6 +357,41 @@ class DashboardController extends Controller
         return redirect()->back();
      }
 
+     public function editCourse(Course $course) {
+        $currentDepartment = $course->department;
+        $currentInstructor = $course->instructor;
+        $departments = Department::all();
+        $instructors = Instructor::all();
+        return view('admin-dashboard.courses.edit-course', compact('course', 'currentDepartment', 'currentInstructor', 'departments', 'instructors'));
+     }
+
+     public function updateCourse(Request $request) {
+
+        $imageName = self::uploadCourseImage($request);
+
+        $title = $request->input('title');
+        $department = $request->input('department');
+        $instructor = $request->input('instructor');
+
+        $course = Course::find($request->input('courseID'));
+
+
+        try {
+            $course->image = $imageName;
+            $course->title = $title;
+            $course->department_id = $department;
+            $course->instructor_id = $instructor;
+            $course->save();
+        } catch(\Exception $e) {
+            flash()->addError('Error while updating the course');
+            return redirect()->back();
+        }
+
+        flash()->addSuccess($course->title . ' updated successfully');
+        return redirect()->back();
+
+     }
+
     //  Upload the course image
      public function uploadCourseImage(Request $request) {
 

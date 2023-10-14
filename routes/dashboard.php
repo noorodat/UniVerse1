@@ -59,10 +59,11 @@ Route::resource('instructor', InstructorController::class);
 Route::resource('department', DepartmentController::class);
 Route::resource('course', CourseController::class);
 
-// Add course
+// course routes
 Route::post('add-course', [DashboardController::class, 'addCourse'])->name('add-dash-course');
 Route::delete('delete-course/{id}', [DashboardController::class, 'deleteCourse'])->name('delete-dash-course');
-
+Route::get('edit-course/{course}', [DashboardController::class, 'editCourse'])->name('edit-dash-course-page');
+Route::patch('update-course', [DashboardController::class, 'updateCourse'])->name('update-dash-course');
 
 
 
