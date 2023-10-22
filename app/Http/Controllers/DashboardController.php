@@ -18,9 +18,7 @@ class DashboardController extends Controller
 {
 
     protected const DEFAULT_NUMBER_OF_COURSES = 0;
-    protected const DEFAULT_COURSE_DURATION = 0;
-    private const DEFAULT_COURSE_PRICE = 1;
-    private const DEFAULT_COURSE_STATUS = 1;
+
     private const RESTRICTED = 0;
 
     public function index() {
@@ -308,12 +306,17 @@ class DashboardController extends Controller
 
 
         try {
-            Course::create([
+
+            $course = new Course();
+
+            $course::create([
                 'title' =>  $course_title,
                 'image' => $imageName,
-                'duration' => self::DEFAULT_COURSE_DURATION,
-                'price' => self::DEFAULT_COURSE_PRICE,
-                'status' => self::DEFAULT_COURSE_STATUS,
+                'description' => "This is a default description",
+                'duration' => $course->DEFAULT_COURSE_DURATION,
+                'number_of_lessons' => $course->DEFAULT_NUMBER_OF_LESSONS,
+                'price' => $course->getDefaultPrice(),
+                'status' => $course->getDefaultStatus(),
                 'instructor_id' => $instructorID,
                 'department_id' => $request->input('department'),
             ]);

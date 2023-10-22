@@ -45,7 +45,7 @@ class DepartmentController extends Controller
                 'number_of_courses' => self::DEFAULT_NUMBER_OF_COURSES,
             ]);
     
-            flash()->addSuccess($request->title . 'department created successfully');
+            flash()->addSuccess($request->title . ' department created successfully');
         }
     
         return redirect()->back();

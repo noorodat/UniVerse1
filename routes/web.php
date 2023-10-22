@@ -15,3 +15,5 @@ require __DIR__.'/dashboard.php';
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+// Home page

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomePageController;
+
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -23,9 +25,7 @@ require __DIR__.'/auth.php';
 /* --------------------- START WEBSITE PAGES --------------------- */
 
 // Home page
-Route::get('/', function() {
-    return view('/index');
-})->name('go-home');
+Route::get('/', [HomePageController::class, 'index'])->name('go-home');
 
 // Courses page
 Route::get('/courses', function() {

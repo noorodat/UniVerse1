@@ -13,13 +13,29 @@ class Course extends Model
 
     protected $fillable = [
         'title',
+        'description',
         'image',
         'duration',
+        'number_of_lessons',
         'price',
         'status',
         'instructor_id',
         'department_id',
     ];
+
+    public $DEFAULT_COURSE_DURATION = 0;
+    public $DEFAULT_NUMBER_OF_LESSONS = 0;
+    private $DEFAULT_COURSE_PRICE = 1;
+    private $DEFAULT_COURSE_STATUS = 1;
+
+    public function getDefaultPrice() {
+        return $this->DEFAULT_COURSE_PRICE;
+    }
+
+    public function getDefaultStatus() {
+        return $this->DEFAULT_COURSE_STATUS;
+    }
+
 
     public function instructor()
     {

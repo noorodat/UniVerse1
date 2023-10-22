@@ -13,8 +13,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('image');
+            $table->string('description');
             $table->bigInteger('duration');
+            $table->integer('number_of_lessons');
             $table->bigInteger('price');
+            $table->integer('rating');
             $table->string('status');
 
             $table->unsignedBigInteger('instructor_id');

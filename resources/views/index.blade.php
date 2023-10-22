@@ -4,6 +4,7 @@
 
 @section('content')
 
+
         <!-- Start Sldier Area  -->
         <div class="slider-area banner-style-2 bg-image d-flex align-items-center">
             <div class="container">
@@ -61,89 +62,23 @@
                     </div>
                 </div>
                 <div class="row g-5 mt--25 justify-content-center">
-
                     <!-- Start Service Grid  -->
+                    @foreach ($departments as $department)
                     <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
                         <div class="service-card service-card-4">
                             <div class="inner">
                                 <div class="icon">
-                                    <i class="fa-solid fa-terminal"></i>
-                                    <span class="subtitle">0 Courses</span>
+                                    <i class="{{$department->image}}"></i>
+                                    <span class="subtitle">{{$department->number_of_courses}} Courses</span>
                                 </div>
                                 <div class="content">
-                                    <h6 class="title"><a href="#">IT</a></h6>
-                                    <p class="description">Lore Ipsum a simply dummy text of the printing</p>
+                                    <h6 class="title"><a href="#">{{$department->title}}</a></h6>
+                                    <p class="description">{{$department->description}}</p>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- End Service Grid  -->
-
-                    <!-- Start Service Grid  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="200" data-sal="slide-up" data-sal-duration="800">
-                        <div class="service-card service-card-4">
-                            <div class="inner">
-                                <div class="icon">
-                                    <i class="fa-solid fa-gears"></i>
-                                    <span class="subtitle">0 Courses</span>
-                                </div>
-                                <div class="content">
-                                    <h6 class="title"><a href="#">Engineering</a></h6>
-                                    <p class="description">Lore Ipsum a simply dummy text of the printing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Service Grid  -->
-
-                    <!-- Start Service Grid  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="service-card service-card-4">
-                            <div class="inner">
-                                <div class="icon">
-                                    <i class="fa-solid fa-notes-medical"></i>
-                                    <span class="subtitle">0 Courses</span>
-                                </div>
-                                <div class="content">
-                                    <h6 class="title"><a href="#">Medical school</a></h6>
-                                    <p class="description">Lore Ipsum a simply dummy text of the printing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Service Grid  -->
-                    <!-- Start Service Grid  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="service-card service-card-4">
-                            <div class="inner">
-                                <div class="icon">
-                                    <i class="fa-solid fa-flask"></i>
-                                    <span class="subtitle">0 Courses</span>
-                                </div>
-                                <div class="content">
-                                    <h6 class="title"><a href="#">Science</a></h6>
-                                    <p class="description">Lore Ipsum a simply dummy text of the printing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- End Service Grid  -->
-
-                    <!-- Start Service Grid  -->
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <div class="service-card service-card-4">
-                            <div class="inner">
-                                <div class="icon">
-                                    <i class="fa-solid fa-pen-ruler"></i>
-                                    <span class="subtitle">0 Courses</span>
-                                </div>
-                                <div class="content">
-                                    <h6 class="title"><a href="#">Architecture and Design</a></h6>
-                                    <p class="description">Lore Ipsum a simply dummy text of the printing</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                     <!-- End Service Grid  -->
                 </div>
 
@@ -260,18 +195,10 @@
         <div class="edu-course-area eduvibe-home-two-course course-three-wrapper edu-section-gap bg-color-white">
             <div class="container eduvibe-animated-shape">
                 <div class="row g-5 align-items-center mb--30">
-                    <div class="col-lg-6">
-                        <div class="section-title text-start" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                            <span class="pre-title">Who We Are</span>
-                            <h3 class="title">We Offer The Best Carrier</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="button-group isotop-filter filters-button-group d-flex justify-content-start justify-content-lg-end">
-                            <button data-filter="*" class="is-checked"><span class="filter-text">All</span></button>
-                            <button data-filter=".cat--1"><span class="filter-text">Trending</span></button>
-                            <button data-filter=".cat--2"><span class="filter-text">Popularity</span></button>
-                            <button data-filter=".cat--3"><span class="filter-text">Featured</span></button>
+                    <div class="col-lg-12 text-center">
+                        <div class="section-title" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
+                            <span class="pre-title">Popular courses</span>
+                            <h3 class="title">Explore the best seller courses</h3>
                         </div>
                     </div>
                 </div>
@@ -281,6 +208,7 @@
                         <div class="grid-metro3 mesonry-list">
                             <div class="resizer"></div>
                             <!-- Start Single Card  -->
+                            @foreach ($randomCourses as $randomCourse)
                             <div class="grid-metro-item cat--1 cat--3">
                                 <div class="edu-card card-type-3 radius-small">
                                     <div class="inner">
@@ -288,11 +216,9 @@
                                             <a href="course-details.html">
                                                 <img class="w-100" src="assets/images/course/course-01/course-01.jpg" alt="Course Meta">
                                             </a>
-                                            <div class="wishlist-top-right">
-                                                <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                            </div>
+
                                             <div class="top-position status-group left-bottom">
-                                                <span class="eduvibe-status status-03">Language Learning</span>
+                                                <span class="eduvibe-status status-03">{{$randomCourse->department->title}}</span>
                                             </div>
                                         </div>
 
@@ -302,20 +228,20 @@
                                                     <div class="author-thumb">
                                                         <a href="#">
                                                             <img src="assets/images/instructor/instructor-small/instructor-1.jpg" alt="Author Images">
-                                                            <span class="author-title">James Carlson</span>
+                                                            <span class="author-title">{{$randomCourse->instructor->user->name}}</span>
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>45 Lessons</li>
+                                                    <li><i class="icon-file-list-3-line"></i>{{$randomCourse->number_of_lessons}} Lessons</li>
                                                 </ul>
                                             </div>
-                                            <h6 class="title"><a href="course-details.html">Master Native English Class This Speaking Skills</a>
+                                            <h6 class="title"><a href="course-details.html">{{$randomCourse->title}}</a>
                                             </h6>
                                             <div class="card-bottom">
                                                 <div class="price-list price-style-02">
-                                                    <div class="price current-price">$55.99</div>
-                                                    <div class="price old-price">$65.99</div>
+                                                    <div class="price current-price">${{$randomCourse->price}}</div>
+                                                    {{-- <div class="price old-price">$65.99</div> --}}
                                                 </div>
                                                 <div class="edu-rating rating-default">
                                                     <div class="rating">
@@ -335,22 +261,18 @@
                                         <div class="hover-content">
                                             <div class="content-top">
                                                 <div class="top-status-bar">
-                                                    <span class="eduvibe-status status-03">Language
-                                                        Learning</span>
-                                                </div>
-                                                <div class="top-wishlist-bar">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
+                                                    <span class="eduvibe-status status-03">{{$randomCourse->department->title}}</span>
                                                 </div>
                                             </div>
-                                            <h6 class="title"><a href="course-details.html">Master Native English Class This Speaking Skills</a></h6>
+                                            <h6 class="title"><a href="course-details.html">{{$randomCourse->title}}</a></h6>
 
                                             <p class="description">There are many variations of passages of
                                                 Lorem Ipsaums available, but the majority have suffered
                                                 alteration. generators on the Internet tend to repeat.</p>
 
                                             <div class="price-list price-style-02">
-                                                <div class="price current-price">$55.99</div>
-                                                <div class="price old-price">$69.99</div>
+                                                <div class="price current-price">${{$randomCourse->price}}</div>
+                                                {{-- <div class="price old-price">$69.99</div> --}}
                                             </div>
 
                                             <div class="hover-bottom-content">
@@ -358,12 +280,12 @@
                                                     <div class="author-thumb">
                                                         <a href="#">
                                                             <img src="assets/images/instructor/instructor-small/instructor-1.jpg" alt="Author Images">
-                                                            <span class="author-title">James Carlson</span>
+                                                            <span class="author-title">{{$randomCourse->instructor->user->name}}</span>
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>45 Lessons</li>
+                                                    <li><i class="icon-file-list-3-line"></i>{{$randomCourse->number_of_lessons}} Lessons</li>
                                                 </ul>
                                             </div>
 
@@ -377,512 +299,13 @@
                                     </div>
                                 </div>
                             </div>
+                            @endforeach
                             <!-- End Single Card  -->
 
-                            <!-- Start Single Card  -->
-                            <div class="grid-metro-item cat--1 cat--2">
-                                <div class="edu-card card-type-3 radius-small">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a href="course-details.html">
-                                                <img class="w-100" src="assets/images/course/course-01/course-02.jpg" alt="Course Meta">
-                                            </a>
-                                            <div class="wishlist-top-right">
-                                                <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                            </div>
-                                            <div class="top-position status-group left-bottom">
-                                                <span class="eduvibe-status status-03">Marketing</span>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <div class="card-top">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-3.jpg" alt="Author Images">
-                                                            <span class="author-title">Nancy Phipps</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>40 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <h6 class="title"><a href="course-details.html">The Basic Of Financial Analyst Online
-                                                    Course</a>
-                                            </h6>
-                                            <div class="card-bottom">
-                                                <div class="price-list price-style-02">
-                                                    <div class="price current-price">$39.99</div>
-                                                    <div class="price old-price">$49.99</div>
-                                                </div>
-                                                <div class="edu-rating rating-default">
-                                                    <div class="rating">
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                    </div>
-                                                    <span class="rating-count">(10)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-hover-action">
-                                        <div class="hover-content">
-                                            <div class="content-top">
-                                                <div class="top-status-bar">
-                                                    <span class="eduvibe-status status-03">Marketing</span>
-                                                </div>
-                                                <div class="top-wishlist-bar">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                </div>
-                                            </div>
-
-                                            <h6 class="title"><a href="course-details.html">The Basic Of Financial Analyst Online
-                                                    Course</a></h6>
-
-                                            <p class="description">There are many variations of passages of
-                                                Lorem Ipsaums available, but the majority have suffered
-                                                alteration. generators on the Internet tend to repeat.</p>
-
-                                            <div class="price-list price-style-02">
-                                                <div class="price current-price">$39.99</div>
-                                                <div class="price old-price">$49.99</div>
-                                            </div>
-
-                                            <div class="hover-bottom-content">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-3.jpg" alt="Author Images">
-                                                            <span class="author-title">Nancy Phipps</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>40 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <div class="read-more-btn">
-                                                <a class="edu-btn btn-medium btn-white" href="course-details.html">Enroll Now<i
-                                                        class="icon-arrow-right-line-right"></i></a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Card  -->
-
-                            <!-- Start Single Card  -->
-                            <div class="grid-metro-item cat--3">
-                                <div class="edu-card card-type-3 radius-small">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a href="course-details.html">
-                                                <img class="w-100" src="assets/images/course/course-01/course-03.jpg" alt="Course Meta">
-                                            </a>
-                                            <div class="wishlist-top-right">
-                                                <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                            </div>
-                                            <div class="top-position status-group left-bottom">
-                                                <span class="eduvibe-status status-03">Graphics Design</span>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <div class="card-top">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-6.jpg" alt="Author Images">
-                                                            <span class="author-title">Linda Bacote</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>18 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <h6 class="title"><a href="course-details.html">Introduction to Javascript for The
-                                                    Beginners</a>
-                                            </h6>
-                                            <div class="card-bottom">
-                                                <div class="price-list price-style-02">
-                                                    <div class="price current-price">$89.99</div>
-                                                    <div class="price old-price">$99.99</div>
-                                                </div>
-                                                <div class="edu-rating rating-default">
-                                                    <div class="rating">
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                    </div>
-                                                    <span class="rating-count">(20)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-hover-action">
-                                        <div class="hover-content">
-                                            <div class="content-top">
-                                                <div class="top-status-bar">
-                                                    <span class="eduvibe-status status-03">Marketing</span>
-                                                </div>
-                                                <div class="top-wishlist-bar">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                </div>
-                                            </div>
-
-                                            <h6 class="title"><a href="course-details.html">Introduction to Javascript for The
-                                                    Beginners</a></h6>
-
-                                            <p class="description">There are many variations of passages of
-                                                Lorem Ipsaums available, but the majority have suffered
-                                                alteration. generators on the Internet tend to repeat.</p>
-
-                                            <div class="price-list price-style-02">
-                                                <div class="price current-price">$89.99</div>
-                                                <div class="price old-price">$99.99</div>
-                                            </div>
-
-                                            <div class="hover-bottom-content">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-6.jpg" alt="Author Images">
-                                                            <span class="author-title">Linda Bacote</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>18 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <div class="read-more-btn">
-                                                <a class="edu-btn btn-medium btn-white" href="course-details.html">Enroll Now<i
-                                                        class="icon-arrow-right-line-right"></i></a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Card  -->
-
-                            <!-- Start Single Card  -->
-                            <div class="grid-metro-item cat--3">
-                                <div class="edu-card card-type-3 radius-small">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a href="course-details.html">
-                                                <img class="w-100" src="assets/images/course/course-01/course-04.jpg" alt="Course Meta">
-                                            </a>
-                                            <div class="wishlist-top-right">
-                                                <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                            </div>
-                                            <div class="top-position status-group left-bottom">
-                                                <span class="eduvibe-status status-03">Marketing</span>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <div class="card-top">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-5.jpg" alt="Author Images">
-                                                            <span class="author-title">Alice McCoy</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>28 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <h6 class="title"><a href="course-details.html">Oracle SQL Developer : Essentials Tips and
-                                                    Tricks</a>
-                                            </h6>
-                                            <div class="card-bottom">
-                                                <div class="price-list price-style-02">
-                                                    <div class="price current-price">$79.99</div>
-                                                    <div class="price old-price">$85.99</div>
-                                                </div>
-                                                <div class="edu-rating rating-default">
-                                                    <div class="rating">
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                    </div>
-                                                    <span class="rating-count">(15)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-hover-action">
-                                        <div class="hover-content">
-                                            <div class="content-top">
-                                                <div class="top-status-bar">
-                                                    <span class="eduvibe-status status-03">Marketing</span>
-                                                </div>
-                                                <div class="top-wishlist-bar">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                </div>
-                                            </div>
-
-                                            <h6 class="title"><a href="course-details.html">Oracle SQL Developer : Essentials Tips and
-                                                    Tricks</a></h6>
-
-                                            <p class="description">There are many variations of passages of
-                                                Lorem Ipsaums available, but the majority have suffered
-                                                alteration. generators on the Internet tend to repeat.</p>
-
-                                            <div class="price-list price-style-02">
-                                                <div class="price current-price">$75.99</div>
-                                                <div class="price old-price">$85.99</div>
-                                            </div>
-
-                                            <div class="hover-bottom-content">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-5.jpg" alt="Author Images">
-                                                            <span class="author-title">Alice McCoy</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>28 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <div class="read-more-btn">
-                                                <a class="edu-btn btn-medium btn-white" href="course-details.html">Enroll Now<i
-                                                        class="icon-arrow-right-line-right"></i></a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Card  -->
-
-                            <!-- Start Single Card  -->
-                            <div class="grid-metro-item cat--3">
-                                <div class="edu-card card-type-3 radius-small">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a href="course-details.html">
-                                                <img class="w-100" src="assets/images/course/course-01/course-05.jpg" alt="Course Meta">
-                                            </a>
-                                            <div class="wishlist-top-right">
-                                                <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                            </div>
-                                            <div class="top-position status-group left-bottom">
-                                                <span class="eduvibe-status status-03">Web Development</span>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <div class="card-top">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-1.jpg" alt="Author Images">
-                                                            <span class="author-title">James Carlson</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>35 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <h6 class="title"><a href="course-details.html">Education Makes A Person A Responsible Citizen</a>
-                                            </h6>
-                                            <div class="card-bottom">
-                                                <div class="price-list price-style-02">
-                                                    <div class="price current-price">$49.99</div>
-                                                    <div class="price old-price">$59.99</div>
-                                                </div>
-                                                <div class="edu-rating rating-default">
-                                                    <div class="rating">
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                    </div>
-                                                    <span class="rating-count">(40)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-hover-action">
-                                        <div class="hover-content">
-                                            <div class="content-top">
-                                                <div class="top-status-bar">
-                                                    <span class="eduvibe-status status-03">Web Development</span>
-                                                </div>
-                                                <div class="top-wishlist-bar">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                </div>
-                                            </div>
-
-                                            <h6 class="title"><a href="course-details.html">Education Makes A Person A Responsible Citizen</a></h6>
-
-                                            <p class="description">There are many variations of passages of
-                                                Lorem Ipsaums available, but the majority have suffered
-                                                alteration. generators on the Internet tend to repeat.</p>
-
-                                            <div class="price-list price-style-02">
-                                                <div class="price current-price">$49.99</div>
-                                                <div class="price old-price">$59.99</div>
-                                            </div>
-
-                                            <div class="hover-bottom-content">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-1.jpg" alt="Author Images">
-                                                            <span class="author-title">James Carlson</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>35 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <div class="read-more-btn">
-                                                <a class="edu-btn btn-medium btn-white" href="course-details.html">Enroll Now<i
-                                                        class="icon-arrow-right-line-right"></i></a>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Card  -->
-
-                            <!-- Start Single Card  -->
-                            <div class="grid-metro-item cat--3">
-                                <div class="edu-card card-type-3 radius-small">
-                                    <div class="inner">
-                                        <div class="thumbnail">
-                                            <a href="course-details.html">
-                                                <img class="w-100" src="assets/images/course/course-01/course-06.jpg" alt="Course Meta">
-                                            </a>
-                                            <div class="wishlist-top-right">
-                                                <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                            </div>
-                                            <div class="top-position status-group left-bottom">
-                                                <span class="eduvibe-status status-03">Programming</span>
-                                            </div>
-                                        </div>
-                                        <div class="content">
-                                            <div class="card-top">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-3.jpg" alt="Author Images">
-                                                            <span class="author-title">Nancy Phipps</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>16 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <h6 class="title"><a href="course-details.html">Python Django Web Development: To-Do
-                                                    App</a>
-                                            </h6>
-                                            <div class="card-bottom">
-                                                <div class="price-list price-style-02">
-                                                    <div class="price current-price">$79.99</div>
-                                                    <div class="price old-price">$89.99</div>
-                                                </div>
-                                                <div class="edu-rating rating-default">
-                                                    <div class="rating">
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                        <i class="icon-Star"></i>
-                                                    </div>
-                                                    <span class="rating-count">(53)</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="card-hover-action">
-                                        <div class="hover-content">
-                                            <div class="content-top">
-                                                <div class="top-status-bar">
-                                                    <span class="eduvibe-status status-03">Programming</span>
-                                                </div>
-                                                <div class="top-wishlist-bar">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                </div>
-                                            </div>
-
-                                            <h6 class="title"><a href="course-details.html">Python Django Web Development: To-Do
-                                                    App</a></h6>
-
-                                            <p class="description">There are many variations of passages of
-                                                Lorem Ipsaums available, but the majority have suffered
-                                                alteration. generators on the Internet tend to repeat.</p>
-
-                                            <div class="price-list price-style-02">
-                                                <div class="price current-price">$79.99</div>
-                                                <div class="price old-price">$89.99</div>
-                                            </div>
-
-                                            <div class="hover-bottom-content">
-                                                <div class="author-meta">
-                                                    <div class="author-thumb">
-                                                        <a href="#">
-                                                            <img src="assets/images/instructor/instructor-small/instructor-3.jpg" alt="Author Images">
-                                                            <span class="author-title">Nancy Phipps</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <ul class="edu-meta meta-02">
-                                                    <li><i class="icon-file-list-3-line"></i>16 Lessons</li>
-                                                </ul>
-                                            </div>
-                                            <div class="read-more-btn">
-                                                <a class="edu-btn btn-medium btn-white" href="course-details.html">Enroll Now<i
-                                                        class="icon-arrow-right-line-right"></i></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- End Single Card  -->
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-lg-10 offset-lg-1">
-                        <div class="video-gallery-wrapper edu-section-gapTop video-section-overlayto-another">
-                            <div class="video-gallery-1">
-                                <div class="thumbnail video-popup-wrapper">
-                                    <img class="radius-small w-100" src="assets/images/videopopup/video-popup-bg-01.jpg" alt="Video Images">
-                                    <a href="https://www.youtube.com/watch?v=pNje3bWz7V8" class="video-play-btn with-animation position-to-top video-popup-activation btn-secondary-color size-80">
-                                        <span class="play-icon"></span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="shape-dot-wrapper shape-wrapper d-xl-block d-none">
                     <div class="shape-image shape-image-1">
                         <img src="assets/images/shapes/shape-04-02.png" alt="Shape Thumb" />
@@ -901,7 +324,7 @@
         </div>
 
         <!-- Start Event Area  -->
-        <div class="edu-event-area eduvibe-home-two-event edu-section-gap bg-image video-gallery-overlay-area">
+        {{-- <div class="edu-event-area eduvibe-home-two-event edu-section-gap bg-image video-gallery-overlay-area">
             <div class="container eduvibe-animated-shape">
                 <div class="row">
                     <div class="col-lg-12">
@@ -1015,7 +438,7 @@
                     <div class="shape shape-1"><span class="shape-dot"></span></div>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- End Event Area  -->
 
         <!-- Start Testimonial Area  -->
@@ -1366,7 +789,7 @@
         </div>
         <!-- End Newsletter Area  -->
 
-        <!-- Start Blog Area  -->
+        {{-- <!-- Start Blog Area  -->
         <div class="eduvibe-home-two-blog edu-blog-area edu-section-gap bg-image">
             <div class="wrapper">
                 <div class="container eduvibe-animated-shape">
@@ -1487,5 +910,7 @@
                 </div>
             </div>
         </div>
-        <!-- End Blog Area  -->
+        <!-- End Blog Area  --> --}}
+        
+
 @endsection
