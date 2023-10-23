@@ -287,7 +287,6 @@ class DashboardController extends Controller
 
         $imageName = $this->uploadCourseImage($request);
         
-
         // Validate the course inputs
         $validator = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:80'],
@@ -297,7 +296,6 @@ class DashboardController extends Controller
 
         if ($validator->fails()) {
             flash()->addError('Some error happened, Try again');
-            // return redirect()->back()->withErrors($validator)->withInput();
             return redirect()->back();
         }
 
@@ -308,7 +306,6 @@ class DashboardController extends Controller
         try {
 
             $course = new Course();
-
             $course::create([
                 'title' =>  $course_title,
                 'image' => $imageName,
@@ -317,9 +314,15 @@ class DashboardController extends Controller
                 'number_of_lessons' => $course->DEFAULT_NUMBER_OF_LESSONS,
                 'price' => $course->getDefaultPrice(),
                 'status' => $course->getDefaultStatus(),
+                'rating' => $course->DEFAULT_COURSE_RATING,
                 'instructor_id' => $instructorID,
                 'department_id' => $request->input('department'),
             ]);
+
+            // Update the number of courses column for the department
+            $department = Department::find($request->input('department'));
+            $department->number_of_courses = $department->number_of_courses + 1;
+            $department->save();
 
             // Update the courses_number of the instructor
             $instructor = Instructor::find($instructorID);
@@ -328,7 +331,7 @@ class DashboardController extends Controller
             $instructor->save();
 
         } catch(\Exception $e) {
-            flash()->addError($e);
+            flash()->addError("An error occurred: " . $e->getMessage());
             return redirect()->back();
         }
 

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('image');
-            $table->string('description');
+            $table->text('description');
             $table->bigInteger('duration');
             $table->integer('number_of_lessons');
             $table->bigInteger('price');

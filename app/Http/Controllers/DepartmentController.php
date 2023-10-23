@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -56,7 +57,13 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        try {
+            $departments = Department::all();
+            $courses = Course::where('department_id', $department->id)->get();
+            return view('pages.courses.index', compact('courses', 'department', 'departments'));
+        } catch (\Exception $e) {
+            return view("Some error happened :(");
+        }
     }
 
     /**

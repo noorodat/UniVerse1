@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomePageController;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\CourseController;
 
 
 Route::get('/welcome', function () {
@@ -41,6 +43,9 @@ Route::get('/aboutus', function() {
 Route::get('/pricing', function() {
     return view('/pages.pricing.index');
 })->name('go-pricing');
+
+Route::resource('departmnet', DepartmentController::class);
+// Route::resource('course', CourseController::class);
 
 /* --------------------- END WEBSITE PAGES --------------------- */
 

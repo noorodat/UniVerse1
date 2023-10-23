@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Department;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -37,7 +38,15 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        try {
+            $department = $course->department;
+            $relatedCourses = Course::where('department_id', $department->id)
+                ->where('id', '!=', $course->id)
+                ->get();
+            return view('pages.courses.course-details', compact('course', 'relatedCourses'));
+        } catch (\Exception $e) {
+            return view("Sorry, Some error happened :(");
+        }
     }
 
     /**
