@@ -410,13 +410,17 @@
                                                 <a class="edu-btn btn-bg-alt w-100 text-center" href="#">Price: ${{$course->price}}</a>
                                             </div>
                                             <div class="read-more-btn mt--15">
+                                                @if (Auth::user())
                                                 <form action="{{route('buy-course')}}" method="POST">
                                                     @csrf
                                                     <input type="hidden" name="courseID" value="{{$course->id}}">
-                                                    <input type="hidden" name="studentID" value="{{Auth::user()->id}}">
                                                     <input type="hidden" name="instructorID" value="{{$course->instructor->id}}">
-                                                    <button class="edu-btn w-100 text-center" type="submit">Buy Now</button>
+                                                    <input type="hidden" name="studentID" value="{{Auth::user()->id}}">
+                                                    <button class="edu-btn w-100 text-center" name="paypal" type="submit">Buy Now</button>
                                                 </form>
+                                                @else
+                                                    <a href="{{route('login')}}" class="edu-btn w-100 text-center">Buy Now</a>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
