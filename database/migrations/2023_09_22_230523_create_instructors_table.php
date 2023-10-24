@@ -12,6 +12,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->integer('courses_number');
+            $table->integer('rating');
+            $table->bigInteger('earnings');
             $table->boolean('restricted');
             $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users');

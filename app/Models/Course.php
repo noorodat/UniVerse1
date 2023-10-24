@@ -30,11 +30,13 @@ class Course extends Model
     private $DEFAULT_COURSE_PRICE = 1;
     private $DEFAULT_COURSE_STATUS = 1;
 
-    public function getDefaultPrice() {
+    public function getDefaultPrice()
+    {
         return $this->DEFAULT_COURSE_PRICE;
     }
 
-    public function getDefaultStatus() {
+    public function getDefaultStatus()
+    {
         return $this->DEFAULT_COURSE_STATUS;
     }
 
@@ -48,5 +50,9 @@ class Course extends Model
     {
         return $this->belongsTo(Department::class);
     }
-}
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'courses_students', 'course_id', 'user_id');
+    }
+}

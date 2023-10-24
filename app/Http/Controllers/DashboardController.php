@@ -255,6 +255,8 @@ class DashboardController extends Controller
             'courses_number' => self::DEFAULT_NUMBER_OF_COURSES,
             'user_id' => $studentID,
             'restricted' => self::RESTRICTED,
+            'rating' => 0,
+            'earnings' => 0,
         ]);
         
         flash()->addSuccess($userName . ' is now an instructor');

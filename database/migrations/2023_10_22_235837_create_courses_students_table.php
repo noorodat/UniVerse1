@@ -16,9 +16,13 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('instructor_id');
 
             $table->foreign('course_id')->references('id')->on('courses');
             $table->foreign('student_id')->references('id')->on('users');
+            $table->foreign('instructor_id')->references('id')->on('instructors');
+
+            $table->unique(['student_id', 'course_id']);
         });
     }
 

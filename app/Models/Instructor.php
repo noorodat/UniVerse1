@@ -16,7 +16,9 @@ class Instructor extends User
     protected $fillable = [
         'courses_number',
         'user_id',
-        'restricted'
+        'restricted',
+        'rating',
+        'earnings',
     ];
 
     public function user()

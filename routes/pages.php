@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 
 
@@ -45,7 +46,13 @@ Route::get('/pricing', function() {
 })->name('go-pricing');
 
 Route::resource('departmnet', DepartmentController::class);
-// Route::resource('course', CourseController::class);
+
+// Show user profile
+Route::get('/profile/{user}', [ProfileController::class, 'showProfile'])->name('go-profile');
+
+// Buy course function
+Route::post('/buyCourse', [UserController::class,'buyCourse'])->name('buy-course');
+
 
 /* --------------------- END WEBSITE PAGES --------------------- */
 

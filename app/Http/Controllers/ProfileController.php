@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Validation\Rule;
+use App\Models\User;
+use App\Models\Instructor;
+use App\Models\CourseStudent;
+use App\Models\Course;
 
 
 class ProfileController extends Controller
@@ -40,7 +44,7 @@ class ProfileController extends Controller
                 function ($attribute, $value, $fail) {
                     // Define the allowed domain ending
                     $allowedDomainEnding = 'edu.jo';
-            
+
                     // Extract the email domain and check if it ends with 'edu.jo'
                     $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
                     if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
@@ -50,23 +54,44 @@ class ProfileController extends Controller
             ],
             'password' => ['sometimes', 'nullable', 'string', 'min:8', 'confirmed'],
         ]);
-    
+
         $user = auth()->user();
-    
+
         $user->fill([
             'name' => $request->name,
             'email' => $request->email,
         ]);
-    
+
         if ($request->has('password')) {
             $user->password = Hash::make($request->password);
         }
-    
+
         $user->save();
-    
+
         return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
-    
+
+
+    public function showProfile(User $user)
+    {
+        $isInstructor = false;
+        if ($user->role === 'instructor') {
+            $instructor = Instructor::where('user_id', $user->id)->first();
+            $isInstructor = true;
+            $widgetData = [
+                'enrolled_courses_count' => CourseStudent::where('student_id', $user->id)->count(),
+                'published_courses_count' => Course::where('instructor_id', $user->id)->count(),
+                'total_students' => CourseStudent::whereHas('course', function ($query) use ($user) {
+                    $query->where('instructor_id', $user->id);
+                })->count(),
+                'earnings' => $instructor->earnings,
+            ];
+            return view('pages.profile.instructor-dashboard', compact('instructor', 'isInstructor', 'widgetData'));
+        } else {
+            return view('pages.profile.profile', compact('user', 'isInstructor'));
+        }
+    }
+
 
     /**
      * Delete the user's account.
