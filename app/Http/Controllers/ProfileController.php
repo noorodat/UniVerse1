@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -13,6 +14,8 @@ use App\Models\User;
 use App\Models\Instructor;
 use App\Models\CourseStudent;
 use App\Models\Course;
+use App\Exceptions\Exception;
+
 
 
 class ProfileController extends Controller
@@ -71,8 +74,7 @@ class ProfileController extends Controller
         return redirect()->route('profile.edit')->with('status', 'profile-updated');
     }
 
-
-    public function showProfile(User $user)
+    public function showDashboard(User $user)
     {
         $isInstructor = false;
         if ($user->role === 'instructor') {
@@ -87,8 +89,34 @@ class ProfileController extends Controller
                 'earnings' => $instructor->earnings,
             ];
             return view('pages.profile.instructor-dashboard', compact('instructor', 'isInstructor', 'widgetData'));
-        } else {
+        }
+    }
+
+    public function showProfile(User $user) {
+        $isInstructor = false;
+        if($user->role === 'instructor') {
+            $instructor = Instructor::where('user_id', $user->id)->first();
+            $isInstructor = true;
+            return view('pages.profile.profile', compact('user', 'isInstructor', 'instructor'));
+        }
+        else {
             return view('pages.profile.profile', compact('user', 'isInstructor'));
+        }
+    }
+
+    public function showInstructorProfile(User $user) {
+        return view('pages.profile.profile', compact('user'));
+    }
+
+    public function showEnrolledCourses(User $user) {
+        try {
+            $enrolledCourses = CourseStudent::where('student_id', $user->id)
+                ->join('courses', 'courses_students.course_id', '=', 'courses.id')
+                ->get();
+    
+            return view('pages.profile.enrolled-courses', compact('enrolledCourses'));
+        } catch (Exception $e) {
+            return redirect()->route('go-home')->with('error', $e->getMessage());
         }
     }
 

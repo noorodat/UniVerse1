@@ -47,11 +47,29 @@ Route::get('/pricing', function() {
 
 Route::resource('departmnet', DepartmentController::class);
 
+/* ------------------------------------- START USER PROFILE ROUTES ------------------------------------- */
+// Show instructor dashboard
+Route::get('/dashboard/{user}', [ProfileController::class, 'showDashboard'])->name('go-dashboard');
+
 // Show user profile
 Route::get('/profile/{user}', [ProfileController::class, 'showProfile'])->name('go-profile');
 
+// Show enrolled courses
+Route::get('/enrolledCourses/{user}', [ProfileController::class, 'showEnrolledCourses'])->name('go-enrolled-courses');
+/* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
+
+
 // Buy course function
 Route::post('/buyCourse', [UserController::class,'buyCourse'])->name('buy-course');
+
+// Payment success page
+Route::get('/success', function() {
+    return view('pages.success');
+})->name('go-success');
+
+Route::get('/failure', function() {
+    return view('pages.fail');
+})->name('go-failure');
 
 
 /* --------------------- END WEBSITE PAGES --------------------- */

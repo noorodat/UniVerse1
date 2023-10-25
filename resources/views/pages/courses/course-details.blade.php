@@ -416,6 +416,7 @@
                                                     <input type="hidden" name="courseID" value="{{$course->id}}">
                                                     <input type="hidden" name="instructorID" value="{{$course->instructor->id}}">
                                                     <input type="hidden" name="studentID" value="{{Auth::user()->id}}">
+                                                    <input type="hidden" name="coursePrice" value="{{$course->price}}">
                                                     <button class="edu-btn w-100 text-center" name="paypal" type="submit">Buy Now</button>
                                                 </form>
                                                 @else
