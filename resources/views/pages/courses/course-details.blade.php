@@ -120,13 +120,6 @@
                                         <h5>Course Description</h5>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <h5>What You’ll Learn From This Course</h5>
-                                        <ul>
-                                            <li>Neque sodales ut etiam sit amet nisl purus non tellus orci ac auctor</li>
-                                            <li>Tristique nulla aliquet enim tortor at auctor urna. Sit amet aliquam id diam maer</li>
-                                            <li>Nam libero justo laoreet sit amet. Lacus sed viverra tellus in hac</li>
-                                            <li>Tempus imperdiet nulla malesuada pellentesque elit eget gravida cum sociis</li>
-                                        </ul>
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">

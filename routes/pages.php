@@ -6,7 +6,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
-
+use App\Http\Controllers\InstructorController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -64,6 +64,9 @@ Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->nam
 
 // Buy course function
 Route::post('/buyCourse', [UserController::class,'buyCourse'])->name('buy-course');
+
+// Create course by instructor
+Route::post('/createNewCourse', [InstructorController::class, 'createCourse'])->name('create-new-course');
 
 // Payment success page
 Route::get('/success', function() {

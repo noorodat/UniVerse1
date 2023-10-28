@@ -121,7 +121,8 @@ class ProfileController extends Controller
 
     public function showCreateCourse() {
         $departments = Department::all();
-        return view('pages.profile.create-course', compact('departments'));
+        $instructor = Instructor::where('user_id',Auth::user()->id)->first();
+        return view('pages.profile.create-course', compact('departments', 'instructor'));
     }
 
     /**

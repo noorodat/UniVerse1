@@ -7,8 +7,10 @@
 @section('content')
 
 
+
 <main class="rbt-main-wrapper">
-    <form action="">
+    <form action="{{route('create-new-course')}}" method="POST" enctype="multipart/form-data">
+    @csrf
     <div class="rbt-create-course-area bg-color-white rbt-section-gap">
         <div class="container">
             <div class="row g-5">
@@ -170,7 +172,7 @@
                                                 <div class="rbt-modern-select bg-transparent height-45 w-100 mb--10">
                                                     <select name="department" class="w-100" title="example: IT Departmnet">
                                                         @foreach ($departments as $department)
-                                                            <option value="$department">{{$department->title}}</option>
+                                                            <option value="{{$department->id}}">{{$department->title}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -214,7 +216,7 @@
 
                                         <div class="course-field mb--20">
                                             <div class="rbt-modern-select bg-transparent height-45 mb--10">
-                                                <select name="previewVideo" class="previewVideoBox w-100" id="">
+                                                <select name="previewVideoMethod" class="previewVideoBox w-100" id="">
                                                     <option value="" disabled selected>Select Video Sources</option>
                                                     <option value="youtube">Youtube</option>
                                                     <option value="local">Local</option>
@@ -224,14 +226,13 @@
 
                                         <div id="youtubeDiv" class="course-field mb--15">
                                             <label for="videoUrl">Add Your Video URL</label>
-                                            <input id="videoUrl" type="text" placeholder="Add Your Video URL here.">
+                                            <input name="youtubeURL" id="videoUrl" type="text" placeholder="Add Your Video URL here.">
                                             <small class="d-block mt_dec--5">Example: <a href="https://www.youtube.com/watch?v=yourvideoid">https://www.youtube.com/watch?v=yourvideoid</a></small>
                                         </div>
                                         <div id="localDiv" class="course-field mb--15">
                                             <label for="videoUrl">Add Your Video</label>
-                                            <input id="videoUrl" type="file" placeholder="Add Your Video URL here.">
+                                            <input name="localVideo" id="videoUrl" type="file" placeholder="Add Your Video URL here.">
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +272,8 @@
                         <div class="col-lg-8">
                             <a class="rbt-btn btn-gradient hover-icon-reverse w-100 text-center" href="#">
                                 <span class="icon-reverse-wrapper">
-                                    <span class="btn-text">Create Course</span>
+                                    {{-- <button type="button" class="rbt-btn btn-border btn-md radius-round-10" data-bs-dismiss="modal">Create Course</button> --}}
+                                    <button type="submit" class="rbt-btn btn-text">Create Course</button>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                 <span class="btn-icon"><i class="feather-arrow-right"></i></span>
                                 </span>
@@ -297,11 +299,12 @@
                                     <li><i class="feather-check"></i> Course Builder is where you create & organize
                                         a course.</li>
                                     <li><i class="feather-check"></i> Add Topics in the Course Builder section to
-                                        create lessons, quizzes, and assignments.</li>
+                                        add videos and files.</li>
                                     <li><i class="feather-check"></i> Prerequisites refers to the fundamental
                                         courses to complete before taking this particular course.</li>
                                     <li><i class="feather-check"></i> Information from the Additional Data section
-                                        shows up on the course single page.</li>
+                                        shows up on the course single page.
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -328,13 +331,21 @@
                                 <h5 class="modal-title mb--20" id="exampleModalLabel">Add Topic</h5>
                                 <div class="course-field mb--20">
                                     <label for="modal-field-1">Topic title</label>
-                                    <input id="modal-field-1" type="text">
+                                    <input name="introTopic" id="modal-field-1" type="text">
+                                    <input name="instructor" type="hidden" value="{{$instructor->id}}">
                                     <small><i class="feather-info"></i> Topic titles are displayed publicly wherever required. Each topic may contain one or more video and file</small>
                                 </div>
                                 <div class="course-field mb--20">
-                                    <label for="modal-field-2">Topic Summary</label>
-                                    <textarea id="modal-field-2"></textarea>
-                                    <small><i class="feather-info"></i> Add a summary of short text to prepare students for the activities for the topic. The text is shown on the course page beside the tooltip beside the topic name.</small>
+                                    <label for="modal-field-2">Video</label>
+                                    {{-- <textarea id="modal-field-2"></textarea> --}}
+                                    <input name="courseVideo" type="file">
+                                    <small><i class="feather-info"></i>Add a video for the topic.</small>
+                                </div>
+                                <div class="course-field mb--20">
+                                    <label for="modal-field-2">File</label>
+                                    {{-- <textarea id="modal-field-2"></textarea> --}}
+                                    <input name="courseFile" type="file">
+                                    <small><i class="feather-info"></i> Add a file for the topic.</small>
                                 </div>
                             </div>
                         </div>
@@ -353,7 +364,3 @@
 
 
 @endsection
-
-
-
-

@@ -21,6 +21,7 @@ class Course extends Model
         'price',
         'status',
         'rating',
+        'preview_video',
         'instructor_id',
         'department_id',
     ];

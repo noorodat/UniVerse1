@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->unsignedBigInteger('course_id');
-            $table->integer('duraion');
+            $table->integer('duration');
             $table->integer('number_of_videos');
             $table->integer('number_of_files');
             $table->timestamps();
