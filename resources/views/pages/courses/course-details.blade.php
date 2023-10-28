@@ -257,10 +257,7 @@
                                                 <h6 class="title">
                                                     <a href="instructor-profile.html">{{$course->instructor->user->name}}</a>
                                                 </h6>
-                                                <span class="subtitle">Students major here</span>
-                                                <p>
-                                                    Some description
-                                                </p>
+                                                <span class="subtitle">{{$course->instructor->user->major}}</span>
                                                 <ul class="social-share border-style">
                                                     <li><a href="#"><i class="icon-Fb"></i></a></li>
                                                     <li><a href="#"><i class="icon-linkedin"></i></a></li>
@@ -393,7 +390,7 @@
 
                                                 <li><span><i class="icon-draft-line"></i> Lessons</span><span>{{$course->number_of_lessons}}</span></li>
 
-                                                <li><span><i class="icon-translate"></i> Language</span><span>English</span></li>
+                                                {{-- <li><span><i class="icon-translate"></i> Language</span><span>English</span></li> --}}
 
                                                 {{-- <li><span><i class="icon-artboard-line"></i> Quizzes</span><span>25</span></li> --}}
 

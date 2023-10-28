@@ -5,7 +5,7 @@
                         <div class="rbt-tutor-information">
                             <div class="rbt-tutor-information-left">
                                 <div class="thumbnail rbt-avatars size-lg">
-                                    <img src="{{url('/images/' . Auth::user()->image)}}" alt="user image">
+                                    <img style="width: 120px; height: 120px" src="{{url('/images/' . Auth::user()->image)}}" alt="user image">
                                 </div>
                                 <div class="tutor-content">
                                     <h5 class="title">{{Auth::user()->name}}</h5>
@@ -52,7 +52,7 @@
                             <div class="rbt-tutor-information-right">
                                 <div class="tutor-btn">
                                     @if (Auth::user()->role === 'instructor')
-                                    <a class="rbt-btn btn-md hover-icon-reverse" href="create-course.html">
+                                    <a class="rbt-btn btn-md hover-icon-reverse" href="{{route('go-create-course')}}">
                                         <span class="icon-reverse-wrapper">
                                             <span class="btn-text">Create a New Course</span>
                                             <span class="btn-icon"><i class="feather-arrow-right"></i></span>

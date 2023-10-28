@@ -5,14 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CourseMaterial extends Model
+class CourseCurriculum extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'video',
-        'file',
+        'title',
         'course_id',
-        'curriculum_id',
+        'duration',
+        'number_of_videos',
+        'number_of_files',
     ];
 }

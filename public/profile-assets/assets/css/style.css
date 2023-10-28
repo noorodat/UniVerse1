@@ -29219,3 +29219,8 @@ Course Sidebar
   }
 }
 /*# sourceMappingURL=../maps/style.css.map */
+
+
+#youtubeDiv {
+  display: none;
+}

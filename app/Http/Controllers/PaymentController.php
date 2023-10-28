@@ -76,8 +76,10 @@ class PaymentController extends Controller
 
                 $instructor = Instructor::findOrFail($instructor_id);
                 $course = Course::findOrFail($course_id);
+                $course->number_of_students++;
                 $instructor->earnings += $course->price;
                 $instructor->save();
+                $course->save();
                 return redirect()->route('go-success');
             } catch (\Exception $e) {
                 return redirect()->back();
@@ -92,23 +94,3 @@ class PaymentController extends Controller
         return "Payment is cancelled!";
     }
 }
-
-// try {
-
-//     if (CourseStudent::where('course_id', $request->input('courseID'))->where('student_id', $request->input('studentID'))->exists()) {
-//         return redirect()->back()->with('error', 'You already have this course.');
-//     }
-//     CourseStudent::create([
-//         'course_id' => $request->input('courseID'),
-//         'student_id' => $request->input('studentID'),
-//         'instructor_id' => $request->input('instructorID'),
-//     ]);
-
-//     $instructor = Instructor::findOrFail($request->input('instructorID'));
-//     $course = Course::findOrFail($request->input('courseID'));
-//     $instructor->earnings += $course->price;
-//     $instructor->save();
-//     return redirect()->back();
-// } catch (\Exception $e) {
-//     return redirect()->back();
-// }

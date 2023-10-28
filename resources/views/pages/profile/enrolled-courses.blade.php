@@ -42,8 +42,8 @@
                                                     <div class="col-lg-4 col-md-6 col-12">
                                                         <div class="rbt-card variation-01 rbt-hover">
                                                             <div class="rbt-card-img">
-                                                                <a href="course-details.html">
-                                                                    <img src="assets/images/course/course-online-01.jpg"
+                                                                <a href="{{route('course.show', $course)}}">
+                                                                    <img src="{{url('/images/' . $course->image)}}"
                                                                         alt="Card image">
                                                                 </a>
                                                             </div>
@@ -86,18 +86,19 @@
                                                                         href="course-details.html"></a>
                                                                 </h4>
                                                                 <ul class="rbt-meta">
-                                                                    <li><i class="feather-book"></i>{{$course->number_of_lessons}}</li>
-                                                                    <li><i class="feather-users"></i>40 Students</li>
+                                                                    <li><i class="feather-book"></i>{{$course->number_of_lessons}} Lessons</li>
+                                                                    <li><i class="feather-users"></i>{{$course->number_of_students}} Students</li>
                                                                 </ul>
 
                                                                 <div class=" p-2 d-flex align-items-center">
                                                                     <div class="rbt-avatars">
-                                                                        <img style="width: 50px;"
-                                                                            src="assets/images/team/avatar.jpg"
+                                                                        <img style="width: 45px; height: 45px"
+                                                                            src="{{url('/images/' . $course->instructor->user->image)}}"
+                                                                            {{-- <img draggable="false" src="{{ url('/images/' . $catagory->image) }}" alt=""> --}}
                                                                             alt="Instructor">
                                                                     </div>
                                                                     <div class="tutor-content">
-                                                                        <h6 style="margin: 0;" class="title">John Due</h6>
+                                                                        <h6 style="margin: 0;" class="title fs-5">{{$course->instructor->user->name}}</h6>
                                                                     </div>
                                                                 </div>
                                                                 <div class="rbt-card-bottom">

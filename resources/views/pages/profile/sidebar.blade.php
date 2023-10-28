@@ -5,7 +5,7 @@
 
                                     <div class="rbt-default-sidebar-wrapper">
                                         <div class="section-title mb--20">
-                                            <h6 class="rbt-title-style-2">Welcome, Jone Due</h6>
+                                            <h6 class="rbt-title-style-2">Welcome, {{Auth::user()->name}}</h6>
                                         </div>
                                         <nav class="mainmenu-nav">
                                             <ul class="dashboard-mainmenu rbt-default-sidebar-list">

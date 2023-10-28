@@ -57,7 +57,6 @@
                 <div class="dot"></div>
                 <div class="dot"></div>
             </div>
-
         </div>
     </div>
 
@@ -66,7 +65,7 @@
             Nav header start
         ***********************************-->
         <div class="nav-header">
-            <a href="{{ route('go-dashboard') }}" class="brand-logo">
+            <a href="{{ route('go-admin-dashboard') }}" class="brand-logo">
                 <svg class="logo-abbr" width="40" height="40" viewBox="0 0 48 54" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
                     <rect y="3" width="48" height="48" rx="16" fill="#FB7D5B" />
@@ -1162,7 +1161,7 @@
             <div class="dlabnav-scroll">
                 <ul class="metismenu" id="menu">
                     <li>
-                        <a class="" href="{{ route('go-dashboard') }}" aria-expanded="false">
+                        <a class="" href="{{ route('go-admin-dashboard') }}" aria-expanded="false">
                             <i class="material-symbols-outlined">home</i>
                             <span class="nav-text">Dashboard</span>
                         </a>

@@ -63,28 +63,27 @@
                 <div class="col-lg-12">
                     <div class="section-title text-center" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
                         <span class="pre-title">Department</span>
-                        <h3 class="title">Uni Departments</h3>
+                        <h3 class="title">Universtiy Departments</h3>
                     </div>
                 </div>
             </div>
             <div class="row g-5 mt--25 justify-content-center">
                 <!-- Start Service Grid  -->
                 @foreach ($departments as $department)
-                    <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up"
-                        data-sal-duration="800">
-                        <div class="service-card service-card-4">
-                            <div class="inner">
-                                <div class="icon">
-                                    <i class="{{ $department->image }}"></i>
-                                    <span class="subtitle">{{ $department->number_of_courses }} Courses</span>
-                                </div>
-                                <div class="content">
-                                    <h6 class="title"><a href="{{route('department.show', $department)}}">{{ $department->title }}</a></h6>
-                                    <p class="description">{{ $department->description }}</p>
-                                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6 col-12" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
+                    <a href="{{ route('department.show', $department) }}" class="service-card service-card-4">
+                        <div class="inner">
+                            <div class="icon">
+                                <i class="{{ $department->image }}"></i>
+                                <span class="subtitle">{{ $department->number_of_courses }} Courses</span>
+                            </div>
+                            <div class="content">
+                                <h6 class="title">{{ $department->title }}</h6>
+                                <p class="description">{{ $department->description }}</p>
                             </div>
                         </div>
-                    </div>
+                    </a>
+                </div>
                 @endforeach
                 <!-- End Service Grid  -->
             </div>

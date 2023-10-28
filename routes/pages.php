@@ -49,13 +49,16 @@ Route::resource('departmnet', DepartmentController::class);
 
 /* ------------------------------------- START USER PROFILE ROUTES ------------------------------------- */
 // Show instructor dashboard
-Route::get('/dashboard/{user}', [ProfileController::class, 'showDashboard'])->name('go-dashboard');
+Route::get('/instructor-dashabord/{user}', [ProfileController::class, 'showDashboard'])->name('go-dashboard');
 
 // Show user profile
 Route::get('/profile/{user}', [ProfileController::class, 'showProfile'])->name('go-profile');
 
 // Show enrolled courses
-Route::get('/enrolledCourses/{user}', [ProfileController::class, 'showEnrolledCourses'])->name('go-enrolled-courses');
+Route::get('/profile/enrolledCourses/{user}', [ProfileController::class, 'showEnrolledCourses'])->name('go-enrolled-courses');
+
+// Create Course
+Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->name('go-create-course');
 /* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
 
 

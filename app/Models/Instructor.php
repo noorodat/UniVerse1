@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\CourseStudent;
 
 class Instructor extends User
 {
@@ -30,5 +31,11 @@ class Instructor extends User
     {
         return $this->hasMany(Course::class, 'instructor_id');
     }
+
+    public function courseStudents()
+    {
+        return $this->hasManyThrough(CourseStudent::class, Course::class, 'instructor_id', 'course_id', 'id', 'id');
+    }
+    
 }
 

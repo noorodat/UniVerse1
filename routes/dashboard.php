@@ -10,7 +10,7 @@ use App\Http\Controllers\CourseController;
 /* --------------------- START DASHBOARD PAGES --------------------- */
 
 // Dashboard home
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('go-dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('go-admin-dashboard');
 
 // Students page
 Route::get('/dashboard/students', [RegisteredUserController::class, 'getAllStudents'])->name('go-dash-students');

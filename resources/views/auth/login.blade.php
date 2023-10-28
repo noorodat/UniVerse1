@@ -35,6 +35,12 @@
                                 <button class="rn-btn edu-btn w-100 mb--30" type="submit">
                                     <span>Login</span>
                                 </button>
+                                <div class="login-links d-flex justify-content-between">
+                                    <div class="flex items-center justify-end mt-4">
+                                        <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('register') }}">
+                                            {{ __('Dont have? Create one') }}
+                                        </a>
+                                </div>
                                 <div class="flex items-center justify-end mt-4">
                                     @if (Route::has('password.request'))
                                         <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
@@ -42,7 +48,7 @@
                                         </a>
                                         
                                     @endif
-                                    
+                                </div>
                                 </div>
                             </form>
                         </div>

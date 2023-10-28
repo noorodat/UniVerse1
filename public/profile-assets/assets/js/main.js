@@ -1129,7 +1129,31 @@
 
 
 
+// Change course price input value to '0' when the Instructor chooses Free
+const freeChoice = document.getElementById('freeChoice');
+let priceinput = document.getElementById('regularPrice-1');
 
+if(freeChoice && priceinput) {
+    freeChoice.onclick = () => {
+        priceinput.value = 0;
+    }
+}
 
+// Handle local & video uploading choices
+let selectPreviewMethodBox = document.querySelector('.rbt-modern-select select.previewVideoBox');
+let YouTubeChoice = document.getElementById('youtubeDiv');
+let localChoice = document.getElementById('localDiv');
+
+if (YouTubeChoice && localChoice && selectPreviewMethodBox) {
+    selectPreviewMethodBox.addEventListener('change', () => {
+        if (selectPreviewMethodBox.value === 'youtube') {
+            YouTubeChoice.style.display = 'block';
+            localChoice.style.display = 'none';
+        } else if (selectPreviewMethodBox.value === 'local') {
+            YouTubeChoice.style.display = 'none';
+            localChoice.style.display = 'block';
+        }
+    });
+}
 
 

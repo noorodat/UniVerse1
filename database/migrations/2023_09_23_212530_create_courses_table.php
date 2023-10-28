@@ -13,9 +13,11 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('image');
+            $table->string('preview_video');
             $table->text('description');
             $table->bigInteger('duration');
             $table->integer('number_of_lessons');
+            $table->integer('number_of_students');
             $table->bigInteger('price');
             $table->integer('rating');
             $table->string('status');

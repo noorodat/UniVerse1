@@ -15,8 +15,7 @@ use App\Models\Instructor;
 use App\Models\CourseStudent;
 use App\Models\Course;
 use App\Exceptions\Exception;
-
-
+use App\Models\Department;
 
 class ProfileController extends Controller
 {
@@ -100,7 +99,7 @@ class ProfileController extends Controller
             return view('pages.profile.profile', compact('user', 'isInstructor', 'instructor'));
         }
         else {
-            return view('pages.profile.profile', compact('user', 'isInstructor'));
+            return view('pages.profile.profile', compact('user'));
         }
     }
 
@@ -120,6 +119,10 @@ class ProfileController extends Controller
         }
     }
 
+    public function showCreateCourse() {
+        $departments = Department::all();
+        return view('pages.profile.create-course', compact('departments'));
+    }
 
     /**
      * Delete the user's account.
