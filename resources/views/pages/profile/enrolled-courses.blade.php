@@ -42,7 +42,7 @@
                                                     <div class="col-lg-4 col-md-6 col-12">
                                                         <div class="rbt-card variation-01 rbt-hover">
                                                             <div class="rbt-card-img">
-                                                                <a href="{{route('course.show', $course)}}">
+                                                                <a href="{{route('show-unlocked-course', $course)}}">
                                                                     <img src="{{url('/images/' . $course->image)}}"
                                                                         alt="Card image">
                                                                 </a>
@@ -103,7 +103,7 @@
                                                                 </div>
                                                                 <div class="rbt-card-bottom">
                                                                     <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
-                                                                        href="#">View Course</a>
+                                                                        href="{{route('course.show', $course)}}">View Course</a>
                                                                 </div>
                                                             </div>
                                                         </div>

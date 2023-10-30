@@ -16,6 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->string('video');
             $table->string('file');
+            $table->string('video_name');
+            $table->string('file_name');
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('curriculum_id');
 

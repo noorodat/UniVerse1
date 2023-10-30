@@ -13,6 +13,7 @@ use App\Models\CourseStudent;
 class Instructor extends User
 {
     use HasFactory;
+    protected $guard = 'instructor';
 
     protected $fillable = [
         'courses_number',
@@ -36,6 +37,4 @@ class Instructor extends User
     {
         return $this->hasManyThrough(CourseStudent::class, Course::class, 'instructor_id', 'course_id', 'id', 'id');
     }
-    
 }
-

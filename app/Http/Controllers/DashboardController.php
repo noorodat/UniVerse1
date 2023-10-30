@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use App\Models\Instructor;
 use Faker\Extension\Helper;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Models\Department;
 use App\Models\Course;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
@@ -21,14 +23,71 @@ class DashboardController extends Controller
 
     private const RESTRICTED = 0;
 
-    public function index() {
+    public function index()
+    {
         return view('admin-dashboard.index');
-    }   
+    }
 
+    public function loginPage()
+    {
+        return view('admin-dashboard.login.login');
+    }
+    public function loginHandler(Request $request)
+    {
+        $fieldType = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+        if ($fieldType == 'email') {
+            $request->validate([
+                'login_id' => 'required|email|exists:admins,email',
+                'password' => 'required|min:5|max:45',
+            ], [
+                'login_id.required' => 'Email or Username is required',
+                'login_id.email' => 'Invalid email address',
+                'login_id.exists' => 'Email does not exists in the system',
+                'password.required' => 'Password is required',
+            ]);
+        } else {
+            $request->validate([
+                'login_id' => 'required|exists:admins,username',
+                'password' => 'required|min:5|max:45',
+            ], [
+                'login_id.required' => 'Email or Username is required',
+                'login_id.username' => 'Invalid username',
+                'login_id.exists' => 'Email does not exists in the system',
+                'password.required' => 'Password is required',
+            ]);
+        }
+
+        $credts = array(
+            $fieldType => $request->login_id,
+            'password' => $request->password
+        );
+
+        if (Auth::guard('admin')->attempt($credts)) {
+            return redirect()->route('go-admin-dashboard');
+        } else {
+
+            $notification = array(
+                'message' => 'Incorrect credentials!',
+                'alert-type' => 'error',
+            );
+            return redirect()->route('go-admin-login')->with($notification);
+        }
+    }
+    public function logoutHandler(Request $request)
+    {
+        Auth::guard('admin')->logout();
+        $notification = array(
+            'message' => 'You are logged out successfully!',
+            'alert-type' => 'success',
+        );
+        return redirect()->route('go-admin-login')->with($notification);
+    }
     /* ############################ START STUDENT FUNCTIONS ############################ */
 
     // Add student
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
 
         $this->validateAddStudentInputs($request);
 
@@ -52,7 +111,8 @@ class DashboardController extends Controller
     }
 
     //Delete student
-    public function destroy(Request $request) {
+    public function destroy(Request $request)
+    {
         $user = User::find($request->input('user_id'));
         if ($user) {
 
@@ -61,21 +121,21 @@ class DashboardController extends Controller
             flash()->addSuccess('Student deleted successfully');
 
             return redirect()->route('go-dash-students');
-        } 
-        
-        else {
+        } else {
             flash()->addError('Student deletion failed');
             return redirect()->route('go-dash-students');
         }
     }
 
     // Show edit student page
-    public function edit(User $student) {
+    public function edit(User $student)
+    {
         return view('admin-dashboard.students.edit-student', compact('student'));
     }
 
     // Update student
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
 
         $student = User::find($request->input('userID'));
         $studentPassword = $student->password;
@@ -83,16 +143,16 @@ class DashboardController extends Controller
 
         $this->validateUpdateStudentInputs($request);
         $imageName = $this->uploadUserImage($request);
-    
+
         $student->name = $request->input('name');
         $student->major = $request->input('major');
         $student->phone = $request->input('phone');
-    
+
         // Check if the email is changed before updating
         if ($request->input('email') !== $student->email) {
             $student->email = $request->input('email');
         }
-    
+
         // Update the password only if it's provided
 
         if ($request->filled('password')) {
@@ -100,27 +160,26 @@ class DashboardController extends Controller
                 'password' => ['required', 'confirmed', Rules\Password::defaults()],
             ]);
             $student->password = Hash::make($request->password);
-        }
-        else {
+        } else {
             $student->password = $studentPassword;
         }
-    
+
         // Update the image if a new one is provided
         if (!empty($imageName)) {
             $student->image = $imageName;
         }
-    
+
         // Save the updated user data
         $student->save();
-    
+
         flash()->addSuccess('Student\'s info Updated successfully');
-    
+
         return redirect()->route('go-student-details', ['student' => $student]);
-    
     }
 
     // Vaidate add student inputs
-    public function validateAddStudentInputs(Request $request) {
+    public function validateAddStudentInputs(Request $request)
+    {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -128,11 +187,11 @@ class DashboardController extends Controller
                 'string',
                 'email',
                 'max:255',
-                'unique:'.User::class,
+                'unique:' . User::class,
                 function ($attribute, $value, $fail) {
                     // Define the allowed domain ending
                     $allowedDomainEnding = 'edu.jo';
-            
+
                     // Extract the email domain and check if it ends with 'edu.jo'
                     $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
                     if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
@@ -147,10 +206,11 @@ class DashboardController extends Controller
     }
 
     // Validate update student inputs
-    public function validateUpdateStudentInputs(Request $request) {
+    public function validateUpdateStudentInputs(Request $request)
+    {
         $user = User::find($request->input('userID'));
-        $uniqueRule = $user->email !== $request->input('email') ? 'unique:'.User::class : '';
-    
+        $uniqueRule = $user->email !== $request->input('email') ? 'unique:' . User::class : '';
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -162,7 +222,7 @@ class DashboardController extends Controller
                 function ($attribute, $value, $fail) {
                     // Define the allowed domain ending
                     $allowedDomainEnding = 'edu.jo';
-    
+
                     // Extract the email domain and check if it ends with 'edu.jo'
                     $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
                     if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
@@ -174,22 +234,21 @@ class DashboardController extends Controller
             'phone' => 'required|regex:/^\d{10}$/',
         ]);
     }
-    
+
 
     // Upload user image
-    public function uploadUserImage(Request $request) {
+    public function uploadUserImage(Request $request)
+    {
 
         $userID = $request->userID;
         $user = User::find($userID);
-    
-        if($user) {
+
+        if ($user) {
             $imageName = $user->image;
-        }
-    
-        else {
+        } else {
             $imageName = 'defaultUserImage.png';
         }
-    
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -199,37 +258,40 @@ class DashboardController extends Controller
     }
 
     // Remove image through AJAX request
-    public function removeImage(Request $request) {
-                // Retrieve the user ID and default image name from the request JSON data
-                $userId = $request->input('userId');
-                $defaultImage = $request->input('defaultImage');
-        
-                // Update the image for the user with the provided user ID
-                // You would typically use Laravel's Eloquent ORM to update the database
-                // Example assuming you have a 'users' table with an 'image' column:
-                $user = User::find($userId);
-                if ($user) {
-                    $user->image = $defaultImage;
-                    $user->save();
-                    return response()->json(['message' => 'Image updated successfully']);
-                } else {
-                    return response()->json(['message' => 'User not found'], 404);
-                }
+    public function removeImage(Request $request)
+    {
+        // Retrieve the user ID and default image name from the request JSON data
+        $userId = $request->input('userId');
+        $defaultImage = $request->input('defaultImage');
+
+        // Update the image for the user with the provided user ID
+        // You would typically use Laravel's Eloquent ORM to update the database
+        // Example assuming you have a 'users' table with an 'image' column:
+        $user = User::find($userId);
+        if ($user) {
+            $user->image = $defaultImage;
+            $user->save();
+            return response()->json(['message' => 'Image updated successfully']);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
 
-    
+
     /* ############################ END STUDENT FUNCTIONS ############################ */
 
     /* ------------------------------------------------------------------------------------------- */
 
     /* ############################ START INSTRUCTOR FUNCTIONS ############################ */
 
-    public function indexInstructor() {
+    public function indexInstructor()
+    {
         $instructors = Instructor::all();
         return view('admin-dashboard.instructors.index', compact('instructors'));
     }
 
-    public function makeInstructor(Request $request) {
+    public function makeInstructor(Request $request)
+    {
 
         $studentID = $request->user_id;
 
@@ -237,16 +299,15 @@ class DashboardController extends Controller
 
         $userName = $user->name;
 
-        if($user->role === 'instructor') {
+        if ($user->role === 'instructor') {
             flash()->addError($userName . ' is already an instructor');
             return redirect()->back();
         }
 
-        if($user) {
+        if ($user) {
             $user->role = 'instructor';
             $user->save();
-        }
-        else {
+        } else {
             flash()->addError('Student was not found');
             return redirect()->back();
         }
@@ -258,7 +319,7 @@ class DashboardController extends Controller
             'rating' => 0,
             'earnings' => 0,
         ]);
-        
+
         flash()->addSuccess($userName . ' is now an instructor');
         return redirect()->back();
     }
@@ -267,28 +328,28 @@ class DashboardController extends Controller
     /* ############################ END INSTRUCTOR FUNCTIONS ############################ */
 
 
-     /* ############################ START COURSE FUNCTIONS ############################ */
+    /* ############################ START COURSE FUNCTIONS ############################ */
 
-     public function indexCourse() {
-
+    public function indexCourse()
+    {
         $courses = Course::all();
         return view('admin-dashboard.courses.index', compact('courses'));
+    }
 
-     }
-
-     public function addDashCoursePage() {
+    public function addDashCoursePage()
+    {
 
         $departments = Department::all();
         $instructors = Instructor::all();
 
         return view('admin-dashboard.courses.add-course', compact('departments', 'instructors'));
+    }
 
-     }
-
-     public function addCourse(Request $request) {
+    public function addCourse(Request $request)
+    {
 
         $imageName = $this->uploadCourseImage($request);
-        
+
         // Validate the course inputs
         $validator = Validator::make($request->all(), [
             'title' => ['required', 'string', 'max:80'],
@@ -330,19 +391,19 @@ class DashboardController extends Controller
             // Update the courses_number of the instructor
             $instructor = Instructor::find($instructorID);
             $instructor->courses_number += 1;
-            
-            $instructor->save();
 
-        } catch(\Exception $e) {
+            $instructor->save();
+        } catch (\Exception $e) {
             flash()->addError("An error occurred: " . $e->getMessage());
             return redirect()->back();
         }
 
         flash()->addSuccess($course_title . ' course added successfully');
         return redirect()->back();
-     }
+    }
 
-     public function deleteCourse($id) {
+    public function deleteCourse($id)
+    {
 
         // Note: make the admin put their email and password to delete the course
         $course = Course::find($id);
@@ -351,30 +412,32 @@ class DashboardController extends Controller
             $instructor_id = $course->instructor_id;
 
             $instructor = Instructor::find($instructor_id);
-    
+
             $instructor->courses_number -= 1;
-    
+
             $instructor->save();
 
             $course->delete();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             flash()->addError('Couldnt delete the course');
             return redirect()->back();
         }
 
-        flash()->addSuccess( $course->titl . " course deleted successfully");
+        flash()->addSuccess($course->titl . " course deleted successfully");
         return redirect()->back();
-     }
+    }
 
-     public function editCourse(Course $course) {
+    public function editCourse(Course $course)
+    {
         $currentDepartment = $course->department;
         $currentInstructor = $course->instructor;
         $departments = Department::all();
         $instructors = Instructor::all();
         return view('admin-dashboard.courses.edit-course', compact('course', 'currentDepartment', 'currentInstructor', 'departments', 'instructors'));
-     }
+    }
 
-     public function updateCourse(Request $request) {
+    public function updateCourse(Request $request)
+    {
 
         $imageName = self::uploadCourseImage($request);
 
@@ -391,30 +454,28 @@ class DashboardController extends Controller
             $course->department_id = $department;
             $course->instructor_id = $instructor;
             $course->save();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             flash()->addError('Error while updating the course');
             return redirect()->back();
         }
 
         flash()->addSuccess($course->title . ' updated successfully');
         return redirect()->back();
-
-     }
+    }
 
     //  Upload the course image
-     public function uploadCourseImage(Request $request) {
+    public function uploadCourseImage(Request $request)
+    {
 
         $course_id = $request->CourseID;
         $course = Course::find($course_id);
-    
-        if($course) {
+
+        if ($course) {
             $imageName = $course->image;
-        }
-    
-        else {
+        } else {
             $imageName = 'defaultCourseImage.png';
         }
-    
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -437,7 +498,7 @@ class DashboardController extends Controller
     //             function ($attribute, $value, $fail) {
     //                 // Define the allowed domain ending
     //                 $allowedDomainEnding = 'edu.jo';
-            
+
     //                 // Extract the email domain and check if it ends with 'edu.jo'
     //                 $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
     //                 if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
@@ -450,8 +511,7 @@ class DashboardController extends Controller
     //         'phone' => 'required|regex:/^\d{10}$/',
     //     ]);
     // }
-    
 
-     /* ############################ END COURSE FUNCTIONS ############################ */
 
+    /* ############################ END COURSE FUNCTIONS ############################ */
 }

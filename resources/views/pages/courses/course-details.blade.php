@@ -118,128 +118,53 @@
                                 <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
                                     <div class="course-tab-content">
                                         <h5>Course Description</h5>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                                        <p>{{$course->description}}</p>
                                     </div>
                                 </div>
+                                @foreach ($topicsWithMaterials as $topicWithMaterials)
                                 <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                                     <div class="course-tab-content">
                                         <div class="edu-accordion-02" id="accordionExample1">
                                             <div class="edu-accordion-item">
+                                                @foreach ($topicsWithMaterials as $topicTitle => $topicCollection)
+                                                
                                                 <div class="edu-accordion-header" id="headingOne">
                                                     <button class="edu-accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        The First Steps
+                                                        {{$topicTitle}}
                                                     </button>
                                                 </div>
                                                 <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
                                                     <div class="edu-accordion-body">
                                                         <ul>
+                                                            @foreach ($topicCollection as $collection)
                                                             <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Introduction</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
+                                                                <div class="text">
+                                                                    <i class="icon-draft-line"></i>
+                                                                        {{$collection->file_name}}
+                                                                </div>
+                                                                @if (!$isEnrolled)
+                                                                    <div class="icon"><i class="icon-lock-password-line"></i></div>
+                                                                @endif
                                                             </li>
                                                             <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Course Overview</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
+                                                                <div class="text">
+                                                                    <i class="icon-draft-line"></i>
+                                                                        {{$collection->video_name}}
+                                                                </div>
+                                                                @if (!$isEnrolled)
+                                                                    <div class="icon"><i class="icon-lock-password-line"></i></div>
+                                                                @endif
                                                             </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Local Development Environment Tools</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Course Excercise</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Embedding PHP in HTML</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Using Dynamic Data</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="edu-accordion-item">
-                                                <div class="edu-accordion-header" id="headingTwo">
-                                                    <button class="edu-accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Data Types and More
-                                                    </button>
-                                                </div>
-                                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample1">
-                                                    <div class="edu-accordion-body">
-                                                        <ul>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Introduction</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Course Overview</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Local Development Environment Tools</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Course Excercise</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Embedding PHP in HTML</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Using Dynamic Data</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="edu-accordion-item">
-                                                <div class="edu-accordion-header" id="headingThree">
-                                                    <button class="edu-accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                        Control Structure
-                                                    </button>
-                                                </div>
-                                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample1">
-                                                    <div class="edu-accordion-body">
-                                                        <ul>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Introduction</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Course Overview</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Local Development Environment Tools</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Course Excercise</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Embedding PHP in HTML</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="text"><i class="icon-draft-line"></i> Using Dynamic Data</div>
-                                                                <div class="icon"><i class="icon-lock-password-line"></i></div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
+                                @endforeach
                                 <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                                     <div class="course-tab-content">
                                         <div class="course-author-wrapper">
@@ -369,7 +294,7 @@
                                     <div class="video-area">
                                         <div class="thumbnail video-popup-wrapper">
                                             <img class="radius-small w-100" src="{{ url('/images/' . $course->image) }}" alt="Course Images">
-                                            <a href="https://www.youtube.com/watch?v=pNje3bWz7V8" class="video-play-btn position-to-top video-popup-activation">
+                                            <a href="{{$previewType == 'youtube' ? $course->preview_video : url('uploads/videos/' . $course->preview_video)}}" class="video-play-btn position-to-top video-popup-activation">
                                                 <span class="play-icon course-details-video-popup"></span>
                                             </a>
                                         </div>
@@ -395,7 +320,11 @@
 
                                                 <li><span><i class="icon-user-2-line_tie"></i> Instructor</span><span>{{$course->instructor->user->name}}</span></li>
                                             </ul>
-
+                                            @if ($isEnrolled)
+                                            <div class="read-more-btn mt--45">
+                                                <a href="{{route('show-unlocked-course', $course)}}" class="edu-btn btn-bg-alt w-100 text-center">Show content</a>
+                                            </div>
+                                            @else
                                             <div class="read-more-btn mt--45">
                                                 <a class="edu-btn btn-bg-alt w-100 text-center" href="#">Price: ${{$course->price}}</a>
                                             </div>
@@ -413,6 +342,7 @@
                                                     <a href="{{route('login')}}" class="edu-btn w-100 text-center">Buy Now</a>
                                                 @endif
                                             </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -515,8 +445,7 @@
 
                                                 <h6 class="title"><a href="{{route('course.show', $course)}}">{{$course->title}}</a></h6>
 
-                                                <p class="description">{{$course->description}}</p>
-
+                                                <p class="description" style="word-wrap: break-word;">{{$course->description}}</p>
                                                 <div class="price-list price-style-02">
                                                     <div class="price current-price">${{$course->price}}
                                                     {{-- <div class="price old-price">$39.99</div> --}}

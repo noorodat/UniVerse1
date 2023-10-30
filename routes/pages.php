@@ -13,9 +13,9 @@ Route::get('/welcome', function () {
 });
 
 // Breeze Pages
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -65,8 +65,12 @@ Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->nam
 // Buy course function
 Route::post('/buyCourse', [UserController::class,'buyCourse'])->name('buy-course');
 
+Route::get('/courseDetials/{course}', [HomePageController::class,'showSingleCourse'])->name('course-details');
 // Create course by instructor
 Route::post('/createNewCourse', [InstructorController::class, 'createCourse'])->name('create-new-course');
+
+// Show Unlocked Course
+Route::get('/course-unlocked/{course}', [CourseController::class, 'showUnlockedCourse'])->name('show-unlocked-course');
 
 // Payment success page
 Route::get('/success', function() {
@@ -76,6 +80,10 @@ Route::get('/success', function() {
 Route::get('/failure', function() {
     return view('pages.fail');
 })->name('go-failure');
+
+
+// Course resource
+Route::resource('course', CourseController::class);
 
 
 /* --------------------- END WEBSITE PAGES --------------------- */

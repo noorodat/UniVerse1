@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\CourseCurriculum;
 
 class CourseMaterial extends Model
 {
@@ -12,7 +13,15 @@ class CourseMaterial extends Model
     protected $fillable = [
         'video',
         'file',
+        'video_name',
+        'file_name',
         'course_id',
         'curriculum_id',
     ];
+    
+
+    public function course_curriculum() {
+        return $this->belongsTo(CourseCurriculum::class);
+    }
+
 }

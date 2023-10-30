@@ -12,7 +12,7 @@ use App\Models\Course;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
+    protected $guard = 'user';
     /**
      * The attributes that are mass assignable.
      *
@@ -49,7 +49,7 @@ class User extends Authenticatable
     ];
 
     public function courses()
-{
-    return $this->belongsToMany(Course::class, 'courses_students', 'student_id', 'course_id');
-}
+    {
+        return $this->belongsToMany(Course::class, 'courses_students', 'student_id', 'course_id');
+    }
 }

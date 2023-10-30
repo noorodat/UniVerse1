@@ -9,64 +9,67 @@ use App\Http\Controllers\CourseController;
 
 /* --------------------- START DASHBOARD PAGES --------------------- */
 
-// Dashboard home
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('go-admin-dashboard');
+// guest admin login page and login handler
+Route::middleware(["guest:admin"])->group(function () {
+    Route::get("/adminLogin", [DashboardController::class, 'loginPage'])->name('go-admin-login');
+    Route::post('/adminLogin-handler', [DashboardController::class, 'loginHandler'])->name('admin-login-handler');
+});
 
-// Students page
-Route::get('/dashboard/students', [RegisteredUserController::class, 'getAllStudents'])->name('go-dash-students');
+Route::middleware(["auth:admin"])->group(function () {
+    // logout handler
+    Route::post('/adminLogout-handler', [DashboardController::class, 'logoutHandler'])->name('admin-logout-handler');
+    // Dashboard home
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('go-admin-dashboard');
 
-// Student details page
-Route::get('/dashboard/student-details/{student}', [RegisteredUserController::class, 'getSingleStudent'])->name('go-student-details');
+    // Students page
+    Route::get('/dashboard/students', [RegisteredUserController::class, 'getAllStudents'])->name('go-dash-students');
 
-// Add student page
-Route::get('/dashboard/add-student', function() {
-    return view('admin-dashboard.students.add-student');
-})->name('go-add-student');
+    // Student details page
+    Route::get('/dashboard/student-details/{student}', [RegisteredUserController::class, 'getSingleStudent'])->name('go-student-details');
 
-// Instructors page
-Route::get('/dashboard/instructors', [DashboardController::class, 'indexInstructor'])->name('go-instructors');
+    // Add student page
+    Route::get('/dashboard/add-student', function () {
+        return view('admin-dashboard.students.add-student');
+    })->name('go-add-student');
 
-// Add dpeartment page
-Route::get('/dashboard/add-department', function() {
-    return view('admin-dashboard.departments.add-department');
-})->name('go-add-department');
+    // Instructors page
+    Route::get('/dashboard/instructors', [DashboardController::class, 'indexInstructor'])->name('go-instructors');
 
-// Courses page
-Route::get('/dashboard/courses', [DashboardController::class, 'indexCourse'])->name('go-dash-course');
+    // Add dpeartment page
+    Route::get('/dashboard/add-department', function () {
+        return view('admin-dashboard.departments.add-department');
+    })->name('go-add-department');
 
-// Add course page
-Route::get('/dashboard/add-course', [DashboardController::class, 'addDashCoursePage'])->name('go-add-dash-course');
+    // Courses page
+    Route::get('/dashboard/courses', [DashboardController::class, 'indexCourse'])->name('go-dash-course');
 
-
-
-
-/* --------------------- END DASHBOARD PAGES --------------------- */
-
-/* --------------------- START DASHBOARD FUNCTIONS --------------------- */
-
-// NOTE:: ADD INDEX PAGE TO SHOW THE DASHBOARD HOME PAGE
-Route::resource('student', DashboardController::class);
-
-Route::resource('department', DepartmentController::class);
-
-// Update image coming from AJAX
-Route::post('/api/update-image', [DashboardController::class, 'removeImage']);
-
-// Make instructor
-Route::post('/students/{student}/make-instructor', [DashboardController::class, 'makeInstructor'])->name('makeInstructor');
-
-Route::resource('instructor', InstructorController::class);
-Route::resource('department', DepartmentController::class);
-Route::resource('course', CourseController::class);
-
-// course routes
-Route::post('add-course', [DashboardController::class, 'addCourse'])->name('add-dash-course');
-Route::delete('delete-course/{id}', [DashboardController::class, 'deleteCourse'])->name('delete-dash-course');
-Route::get('edit-course/{course}', [DashboardController::class, 'editCourse'])->name('edit-dash-course-page');
-Route::patch('update-course', [DashboardController::class, 'updateCourse'])->name('update-dash-course');
+    // Add course page
+    Route::get('/dashboard/add-course', [DashboardController::class, 'addDashCoursePage'])->name('go-add-dash-course');
 
 
+    /* --------------------- END DASHBOARD PAGES --------------------- */
 
+    /* --------------------- START DASHBOARD FUNCTIONS --------------------- */
 
+    // NOTE:: ADD INDEX PAGE TO SHOW THE DASHBOARD HOME PAGE
+    Route::resource('student', DashboardController::class);
 
-/* --------------------- END DASHBOARD FUNCTIONS --------------------- */
+    Route::resource('department', DepartmentController::class);
+
+    // Update image coming from AJAX
+    Route::post('/api/update-image', [DashboardController::class, 'removeImage']);
+
+    // Make instructor
+    Route::post('/students/{student}/make-instructor', [DashboardController::class, 'makeInstructor'])->name('makeInstructor');
+
+    Route::resource('instructor', InstructorController::class);
+    Route::resource('department', DepartmentController::class);
+
+    // course routes
+    Route::post('add-course', [DashboardController::class, 'addCourse'])->name('add-dash-course');
+    Route::delete('delete-course/{id}', [DashboardController::class, 'deleteCourse'])->name('delete-dash-course');
+    Route::get('edit-course/{course}', [DashboardController::class, 'editCourse'])->name('edit-dash-course-page');
+    Route::patch('update-course', [DashboardController::class, 'updateCourse'])->name('update-dash-course');
+
+    /* --------------------- END DASHBOARD FUNCTIONS --------------------- */
+});
