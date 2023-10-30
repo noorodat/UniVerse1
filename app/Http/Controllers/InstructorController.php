@@ -32,13 +32,9 @@ class InstructorController extends Controller
         $course_description = $request->input('courseDescription');
         $course_price = $request->input('coursePrice');
         $course_department = $request->input('department');
-        // $course_image = $request->input('courseImage');
         $course_preview_method = $request->input('previewVideoMethod');
         $course_preview_youtube = $request->input('youtubeURL');
-        // $course_preview_local = $request->input('localVideo');
         $course_first_topic = $request->input('introTopic');
-        // $course_first_video = $request->input('courseVideo');
-        // $course_first_file = $request->input('courseFile');
         $instructor_id = $request->input('instructor');
 
         $imageName = $this->uploadCourseImage($request);

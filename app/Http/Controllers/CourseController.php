@@ -43,26 +43,17 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
+        $videoUrl = $course->preview_video; // Get the video URL from your course model
 
-            // Check if the course belongs to the instructor that wants to show the course
-            // if yes then call the function (showInstructorCourse)
+        if (strpos($videoUrl, 'youtube.com') !== false) {
+            $previewType = 'youtube';
+        } else {
+            $previewType = 'local';
+        }
 
-            $instructor = Instructor::where('user_id', Auth::user()->id)->first();
+        $isEnrolled = false;
 
-            if($instructor !== null) {
-                // Call showInstructorCourse Here
-                dd("YESYES");
-            }
-
-            $videoUrl = $course->preview_video; // Get the video URL from your course model
-
-            if (strpos($videoUrl, 'youtube.com') !== false) {
-                $previewType = 'youtube';
-            } else {
-                $previewType = 'local';
-            }
-
-            $isEnrolled = false;
+        if (Auth::check()) {
             $studentWithCourse = CourseStudent::where('course_id', $course->id)
                 ->where('student_id', Auth::user()->id)
                 ->first();
@@ -70,37 +61,38 @@ class CourseController extends Controller
             if ($studentWithCourse) {
                 $isEnrolled = true;
             }
+        }
 
-            $department = $course->department;
-            $relatedCourses = Course::where('department_id', $department->id)
-                ->where('id', '!=', $course->id)
+        $department = $course->department;
+        $relatedCourses = Course::where('department_id', $department->id)
+            ->where('id', '!=', $course->id)
+            ->get();
+
+        $courseTopics = CourseCurriculum::where('course_id', $course->id)->get();
+
+        $topicsWithMaterials = array();
+
+        foreach ($courseTopics as $courseTopic) {
+            $courseMaterials = CourseMaterial::where('course_id', $course->id)
+                ->where('curriculum_id', $courseTopic->id)
                 ->get();
 
-                $courseTopics = CourseCurriculum::where('course_id', $course->id)->get();
+            $topicsWithMaterials[$courseTopic->title] = $courseMaterials;
+        }
 
-                $topicsWithMaterials = array();
-                
-                foreach ($courseTopics as $courseTopic) {
-                    $courseMaterials = CourseMaterial::where('course_id', $course->id)
-                        ->where('curriculum_id', $courseTopic->id)
-                        ->get();
-                
-                    $topicsWithMaterials[$courseTopic->title] = $courseMaterials;
-                }
+        if (Auth::check()) {
+            $instructor = Instructor::where('user_id', Auth::user()->id)->first();
 
-                // foreach($topicsWithMaterials as $topicTitle => $topicCollection) {
-                //     dd($topicCollection);
-                // }
-            
-            return view('pages.courses.course-details', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));    
+            if ($instructor !== null) {
+                return view('pages.courses.instructor-course-details', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));
+            }
+        }
+
+        return view('pages.courses.course-details', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));
     }
 
-    // Make the course editable in this page
-    public function showInstructorCourse(Course $course) {
-
-    }
-
-    public function showUnlockedCourse(Course $course) {
+    public function showUnlockedCourse(Course $course)
+    {
         $videoUrl = $course->preview_video;
 
         if (strpos($videoUrl, 'youtube.com') !== false) {
@@ -123,23 +115,23 @@ class CourseController extends Controller
             ->where('id', '!=', $course->id)
             ->get();
 
-            $courseTopics = CourseCurriculum::where('course_id', $course->id)->get();
+        $courseTopics = CourseCurriculum::where('course_id', $course->id)->get();
 
-            $topicsWithMaterials = array();
-            
-            foreach ($courseTopics as $courseTopic) {
-                $courseMaterials = CourseMaterial::where('course_id', $course->id)
-                    ->where('curriculum_id', $courseTopic->id)
-                    ->get();
-            
-                $topicsWithMaterials[$courseTopic->title] = $courseMaterials;
-            }
+        $topicsWithMaterials = array();
 
-            // foreach($topicsWithMaterials as $topicTitle => $topicCollection) {
-            //     dd($topicCollection);
-            // }
-        
-        return view('pages.courses.course-unlocked', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));  
+        foreach ($courseTopics as $courseTopic) {
+            $courseMaterials = CourseMaterial::where('course_id', $course->id)
+                ->where('curriculum_id', $courseTopic->id)
+                ->get();
+
+            $topicsWithMaterials[$courseTopic->title] = $courseMaterials;
+        }
+
+        // foreach($topicsWithMaterials as $topicTitle => $topicCollection) {
+        //     dd($topicCollection);
+        // }
+
+        return view('pages.courses.course-unlocked', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));
     }
 
     /**
@@ -147,15 +139,75 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        $topicTitle = request()->input('topicTitle');
+        $file = request()->input('collection');
+        $fileName = request()->input('file_name');
+
+        return view('pages.courses.edit', compact('course', 'topicTitle', 'file', 'fileName'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function updateCourseContent(Request $request, Course $course, $topic_name, $tmpFileName)
     {
-        //
+        $topicTitle = $request->input('topic_title');
+        $fileName = $request->input('file_name');
+        $file = $request->input('old_file_content');
+        $new_file = $request->input('new_file_content');
+
+        // Edit the topic's name
+        $topic = CourseCurriculum::where('course_id', $course->id)
+            ->where('title', $topic_name)->first();
+
+        $topic->title = $topicTitle;
+        $topic->save();
+
+        // Edit the material's name
+        $material = CourseMaterial::where('course_id', $course->id)
+            ->where('curriculum_id', $topic->id)
+            ->where(function ($query) use ($tmpFileName) {
+                $query->where('file_name', $tmpFileName)
+                    ->orWhere('video_name', $tmpFileName);
+            })
+            ->first();
+            
+            $pdf_content = $file;
+            $video_content = $file;
+
+        if (pathinfo($file, PATHINFO_EXTENSION) == "pdf") {
+            $material->file_name = $fileName;
+            $pdf_name = $this->getFileName($request, $pdf_content);
+            $material->file = $pdf_name;
+            $material->save();
+        } else {
+            $material->video_name = $fileName;
+            $video_name = $this->getFileName($request, $video_content);
+            $material->video = $video_name;
+            $material->save();
+        }
+
+        return redirect()->route('course.show', $course);
+    }
+
+    public function getVideoName(Request $request, $video_name) {
+        $videoName = $video_name;
+        if ($request->hasFile('new_file_content')) {
+            $video = $request->file('new_file_content');
+            $videoName = time() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('uploads/videos'), $videoName);
+        }
+        return $videoName;
+    }
+
+    public function getFileName(Request $request, $pdfName) {
+        $fileName = $pdfName;
+        if ($request->hasFile('new_file_content')) {
+            $file = $request->file('new_file_content');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/files'), $fileName);
+        }
+        return $fileName;
     }
 
     /**

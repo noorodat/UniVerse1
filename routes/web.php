@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CourseController;
 require __DIR__.'/pages.php';
 require __DIR__.'/dashboard.php';
 
@@ -17,13 +18,14 @@ require __DIR__.'/dashboard.php';
 |
 */
 
-// Paypal
-// U can implement the buyCouse in the user controller and call it in the checkout controller
+// Paypal routes
 Route::post('/buy-course', [PaymentController::class, 'buyCourse'])->name('buy-course');
 Route::get('paypal/success', [PaymentController::class, 'success'])->name('paypal_success');
 Route::get('paypal/cancel', [PaymentController::class, 'cancel'])->name('paypal_cancel');
-// sami //////
 
+// Course routes
+Route::post('/edit-course-content/{course}/{topicTitle}/{tmpFileName}', [CourseController::class, 'updateCourseContent'])
+    ->name('update-course-content');
 
 
 

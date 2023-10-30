@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Instructor;
 use App\Models\Department;
+use App\Models\CourseCurriculum;
 
 class Course extends Model
 {
@@ -40,5 +41,9 @@ class Course extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'courses_students', 'course_id', 'user_id');
+    }
+
+    public function course_curriculums() {
+        return $this->hasMany(CourseCurriculum::class);
     }
 }
