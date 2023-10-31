@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('course_materials', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('video');
-            $table->string('file');
-            $table->string('video_name');
-            $table->string('file_name');
+            $table->string('video')->nullable();
+            $table->string('file')->nullable();
+            $table->string('video_name')->nullable();
+            $table->string('file_name')->nullable();
             $table->unsignedBigInteger('course_id');
             $table->unsignedBigInteger('curriculum_id');
 

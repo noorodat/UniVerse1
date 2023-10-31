@@ -72,6 +72,19 @@ Route::post('/createNewCourse', [InstructorController::class, 'createCourse'])->
 // Show Unlocked Course
 Route::get('/course-unlocked/{course}', [CourseController::class, 'showUnlockedCourse'])->name('show-unlocked-course');
 
+// Show edit course preiview
+Route::get('/edit-course-preivew/{course}', [CourseController::class, 'showEditCoursePreview'])->name('go-edit-cousre-preview');
+
+// Edit course Preview
+Route::post('/course/edit-preview/{course}', [CourseController::class, 'editCoursePreview'])->name('edit-course-preview');
+
+// Add new course contet page
+Route::get('/add-course-content/{course}', [CourseController::class, 'showAddCourseContent'])->name('go-add-cousre-content');
+
+// Add new course contet
+Route::post('/course/add-content/{course}', [CourseController::class, 'addCourseContent'])->name('add-course-content');
+
+
 // Payment success page
 Route::get('/success', function() {
     return view('pages.success');

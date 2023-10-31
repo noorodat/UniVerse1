@@ -177,12 +177,12 @@ class CourseController extends Controller
 
         if (pathinfo($file, PATHINFO_EXTENSION) == "pdf") {
             $material->file_name = $fileName;
-            $pdf_name = $this->getFileName($request, $pdf_content);
+            $pdf_name = $this->uploadFile($request, $pdf_content);
             $material->file = $pdf_name;
             $material->save();
         } else {
             $material->video_name = $fileName;
-            $video_name = $this->getFileName($request, $video_content);
+            $video_name = $this->uploadVideo($request, $video_content);
             $material->video = $video_name;
             $material->save();
         }
@@ -190,26 +190,115 @@ class CourseController extends Controller
         return redirect()->route('course.show', $course);
     }
 
-    public function getVideoName(Request $request, $video_name) {
-        $videoName = $video_name;
-        if ($request->hasFile('new_file_content')) {
-            $video = $request->file('new_file_content');
-            $videoName = time() . '.' . $video->getClientOriginalExtension();
-            $video->move(public_path('uploads/videos'), $videoName);
-        }
-        return $videoName;
+    public function showEditCoursePreview(Course $course) {
+        return view('pages.courses.edit-preview', compact('course'));
     }
 
-    public function getFileName(Request $request, $pdfName) {
+    public function editCoursePreview(Request $request, Course $course) {
+
+        $oldCourseImage = $request->input('oldCourseImage');
+        $oldCourseVideo = $request->input('oldCourseVideo');
+        $coursePrice = $request->input('coursePrice');
+        $courseDescription = $request->input('courseDescription');
+
+        $imageName = $this->getPreviewImage($request, $oldCourseImage);
+        $videoName = $this->uploadImage($request, $oldCourseVideo);
+
+        // dd($oldCourseImage);
+
+        $course->image = $imageName;
+        $course->preview_video = $videoName;
+        $course->price = $coursePrice;
+        $course->description = $courseDescription;
+
+        $course->save();
+
+        return redirect()->route('course.show', $course);
+
+    }
+
+    public function uploadFile(Request $request, $pdfName) {
         $fileName = $pdfName;
-        if ($request->hasFile('new_file_content')) {
-            $file = $request->file('new_file_content');
+        if ($request->hasFile('new_file_content') || $request->hasFile('topicFile')) {
+            $file = $request->file('new_file_content') ?? $request->file('topicFile');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('uploads/files'), $fileName);
         }
         return $fileName;
     }
 
+    public function uploadVideo(Request $request, $video_name) {
+        $videoName = $video_name;
+        if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content')) {
+            $video = $request->file('courseVideo') ?? $request->file('new_file_content');           
+            $videoName = time() . '.' . $video->getClientOriginalExtension();
+            $video->move(public_path('uploads/videos'), $videoName);
+        }
+        return $videoName;
+    }
+    public function uploadImage(Request $request, $image_name) {
+        $imageName = $image_name;
+        if ($request->hasFile('courseImage')) {
+            $image = $request->file('courseImage');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('images'), $imageName);
+        }
+        return $imageName;
+    }
+
+    public function showAddCourseContent(Course $course) {
+        return view('pages.courses.add-course-content', compact('course'));
+    }   
+
+    public function addCourseContent(Request $request, Course $course) {
+
+        $topicName = $request->input('topicName');
+        $videoTitle = $request->input('videoTitle');
+        $fileTitle = $request->input('fileTitle');
+
+        $videoName = $this->uploadVideo($request, "");
+        $fileName = $this->uploadFile($request, "");
+
+        if($videoName == "" && $fileName == "") {
+            return redirect()->back()->with('fileErrorMessage','One file must be added');
+        }
+
+        $courseTopic = CourseCurriculum::create([
+            'title' => $topicName,
+            'course_id' => $course->id,
+            'duration' => 0,
+            'number_of_videos' => 1,
+            'number_of_files' => 1,
+        ]);
+
+        CourseMaterial::create([
+            'video_name' => $videoName != "" ? $videoTitle : null,
+            'file_name' => $fileName != "" ? $fileTitle : null,
+            'video' => $videoName != "" ? $videoName : null,
+            'file' => $fileName != "" ? $fileName : null,
+            'course_id' => $course->id,
+            'curriculum_id' => $courseTopic->id
+        ]);
+
+
+        return redirect()->route('course.show', $course);
+
+    }
+
+    public function getVideoDuration($videoPath) {
+        // Use shell_exec to run FFprobe and get the video duration
+        $command = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 " . escapeshellarg($videoPath);
+        $duration = shell_exec($command);
+    
+        // Convert the duration to a float (in seconds)
+        $duration = (float)$duration;
+    
+        // Format the duration as "00:00"
+        $formattedDuration = sprintf("%02d:%02d", floor($duration / 60), $duration % 60);
+    
+        return $formattedDuration;
+    }
+    
     /**
      * Remove the specified resource from storage.
      */

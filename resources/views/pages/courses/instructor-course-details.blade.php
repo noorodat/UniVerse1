@@ -95,13 +95,13 @@
                             </div>
 
                             <h3 class="title">{{$course->title}}</h3>
-
+                            <a href="{{route('go-add-cousre-content', $course)}}" class="edu-btn btn-bg-alt w-100 mb-2 text-center">Add content</a>
                             <ul class="edu-course-tab nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum" aria-selected="false">Curriculum</button>
+                                    <button class="nav-link" id="curriculum-tab" data-bs-toggle="tab" data-bs-target="#curriculum" type="button" role="tab" aria-controls="curriculum" aria-selected="false">Curriculum (Edit)</button>
                                 </li>
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="instructor-tab" data-bs-toggle="tab" data-bs-target="#instructor" type="button" role="tab" aria-controls="instructor" aria-selected="false">Instructor</button>
@@ -297,6 +297,9 @@
 
                     <div class="col-xl-4 col-lg-5">
                         <div class="eduvibe-sidebar course-details-sidebar">
+                            <div class="d-flex gap-1 read-more-btn mt--30">
+                                <a href="{{route('go-edit-cousre-preview', $course)}}" class="edu-btn btn-bg-alt w-100   text-center">Edit course</a>
+                            </div>
                             <div class="inner">
                                 <div class="eduvibe-widget">
                                     <div class="video-area">
@@ -316,16 +319,6 @@
 
                                                 <li><span><i class="icon-draft-line"></i> Lessons</span><span>{{$course->number_of_lessons}}</span></li>
 
-                                                {{-- <li><span><i class="icon-translate"></i> Language</span><span>English</span></li> --}}
-
-                                                {{-- <li><span><i class="icon-artboard-line"></i> Quizzes</span><span>25</span></li> --}}
-
-                                                {{-- <li><span><i class="icon-award-line"></i> Certificate</span><span>Yes</span></li> --}}
-
-                                                {{-- <li><span><img class="eduvibe-course-sidebar-img-icon" src="/assets/images/icons/percent.svg" alt="icon Thumb"> Pass Percentage</span><span>90%</span></li> --}}
-
-                                                {{-- <li><span><i class="icon-calendar-2-line"></i> Deadline</span><span>25 Dec, 2023</span></li> --}}
-
                                                 <li><span><i class="icon-user-2-line_tie"></i> Instructor</span><span>{{$course->instructor->user->name}}</span></li>
                                             </ul>
                                             @if ($isEnrolled)
@@ -334,21 +327,12 @@
                                             </div>
                                             @else
                                             <div class="read-more-btn mt--45">
-                                                <a class="edu-btn btn-bg-alt w-100 text-center" href="#">Price: ${{$course->price}}</a>
+                                                <a class="edu-btn btn-bg-alt w-100 text-center">Price: ${{$course->price}}</a>
+                                            </div>
+                                            <div class="read-more-btn mt--30">
+                                                <a class="edu-btn btn-bg-alt w-100 text-center">You have this course</a>
                                             </div>
                                             <div class="read-more-btn mt--15">
-                                                @if (Auth::user())
-                                                <form action="{{route('buy-course')}}" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="courseID" value="{{$course->id}}">
-                                                    <input type="hidden" name="instructorID" value="{{$course->instructor->id}}">
-                                                    <input type="hidden" name="studentID" value="{{Auth::user()->id}}">
-                                                    <input type="hidden" name="coursePrice" value="{{$course->price}}">
-                                                    <button class="edu-btn w-100 text-center" name="paypal" type="submit">Buy Now</button>
-                                                </form>
-                                                @else
-                                                    <a href="{{route('login')}}" class="edu-btn w-100 text-center">Buy Now</a>
-                                                @endif
                                             </div>
                                             @endif
                                         </div>
@@ -363,8 +347,8 @@
                     <div class="col-lg-12">
                         <div class="edu-course-wrapper pt--65">
                             <div class="section-title text-start mb--20">
-                                <span class="pre-title">Related Courses</span>
-                                <h3 class="title">Courses You May Like</h3>
+                                <span class="pre-title">My Courses</span>
+                                <h3 class="title">Courses I published</h3>
                             </div>
 
                             <div class="mt--40 edu-slick-button slick-activation-wrapper eduvibe-course-one-carousel eduvibe-course-details-related-course-carousel">
