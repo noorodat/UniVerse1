@@ -14,6 +14,7 @@ class CourseMaterial extends Model
         'video',
         'file',
         'video_name',
+        'video_duration',
         'file_name',
         'course_id',
         'curriculum_id',

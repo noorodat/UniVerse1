@@ -40,7 +40,7 @@
                             <input type="file" name="topicFile" class="form-control form-control-lg">
                         </div>
                         @if (session()->has('fileErrorMessage'))
-                            <div class="alert alert-success text-center"> {{ session()->get('message') }} </div>
+                        <div class="alert alert-danger text-center">{{ session('fileErrorMessage') }}</div>
                         @endif
                         <div class="col-lg-12">
                             <button class="rn-btn edu-btn w-100" name="submit" type="submit">

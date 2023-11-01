@@ -95,7 +95,7 @@
                             </div>
 
                             <h3 class="title">{{$course->title}}</h3>
-                            <a href="{{route('go-add-cousre-content', $course)}}" class="edu-btn btn-bg-alt w-100 mb-2 text-center">Add content</a>
+                            <a href="{{route('go-add-cousre-content', $course)}}" class="edu-btn btn-bg-alt w-100 mb-2 text-center">Add new topic</a>
                             <ul class="edu-course-tab nav nav-tabs" id="myTab" role="tablist">
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
@@ -132,6 +132,7 @@
                                                         </button>
                                                     </div>
                                                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
+                                                        <a class="edu-btn btn-bg-alt w-100 mb-2 text-center">Add content</a>
                                                         <div class="edu-accordion-body">
                                                             <ul>
                                                                 @foreach ($topicCollection as $collection)

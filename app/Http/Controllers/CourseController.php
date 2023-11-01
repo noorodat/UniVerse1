@@ -10,6 +10,8 @@ use App\Models\Department;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use getID3;
+
 
 class CourseController extends Controller
 {
@@ -182,8 +184,11 @@ class CourseController extends Controller
             $material->save();
         } else {
             $material->video_name = $fileName;
-            $video_name = $this->uploadVideo($request, $video_content);
+            $videoInfo = $this->uploadVideo($request, $video_content);
+            $video_name = $videoInfo["videoName"];
+            $video_duration = ['duration'];
             $material->video = $video_name;
+            $material->video_duration = $video_duration;
             $material->save();
         }
 
@@ -201,13 +206,12 @@ class CourseController extends Controller
         $coursePrice = $request->input('coursePrice');
         $courseDescription = $request->input('courseDescription');
 
-        $imageName = $this->getPreviewImage($request, $oldCourseImage);
-        $videoName = $this->uploadImage($request, $oldCourseVideo);
+        $imageName = $this->uploadImage($request, $oldCourseImage);
+        $videoInfo = $this->uploadVideo($request, $oldCourseVideo);
 
-        // dd($oldCourseImage);
 
         $course->image = $imageName;
-        $course->preview_video = $videoName;
+        $course->preview_video = $videoInfo['videoName'];
         $course->price = $coursePrice;
         $course->description = $courseDescription;
 
@@ -227,14 +231,22 @@ class CourseController extends Controller
         return $fileName;
     }
 
+    // Upload the video with it's duration
     public function uploadVideo(Request $request, $video_name) {
         $videoName = $video_name;
-        if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content')) {
-            $video = $request->file('courseVideo') ?? $request->file('new_file_content');           
+        if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content') || $request->hasFile('topicVideo')) {
+            $video = $request->file('courseVideo') ?? $request->file('new_file_content') ?? $request->file('topicVideo');           
             $videoName = time() . '.' . $video->getClientOriginalExtension();
             $video->move(public_path('uploads/videos'), $videoName);
+
+            // Get the vido duration
+            $path = public_path('uploads/videos/' . $videoName);
+            $duration = $this->getVideoDuration($path);
         }
-        return $videoName;
+        return [
+            'videoName' => $videoName,
+            'duration' => $duration,
+        ];
     }
     public function uploadImage(Request $request, $image_name) {
         $imageName = $image_name;
@@ -256,11 +268,18 @@ class CourseController extends Controller
         $videoTitle = $request->input('videoTitle');
         $fileTitle = $request->input('fileTitle');
 
-        $videoName = $this->uploadVideo($request, "");
+        // $videoInfo = $this->uploadVideo($request, $video_content);
+        // $video_name = $videoInfo["videoName"];
+        // $video_duration = ['duration'];
+        // $material->video = $video_name;
+        // $material->video_duration = $video_duration;
+        $videoInfo = $this->uploadVideo($request, "");
+        $videoName = $videoInfo['videoName'];
+        $videoduration = $videoInfo['duration'];
         $fileName = $this->uploadFile($request, "");
 
         if($videoName == "" && $fileName == "") {
-            return redirect()->back()->with('fileErrorMessage','One file must be added');
+            return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');        
         }
 
         $courseTopic = CourseCurriculum::create([
@@ -271,13 +290,15 @@ class CourseController extends Controller
             'number_of_files' => 1,
         ]);
 
+
         CourseMaterial::create([
             'video_name' => $videoName != "" ? $videoTitle : null,
+            'video_duration' => $videoName != "" ? $videoduration : null,
             'file_name' => $fileName != "" ? $fileTitle : null,
             'video' => $videoName != "" ? $videoName : null,
             'file' => $fileName != "" ? $fileName : null,
             'course_id' => $course->id,
-            'curriculum_id' => $courseTopic->id
+            'curriculum_id' => $courseTopic->id,
         ]);
 
 
@@ -285,19 +306,25 @@ class CourseController extends Controller
 
     }
 
-    public function getVideoDuration($videoPath) {
-        // Use shell_exec to run FFprobe and get the video duration
-        $command = "ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 " . escapeshellarg($videoPath);
-        $duration = shell_exec($command);
+    public function getVideoDuration($videoPath)
+    {
+        $getID3 = new \getID3;
+        $file = $getID3->analyze($videoPath);
     
-        // Convert the duration to a float (in seconds)
-        $duration = (float)$duration;
+        if (isset($file['playtime_seconds'])) {
+            $playtime_seconds = $file['playtime_seconds'];
     
-        // Format the duration as "00:00"
-        $formattedDuration = sprintf("%02d:%02d", floor($duration / 60), $duration % 60);
-    
-        return $formattedDuration;
+            // Format the duration as "00:00"
+            $formattedDuration = gmdate('i:s', $playtime_seconds);
+            
+            return $formattedDuration;
+        } else {
+            // Handle the case where 'playtime_seconds' is not set in the $file array.
+            // You may want to return a default value or throw an exception.
+            return 'N/A'; // Example: Return 'N/A' for "Not Available"
+        }
     }
+    
     
     /**
      * Remove the specified resource from storage.

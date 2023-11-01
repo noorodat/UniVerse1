@@ -78,6 +78,7 @@
                                     <div class="accordion-body card-body">
                                         <ul class="rbt-course-main-content liststyle">
                                             @foreach ($topicCollection as $material)
+                                            @if ($material->file_name != null)
                                             <li>
                                                 <a href="{{url('uploads/files/' . $material->file)}}" target="_blank">
                                                     <div class="course-content-left">
@@ -88,6 +89,8 @@
                                                     </div>
                                                 </a>
                                             </li>
+                                            @endif
+                                            @if ($material->video_name)
                                             <li>
                                                 <a onclick="changeCourseVideo(this.href)" class="courseContentVideo" href="{{url('uploads/videos/' . $material->video)}}">
                                                     <div class="course-content-left">
@@ -97,11 +100,12 @@
                                                         </span>
                                                     </div>
                                                     <div class "course-content-right">
-                                                        <span class="min-lable">30 min</span>
+                                                        <span class="min-lable">{{$material->video_duration}}</span>
                                                         {{-- <span class="rbt-check"><i class="feather-check"></i></span> --}}
                                                     </div>
                                                 </a>
                                             </li>
+                                            @endif
                                             @endforeach
                                         </ul>
                                     </div>
