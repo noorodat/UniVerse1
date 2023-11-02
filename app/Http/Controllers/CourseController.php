@@ -301,6 +301,47 @@ class CourseController extends Controller
             'curriculum_id' => $courseTopic->id,
         ]);
 
+        $course->number_of_lessons++;
+
+        $course->save();
+
+
+        return redirect()->route('course.show', $course);
+
+    }
+
+    public function showAddContentToTopicPage($course, $courseTopic) {
+        return view('pages.courses.add-content-to-topic', compact('course', 'courseTopic'));
+    }
+
+    public function addContentToTopic(Request $request, $courseID, $topicTitle) {
+
+        $topic = CourseCurriculum::where('title', $topicTitle)->first();
+        
+        $videoTitle = $request->input('videoTitle');
+        $fileTitle = $request->input('fileTitle');
+
+        $videoInfo = $this->uploadVideo($request, '');
+        $videoName = $videoInfo['videoName'];
+        $videoDuration = $videoInfo['duration'];
+        $fileName = $this->uploadFile($request, '');
+
+        // If the user didnt add anything
+        if($videoName == '' && $fileName == '') {
+            return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');
+        }
+
+        CourseMaterial::create([
+            'video_name' => $videoName != "" ? $videoTitle : null,
+            'video_duration' => $videoName != "" ? $videoDuration : null,
+            'file_name' => $fileName != "" ? $fileTitle : null,
+            'video' => $videoName != "" ? $videoName : null,
+            'file' => $fileName != "" ? $fileName : null,
+            'course_id' => $courseID,
+            'curriculum_id' => $topic->id,
+        ]);
+
+        $course = Course::find($courseID);
 
         return redirect()->route('course.show', $course);
 
@@ -319,9 +360,7 @@ class CourseController extends Controller
             
             return $formattedDuration;
         } else {
-            // Handle the case where 'playtime_seconds' is not set in the $file array.
-            // You may want to return a default value or throw an exception.
-            return 'N/A'; // Example: Return 'N/A' for "Not Available"
+            return 'N/A';
         }
     }
     

@@ -132,10 +132,11 @@
                                                         </button>
                                                     </div>
                                                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample1">
-                                                        <a class="edu-btn btn-bg-alt w-100 mb-2 text-center">Add content</a>
+                                                        <a href="{{route('go-add-content-to-topic', ['course' => $course, 'courseTopic' => $topicTitle])}}" class="edu-btn btn-bg-alt w-100 mb-2 text-center">Add content</a>
                                                         <div class="edu-accordion-body">
                                                             <ul>
                                                                 @foreach ($topicCollection as $collection)
+                                                                @if ($collection->file_name)
                                                                 <li>
                                                                     <div class="text">
                                                                         <i class="icon-draft-line"></i>
@@ -149,6 +150,8 @@
                                                                     </div>
                                                                     @endif
                                                                 </li>
+                                                                @endif
+                                                                @if ($collection->video_name)
                                                                 <li>
                                                                     <div class="text">
                                                                         <i class="fa-solid fa-video"></i>
@@ -162,6 +165,7 @@
                                                                     </div>
                                                                     @endif
                                                                 </li>
+                                                                @endif
                                                                 @endforeach
                                                             </ul>
                                                             

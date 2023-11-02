@@ -84,6 +84,11 @@ Route::get('/add-course-content/{course}', [CourseController::class, 'showAddCou
 // Add new course contet
 Route::post('/course/add-content/{course}', [CourseController::class, 'addCourseContent'])->name('add-course-content');
 
+// Add course content to topic page
+Route::get('/add-content-to-topic/{course}/{courseTopic}', [CourseController::class, 'showAddContentToTopicPage'])->name('go-add-content-to-topic');
+
+// Add course content to topic
+Route::post('/add-content-to-topic/{course}/{courseTopic}', [CourseController::class, 'addContentToTopic'])->name('add-content-to-topic');
 
 // Payment success page
 Route::get('/success', function() {

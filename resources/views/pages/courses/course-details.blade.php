@@ -137,6 +137,7 @@
                                                     <div class="edu-accordion-body">
                                                         <ul>
                                                             @foreach ($topicCollection as $collection)
+                                                            @if ($collection->file_name)
                                                             <li>
                                                                 <div class="text">
                                                                     <i class="icon-draft-line"></i>
@@ -146,15 +147,18 @@
                                                                     <div class="icon"><i class="icon-lock-password-line"></i></div>
                                                                 @endif
                                                             </li>
+                                                            @endif
+                                                            @if ($collection->video_name)
                                                             <li>
                                                                 <div class="text">
-                                                                    <i class="icon-draft-line"></i>
+                                                                    <i class="fa-solid fa-video"></i>
                                                                         {{$collection->video_name}}
                                                                 </div>
                                                                 @if (!$isEnrolled)
                                                                     <div class="icon"><i class="icon-lock-password-line"></i></div>
                                                                 @endif
                                                             </li>
+                                                            @endif
                                                             @endforeach
                                                         </ul>
                                                     </div>

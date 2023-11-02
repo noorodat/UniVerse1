@@ -63,7 +63,6 @@ Route::middleware(["auth:admin"])->group(function () {
     Route::post('/students/{student}/make-instructor', [DashboardController::class, 'makeInstructor'])->name('makeInstructor');
 
     Route::resource('instructor', InstructorController::class);
-    Route::resource('department', DepartmentController::class);
 
     // course routes
     Route::post('add-course', [DashboardController::class, 'addCourse'])->name('add-dash-course');
@@ -73,3 +72,5 @@ Route::middleware(["auth:admin"])->group(function () {
 
     /* --------------------- END DASHBOARD FUNCTIONS --------------------- */
 });
+
+Route::resource('department', DepartmentController::class);
