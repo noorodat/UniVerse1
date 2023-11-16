@@ -59,6 +59,11 @@ Route::get('/profile/enrolledCourses/{user}', [ProfileController::class, 'showEn
 
 // Create Course
 Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->name('go-create-course');
+
+Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->name('go-create-course');
+
+// Show instructor's created courses
+Route::get('/my-courses', [ProfileController::class, 'showMyCourses'])->name('go-my-courses');
 /* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
 
 

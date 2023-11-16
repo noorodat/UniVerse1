@@ -125,6 +125,12 @@ class ProfileController extends Controller
         return view('pages.profile.create-course', compact('departments', 'instructor'));
     }
 
+    public function showMyCourses() {
+        $instructor = Instructor::where('user_id', Auth::user()->id)->first();
+        $courses = Course::where('instructor_id', $instructor->id)->get();
+        return view('pages.profile.my-courses', compact('courses'));
+    }
+
     /**
      * Delete the user's account.
      */
