@@ -17,17 +17,4 @@ class HomePageController extends Controller
 
         return view('index', compact('departments', 'randomCourses'));
     }
-
-    public function showSingleCourse(Course $course)
-    {
-        try {
-            $department = $course->department;
-            $relatedCourses = Course::where('department_id', $department->id)
-                ->where('id', '!=', $course->id)
-                ->get();
-            return view('pages.courses.course-details', compact('course', 'relatedCourses'));
-        } catch (\Exception $e) {
-            return view("Sorry, Some error happened :(");
-        }
-    }
 }

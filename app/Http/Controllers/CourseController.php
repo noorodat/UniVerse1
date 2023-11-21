@@ -268,11 +268,6 @@ class CourseController extends Controller
         $videoTitle = $request->input('videoTitle');
         $fileTitle = $request->input('fileTitle');
 
-        // $videoInfo = $this->uploadVideo($request, $video_content);
-        // $video_name = $videoInfo["videoName"];
-        // $video_duration = ['duration'];
-        // $material->video = $video_name;
-        // $material->video_duration = $video_duration;
         $videoInfo = $this->uploadVideo($request, "");
         $videoName = $videoInfo['videoName'];
         $videoduration = $videoInfo['duration'];

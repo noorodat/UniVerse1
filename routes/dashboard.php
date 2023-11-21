@@ -22,10 +22,10 @@ Route::middleware(["auth:admin"])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('go-admin-dashboard');
 
     // Students page
-    Route::get('/dashboard/students', [RegisteredUserController::class, 'getAllStudents'])->name('go-dash-students');
+    Route::get('/dashboard/students', [DashboardController::class, 'getAllStudents'])->name('go-dash-students');
 
     // Student details page
-    Route::get('/dashboard/student-details/{student}', [RegisteredUserController::class, 'getSingleStudent'])->name('go-student-details');
+    Route::get('/dashboard/student-details/{student}', [DashboardController::class, 'getSingleStudent'])->name('go-student-details');
 
     // Add student page
     Route::get('/dashboard/add-student', function () {

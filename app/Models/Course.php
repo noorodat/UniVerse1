@@ -46,4 +46,10 @@ class Course extends Model
     public function course_curriculums() {
         return $this->hasMany(CourseCurriculum::class);
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
 }

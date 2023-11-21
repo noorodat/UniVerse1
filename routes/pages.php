@@ -66,7 +66,6 @@ Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->nam
 Route::get('/my-courses', [ProfileController::class, 'showMyCourses'])->name('go-my-courses');
 /* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
 
-
 // Buy course function
 Route::post('/buyCourse', [UserController::class,'buyCourse'])->name('buy-course');
 

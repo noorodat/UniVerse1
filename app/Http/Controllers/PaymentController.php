@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\User;
 use App\Models\CourseStudent;
 use App\Models\Instructor;
+use App\Models\Transaction;
 
 class PaymentController extends Controller
 {
@@ -74,12 +75,22 @@ class PaymentController extends Controller
                     'instructor_id' => $instructor_id,
                 ]);
 
+                // Edit info for another tables
                 $instructor = Instructor::findOrFail($instructor_id);
                 $course = Course::findOrFail($course_id);
                 $course->number_of_students++;
                 $instructor->earnings += $course->price;
                 $instructor->save();
                 $course->save();
+
+                // Save transaction in the table
+                Transaction::create([
+                    'amount' => $course->price,
+                    'payment_type' => 'Paypal',
+                    'course_id' => $course_id,
+                    'user_id' => $student_id,
+                ]);
+                
                 return redirect()->route('go-success');
             } catch (\Exception $e) {
                 return redirect()->back();

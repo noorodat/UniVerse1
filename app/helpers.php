@@ -5,16 +5,15 @@ use Illuminate\Validation\Rules;
 use App\Models\User;
 
 
-/* UPLOAD IMAGE */
-function uploadImage(Request $request) {
+function uploadUserImage(Request $request)
+{
+
     $userID = $request->userID;
     $user = User::find($userID);
 
-    if($user) {
+    if ($user) {
         $imageName = $user->image;
-    }
-
-    else {
+    } else {
         $imageName = 'defaultUserImage.png';
     }
 
@@ -26,10 +25,8 @@ function uploadImage(Request $request) {
     return $imageName;
 }
 
-
-/* VALIDATE ADD STUDENT INPUTS */
-function validateAddStudentInputs(Request $request) {
-
+function validateAddStudentInputs(Request $request)
+{
     $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => [
@@ -37,11 +34,11 @@ function validateAddStudentInputs(Request $request) {
             'string',
             'email',
             'max:255',
-            'unique:'.User::class,
+            'unique:' . User::class,
             function ($attribute, $value, $fail) {
                 // Define the allowed domain ending
                 $allowedDomainEnding = 'edu.jo';
-        
+
                 // Extract the email domain and check if it ends with 'edu.jo'
                 $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
                 if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
@@ -54,5 +51,21 @@ function validateAddStudentInputs(Request $request) {
         'phone' => 'required|regex:/^\d{10}$/',
     ]);
 
-    // dd($request->all());
+    function getVideoDuration($videoPath)
+    {
+        $getID3 = new \getID3;
+        $file = $getID3->analyze($videoPath);
+    
+        if (isset($file['playtime_seconds'])) {
+            $playtime_seconds = $file['playtime_seconds'];
+    
+            // Format the duration as "00:00"
+            $formattedDuration = gmdate('i:s', $playtime_seconds);
+            
+            return $formattedDuration;
+        } else {
+            return 'N/A';
+        }
+    }
+
 }

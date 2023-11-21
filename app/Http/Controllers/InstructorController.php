@@ -27,7 +27,9 @@ class InstructorController extends Controller
         //
     }
 
-    public function createCourse(Request $request) {
+    public function createCourse(Request $request)
+    {
+
         $course_title = $request->input('courseTitle');
         $course_description = $request->input('courseDescription');
         $course_price = $request->input('coursePrice');
@@ -39,7 +41,7 @@ class InstructorController extends Controller
 
         $imageName = $this->uploadCourseImage($request);
 
-        if($course_preview_method == 'youtube') {
+        if ($course_preview_method == 'youtube') {
             $course_preview = $course_preview_youtube;
         } else {
             $course_preview = $this->uploadCoursePreview($request);
@@ -60,6 +62,12 @@ class InstructorController extends Controller
             'department_id' => $course_department,
         ]);
 
+        $department = Department::find($course_department);
+
+        $department->number_of_courses++;
+        $department->save();
+
+
         $this->uploadCourseIntroTopic($request, $course->id, $course_first_topic);
 
         // Edit instructor record
@@ -68,10 +76,10 @@ class InstructorController extends Controller
         $instructor->save();
 
         return redirect()->route('go-home');
-
     }
 
-    public function uploadCourseIntroTopic($request, $course_id, $course_first_topic) {
+    public function uploadCourseIntroTopic($request, $course_id, $course_first_topic)
+    {
         $topic = CourseCurriculum::create([
             'title' => $course_first_topic,
             'course_id' => $course_id,
@@ -84,25 +92,37 @@ class InstructorController extends Controller
     }
 
     // Can be used for intro and for usual uploading
-    public function uploadCourseMaterials(Request $request, $course_id, $topic_id) {
+    public function uploadCourseMaterials(Request $request, $course_id, $topic_id)
+    {
+        $videoInfo = $this->uploadCourseVideo($request);
         CourseMaterial::create([
             'course_id' => $course_id,
-            'video' => $this->uploadCourseVideo($request),
+            'video' => $videoInfo['videoName'],
+            'video_duration' => $videoInfo['duration'],
             'file' => $this->uploadCourseFile($request),
             'curriculum_id' => $topic_id,
         ]);
     }
 
-    public function uploadCourseVideo(Request $request) {
+    public function uploadCourseVideo(Request $request)
+    {
         if ($request->hasFile('courseVideo')) {
             $video = $request->file('courseVideo');
             $videoName = time() . '.' . $video->getClientOriginalExtension();
             $video->move(public_path('uploads/videos'), $videoName);
+
+            // Get the vido duration
+            $path = public_path('uploads/videos/' . $videoName);
+            $duration = $this->getVideoDuration($path);
         }
-        return $videoName;
+        return [
+            'videoName' => $videoName,
+            'duration' => $duration,
+        ];
     }
 
-    public function uploadCourseFile(Request $request) {
+    public function uploadCourseFile(Request $request)
+    {
         if ($request->hasFile('courseFile')) {
             $file = $request->file('courseFile');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -111,7 +131,8 @@ class InstructorController extends Controller
         return $fileName;
     }
 
-    public function uploadCourseImage(Request $request) {
+    public function uploadCourseImage(Request $request)
+    {
         if ($request->hasFile('courseImage')) {
             $image = $request->file('courseImage');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
@@ -120,8 +141,9 @@ class InstructorController extends Controller
         return $imageName;
     }
 
-    public function uploadCoursePreview(Request $request) {
-    
+    public function uploadCoursePreview(Request $request)
+    {
+
         if ($request->hasFile('localVideo')) {
             $video = $request->file('localVideo');
             $videoName = time() . '.' . $video->getClientOriginalExtension();
@@ -130,12 +152,28 @@ class InstructorController extends Controller
         return $videoName;
     }
 
+    public function getVideoDuration($videoPath)
+    {
+        $getID3 = new \getID3;
+        $file = $getID3->analyze($videoPath);
+    
+        if (isset($file['playtime_seconds'])) {
+            $playtime_seconds = $file['playtime_seconds'];
+    
+            // Format the duration as "00:00"
+            $formattedDuration = gmdate('i:s', $playtime_seconds);
+            
+            return $formattedDuration;
+        } else {
+            return 'N/A';
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-
     }
 
     /**
@@ -169,5 +207,4 @@ class InstructorController extends Controller
     {
         //
     }
-
 }

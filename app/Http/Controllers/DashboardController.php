@@ -11,10 +11,12 @@ use Illuminate\Validation\Rules;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Models\Department;
 use App\Models\Course;
+use App\Models\Transaction;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -84,6 +86,19 @@ class DashboardController extends Controller
         return redirect()->route('go-admin-login')->with($notification);
     }
     /* ############################ START STUDENT FUNCTIONS ############################ */
+
+    public function getAllStudents(): View
+    {
+        $allStudents = User::all();
+        return view('admin-dashboard/students.index', ['allStudents' => $allStudents]);
+    }
+
+    public function getSingleStudent($id)
+    {
+        $transactions = Transaction::where('user_id', $id)->get();
+        $student = User::find($id);
+        return view('admin-dashboard.students.student-detail', compact('student', 'transactions'));
+    }
 
     // Add student
     public function store(Request $request)
@@ -415,9 +430,14 @@ class DashboardController extends Controller
 
             $instructor->courses_number -= 1;
 
+            $course->delete();
+
+            $department = $course->department;
+            $department->number_of_courses--;
+            $department->save();
+
             $instructor->save();
 
-            $course->delete();
         } catch (\Exception $e) {
             flash()->addError('Couldnt delete the course');
             return redirect()->back();

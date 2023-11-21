@@ -34,7 +34,7 @@ class RegisteredUserController extends Controller
 
         // Helper function i created to validate the add student inputs
 
-        $imageName = uploadImage($request);
+        $imageName = uploadUserImage($request);
 
         validateAddStudentInputs($request);
 
@@ -56,19 +56,6 @@ class RegisteredUserController extends Controller
     
         return redirect(RouteServiceProvider::HOME);
     }
-    
-
-    public function getAllStudents(): View
-    {
-        $allStudents = User::all();
-        return view('admin-dashboard/students.index', ['allStudents' => $allStudents]);
-    }
-
-    public function getSingleStudent($id) {
-        $student = User::find($id);
-        return view('admin-dashboard.students.student-detail', compact('student'));
-    }
-
     
     
 }
