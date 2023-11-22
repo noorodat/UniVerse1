@@ -64,6 +64,10 @@ Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->nam
 
 // Show instructor's created courses
 Route::get('/my-courses', [ProfileController::class, 'showMyCourses'])->name('go-my-courses');
+
+// Show sttings
+Route::get('/settings', [ProfileController::class, 'showSettings'])->name('go-profile-settings');
+
 /* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
 
 // Buy course function

@@ -42,7 +42,7 @@
                                         <nav class="mainmenu-nav">
                                             <ul class="dashboard-mainmenu rbt-default-sidebar-list">
                                                 <li>
-                                                    <a href="{{ route('go-my-courses')}}">
+                                                    <a href="{{ route('go-my-courses') }}">
                                                         <i class="feather-monitor"></i>
                                                         <span>My Courses</span>
                                                     </a>
@@ -65,10 +65,16 @@
 
                                         <nav class="mainmenu-nav">
                                             <ul class="dashboard-mainmenu rbt-default-sidebar-list">
-                                                <li><a href="instructor-settings.html"><i
+                                                <li><a href="{{ route('go-profile-settings') }}"><i
                                                             class="feather-settings"></i><span>Settings</span></a></li>
-                                                <li><a href="index.html"><i
-                                                            class="feather-log-out"></i><span>Logout</span></a></li>
+                                                <li>
+                                                    <form action="{{ route('logout') }}" method="POST">
+                                                        @csrf
+                                                        <button class="border-none" type="submit">
+                                                            <i class="feather-log-out"></i><span>Logout</span>
+                                                        </button>
+                                                    </form>
+                                                </li>
                                             </ul>
                                         </nav>
                                     </div>

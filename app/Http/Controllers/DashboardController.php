@@ -27,7 +27,12 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('admin-dashboard.index');
+        $transactions = Transaction::latest()->take(15)->get();
+        $courses_count = Course::count();
+        $money_count = Transaction::sum('amount');
+        $students_count = User::count();
+        $instructors_count = Instructor::count();
+        return view('admin-dashboard.index', compact('transactions', 'courses_count', 'money_count', 'students_count', 'instructors_count'));
     }
 
     public function loginPage()

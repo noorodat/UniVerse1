@@ -24,7 +24,7 @@
 											</div>
 											<div  class="chart-num">
 												<p>Students</p>
-												<h2 class="font-w700 mb-0">932</h2>
+												<h2 class="font-w700 mb-0">{{$students_count}}</h2>
 											</div>
 										</div>
 									</div>
@@ -36,8 +36,8 @@
 												</svg>
 											</div>
 											<div class="chart-num">
-												<p>Teachers</p>
-												<h2 class="font-w700 mb-0">754</h2>
+												<p>Instructors</p>
+												<h2 class="font-w700 mb-0">{{$instructors_count}}</h2>
 											</div>
 										</div>
 									</div>
@@ -49,21 +49,19 @@
 												</svg>	
 											</div>
 											<div class="chart-num">
-												<p>Events</p>
-												<h2 class="font-w700 mb-0">40</h2>
+												<p>Transactions</p>
+												<h2 class="font-w700 mb-0">{{$money_count}}</h2>
 											</div>
 										</div>
 									</div>
 									<div class="col-xl-3 col-6">
 										<div class="content-box">
 											<div class="food-data icon-box icon-box-xl bg-dark">
-												<svg width="23" height="23" viewBox="0 0 28 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-													<path d="M8.25448 0.509167C5.96882 1.64226 4.0464 3.39315 2.70524 5.56327C1.36408 7.7334 0.657848 10.2359 0.666646 12.787V18.7167C0.667705 19.5871 1.01397 20.4216 1.62948 21.0372C2.245 21.6527 3.07951 21.9989 3.94998 22H7.33331V32C7.33331 32.442 7.50891 32.866 7.82147 33.1785C8.13403 33.4911 8.55795 33.6667 8.99998 33.6667C9.44201 33.6667 9.86593 33.4911 10.1785 33.1785C10.4911 32.866 10.6666 32.442 10.6666 32V2C10.6664 1.71598 10.5936 1.43673 10.4552 1.18872C10.3168 0.940703 10.1173 0.732152 9.87574 0.582831C9.63414 0.43351 9.3584 0.348368 9.07467 0.335477C8.79095 0.322585 8.50863 0.382371 8.25448 0.509167ZM7.33331 18.6833L3.99998 18.7167V12.787C3.99498 11.3525 4.28878 9.93273 4.86268 8.61805C5.43658 7.30336 6.27798 6.12261 7.33331 5.151V18.6833ZM24 2V8.66667C23.9994 9.10852 23.8236 9.53211 23.5112 9.84455C23.1988 10.157 22.7752 10.3328 22.3333 10.3333V2C22.3333 1.55797 22.1577 1.13405 21.8452 0.821489C21.5326 0.508929 21.1087 0.333334 20.6666 0.333334C20.2246 0.333334 19.8007 0.508929 19.4881 0.821489C19.1756 1.13405 19 1.55797 19 2V10.3333C18.5581 10.3328 18.1345 10.157 17.8221 9.84455C17.5097 9.53211 17.3339 9.10852 17.3333 8.66667V2C17.3333 1.55797 17.1577 1.13405 16.8452 0.821489C16.5326 0.508929 16.1087 0.333334 15.6666 0.333334C15.2246 0.333334 14.8007 0.508929 14.4881 0.821489C14.1756 1.13405 14 1.55797 14 2V8.66667C14.0014 9.9923 14.5287 11.2632 15.4661 12.2006C16.4034 13.138 17.6743 13.6652 19 13.6667V32C19 32.442 19.1756 32.866 19.4881 33.1785C19.8007 33.4911 20.2246 33.6667 20.6666 33.6667C21.1087 33.6667 21.5326 33.4911 21.8452 33.1785C22.1577 32.866 22.3333 32.442 22.3333 32V13.6667C23.6589 13.6652 24.9299 13.138 25.8672 12.2006C26.8046 11.2632 27.3319 9.9923 27.3333 8.66667V2C27.3333 1.55797 27.1577 1.13405 26.8452 0.821489C26.5326 0.508929 26.1087 0.333334 25.6666 0.333334C25.2246 0.333334 24.8007 0.508929 24.4881 0.821489C24.1756 1.13405 24 1.55797 24 2Z" fill="white"/>
-												</svg>
+												<i class="text-white fa-solid fa-book"></i>
 											</div>
 											<div class="chart-num">
-												<p>Foods</p>
-												<h2 class="font-w700 mb-0">32k</h2>
+												<p>Courses</p>
+												<h2 class="font-w700 mb-0">{{$courses_count}}</h2>
 											</div>
 										</div>
 									</div>
@@ -73,153 +71,37 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-xl-4 wow fadeInUp" data-wow-delay="1.5s">
-						<div class="card">
-							<div class="card-header pb-0 border-0 flex-wrap">
-								<div>
-									<div class="mb-3">
-										<h2 class="heading mb-0">School Calendar</h2>	
-									</div>
-								</div>
-							</div>
-							<div class="card-body text-center event-calender  py-0 px-1">
-								<input type='text' class="form-control d-none" id='datetimepicker1'>
-							</div>
-						</div>
-					</div>
+	
 					<!--column-->
-					<div class="col-xl-8">
+					<div class="col-xl-12">
 						<div class="card">
 							<div class="card-header py-3 border-0 px-3">
-								<h4 class="heading m-0">Teacher Deatails</h4>
+								<h4 class="heading m-0">Latest Transactions</h4>
 							</div>
 							<div class="card-body p-0">
 								<div class="table-responsive basic-tbl">
 									<table id="teacher-table" class="tech-data" style="min-width: 798px">
 										<thead>
 											<tr>
-												<th>Name</th>
-												<th>Subject</th>
-												<th>Qulification</th>
-												<th>Fees</th>
-												<th class="text-end">Performance</th>
+												<th>ID</th>
+												<th>Type</th>
+												<th>Course</th>
+												<th>Reciever</th>
+												<th>Date</th>
+												<th>Amount</th>
 											</tr>
 										</thead>
 										<tbody>
+											@foreach ($transactions as $transaction)
 											<tr>
-												<td>Yatin Xarma</td>
-												<td>Programming</td>
-												<td>B.Tech</td>
-												<td>$ 217.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-danger">Bad</span></td>
+												<td>{{$transaction->id}}</td>
+												<td>{{$transaction->payment_type}}</td>
+												<td>{{$transaction->course->title}}</td>
+												<td>{{$transaction->course->instructor->user->name}}</td>
+												<td>{{ \Carbon\Carbon::parse($transaction->created_at)->format('Y M d') }}</td>
+												<td>{{$transaction->amount}}</td>
 											</tr>
-											<tr>
-												<td>Ramen</td>
-												<td>Basic Art</td>
-												<td>BA</td>
-												<td>$ 218.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Harry</td>
-												<td>English</td>
-												<td>B.Tech</td>
-												<td>$ 219.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Hanu</td>
-												<td>Programing</td>
-												<td>B.Tech</td>
-												<td>$ 217.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Jorge</td>
-												<td>History</td>
-												<td>BA</td>
-												<td>$ 212.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>James</td>
-												<td>History</td>
-												<td>B.Com</td>
-												<td>$ 21.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-danger">Bad</span></td>
-											</tr>
-											<tr>
-												<td>Vicky canady</td>
-												<td>Basic Art</td>
-												<td>B.Tech</td>
-												<td>$ 217.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Jack Xarma</td>
-												<td>Programming</td>
-												<td>B.Tech</td>
-												<td>$ 19.2.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Ramon</td>
-												<td>Basic Art</td>
-												<td>BA</td>
-												<td>$ 217.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Harry john</td>
-												<td>History</td>
-												<td>B.Tech</td>
-												<td>$ 18.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Hardy</td>
-												<td>Basic Algorithm</td>
-												<td>B.E</td>
-												<td>$ 17.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Jeo</td>
-												<td>English</td>
-												<td>BA</td>
-												<td>$ 217.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>James Brown</td>
-												<td>History</td>
-												<td>B.Com</td>
-												<td>$ 15.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-danger">Bad</span></td>
-											</tr>
-											<tr>
-												<td>John</td>
-												<td>Art</td>
-												<td>B.Tech</td>
-												<td>$ 217.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Janny</td>
-												<td>Basic Algorithm</td>
-												<td>B.Tech</td>
-												<td>$ 21.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											<tr>
-												<td>Jorge clek</td>
-												<td>English</td>
-												<td>BA</td>
-												<td>$ 22.70</td>
-												<td class="text-end"><span class="badge badge-sm light badge-success">Good</span></td>
-											</tr>
-											
-											
+											@endforeach
 										</tbody>
 									</table>
 								</div>
@@ -234,21 +116,12 @@
         <!--**********************************
             Content body end
         ***********************************-->
-		<!--**********************************
-			Footer start
-		***********************************-->
-		<div class="footer footer-outer">
-			<div class="copyright">
-				<p>Copyright © Designed &amp; Developed by <a href="https://dexignlab.com/" target="_blank">DexignLab</a> 2023</p>
-			</div>
-		</div>
+
 
 	</div>
 
 	@endsection
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
+
 
 
 

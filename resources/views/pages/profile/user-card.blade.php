@@ -1,6 +1,6 @@
                     <!-- Start Dashboard Top  -->
                     <div class="rbt-dashboard-content-wrapper">
-                        <div class="tutor-bg-photo bg_image bg_image--22 height-350"></div>
+                        <div style="background: url('{{asset('profile-assets/assets/images/default_cover.jpg')}}') center;" class="tutor-bg-photo bg_image bg_image--22 height-350"></div>
                         <!-- Start Tutor Information  -->
                         <div class="rbt-tutor-information">
                             <div class="rbt-tutor-information-left">
