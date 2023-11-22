@@ -335,7 +335,7 @@
                                                 <a class="edu-btn btn-bg-alt w-100 text-center">Price: ${{$course->price}}</a>
                                             </div>
                                             <div class="read-more-btn mt--30">
-                                                <a class="edu-btn btn-bg-alt w-100 text-center">You have this course</a>
+                                                <a class="edu-btn btn-bg-alt w-100 text-center">This course is Yours</a>
                                             </div>
                                             <div class="read-more-btn mt--15">
                                             </div>

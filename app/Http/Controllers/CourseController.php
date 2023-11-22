@@ -173,9 +173,9 @@ class CourseController extends Controller
                     ->orWhere('video_name', $tmpFileName);
             })
             ->first();
-            
-            $pdf_content = $file;
-            $video_content = $file;
+
+        $pdf_content = $file;
+        $video_content = $file;
 
         if (pathinfo($file, PATHINFO_EXTENSION) == "pdf") {
             $material->file_name = $fileName;
@@ -186,7 +186,7 @@ class CourseController extends Controller
             $material->video_name = $fileName;
             $videoInfo = $this->uploadVideo($request, $video_content);
             $video_name = $videoInfo["videoName"];
-            $video_duration = ['duration'];
+            $video_duration = $videoInfo['duration'];
             $material->video = $video_name;
             $material->video_duration = $video_duration;
             $material->save();
@@ -195,11 +195,13 @@ class CourseController extends Controller
         return redirect()->route('course.show', $course);
     }
 
-    public function showEditCoursePreview(Course $course) {
+    public function showEditCoursePreview(Course $course)
+    {
         return view('pages.courses.edit-preview', compact('course'));
     }
 
-    public function editCoursePreview(Request $request, Course $course) {
+    public function editCoursePreview(Request $request, Course $course)
+    {
 
         $oldCourseImage = $request->input('oldCourseImage');
         $oldCourseVideo = $request->input('oldCourseVideo');
@@ -218,10 +220,10 @@ class CourseController extends Controller
         $course->save();
 
         return redirect()->route('course.show', $course);
-
     }
 
-    public function uploadFile(Request $request, $pdfName) {
+    public function uploadFile(Request $request, $pdfName)
+    {
         $fileName = $pdfName;
         if ($request->hasFile('new_file_content') || $request->hasFile('topicFile')) {
             $file = $request->file('new_file_content') ?? $request->file('topicFile');
@@ -232,10 +234,16 @@ class CourseController extends Controller
     }
 
     // Upload the video with it's duration
-    public function uploadVideo(Request $request, $video_name) {
+    public function uploadVideo(Request $request, $video_name)
+    {
         $videoName = $video_name;
+        if ($videoName) {
+            // Get the vido duration
+            $path = public_path('uploads/videos/' . $videoName);
+            $duration = $this->getVideoDuration($path);
+        }
         if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content') || $request->hasFile('topicVideo')) {
-            $video = $request->file('courseVideo') ?? $request->file('new_file_content') ?? $request->file('topicVideo');           
+            $video = $request->file('courseVideo') ?? $request->file('new_file_content') ?? $request->file('topicVideo');
             $videoName = time() . '.' . $video->getClientOriginalExtension();
             $video->move(public_path('uploads/videos'), $videoName);
 
@@ -248,7 +256,8 @@ class CourseController extends Controller
             'duration' => $duration,
         ];
     }
-    public function uploadImage(Request $request, $image_name) {
+    public function uploadImage(Request $request, $image_name)
+    {
         $imageName = $image_name;
         if ($request->hasFile('courseImage')) {
             $image = $request->file('courseImage');
@@ -258,11 +267,13 @@ class CourseController extends Controller
         return $imageName;
     }
 
-    public function showAddCourseContent(Course $course) {
+    public function showAddCourseContent(Course $course)
+    {
         return view('pages.courses.add-course-content', compact('course'));
-    }   
+    }
 
-    public function addCourseContent(Request $request, Course $course) {
+    public function addCourseContent(Request $request, Course $course)
+    {
 
         $topicName = $request->input('topicName');
         $videoTitle = $request->input('videoTitle');
@@ -273,8 +284,8 @@ class CourseController extends Controller
         $videoduration = $videoInfo['duration'];
         $fileName = $this->uploadFile($request, "");
 
-        if($videoName == "" && $fileName == "") {
-            return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');        
+        if ($videoName == "" && $fileName == "") {
+            return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');
         }
 
         $courseTopic = CourseCurriculum::create([
@@ -302,17 +313,18 @@ class CourseController extends Controller
 
 
         return redirect()->route('course.show', $course);
-
     }
 
-    public function showAddContentToTopicPage($course, $courseTopic) {
+    public function showAddContentToTopicPage($course, $courseTopic)
+    {
         return view('pages.courses.add-content-to-topic', compact('course', 'courseTopic'));
     }
 
-    public function addContentToTopic(Request $request, $courseID, $topicTitle) {
+    public function addContentToTopic(Request $request, $courseID, $topicTitle)
+    {
 
         $topic = CourseCurriculum::where('title', $topicTitle)->first();
-        
+
         $videoTitle = $request->input('videoTitle');
         $fileTitle = $request->input('fileTitle');
 
@@ -322,7 +334,7 @@ class CourseController extends Controller
         $fileName = $this->uploadFile($request, '');
 
         // If the user didnt add anything
-        if($videoName == '' && $fileName == '') {
+        if ($videoName == '' && $fileName == '') {
             return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');
         }
 
@@ -339,27 +351,26 @@ class CourseController extends Controller
         $course = Course::find($courseID);
 
         return redirect()->route('course.show', $course);
-
     }
 
     public function getVideoDuration($videoPath)
     {
         $getID3 = new \getID3;
         $file = $getID3->analyze($videoPath);
-    
+
         if (isset($file['playtime_seconds'])) {
             $playtime_seconds = $file['playtime_seconds'];
-    
+
             // Format the duration as "00:00"
             $formattedDuration = gmdate('i:s', $playtime_seconds);
-            
+
             return $formattedDuration;
         } else {
             return 'N/A';
         }
     }
-    
-    
+
+
     /**
      * Remove the specified resource from storage.
      */

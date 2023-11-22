@@ -59,11 +59,11 @@
                                                 <div class="rbt-tutor-information">
                                                     <div class="rbt-tutor-information-left">
                                                         <div class="thumbnail rbt-avatars size-lg position-relative">
-                                                            <img src="{{url('/images/' . Auth::user()->image)}}" alt="user image">
+                                                            <img id="showImage" src="{{url('/images/' . Auth::user()->image)}}" alt="user image">
                                                             <div class="rbt-edit-photo-inner">
-                                                                <button class="rbt-edit-photo" title="Upload Photo">
+                                                                <label for="pfp" style="cursor: pointer" class="d-flex justify-content-center align-items-center rbt-edit-photo" title="Upload Photo">
                                                                     <i class="feather-camera"></i>
-                                                                </button>
+                                                                </label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -76,29 +76,38 @@
                                                 <!-- End Tutor Information  -->
                                             </div>
                                             <!-- Start Profile Row  -->
-                                            <form action="#" class="rbt-profile-row rbt-default-form row row--15">
+                                            <form enctype="multipart/form-data" method="POST" action="{{route('profile.update')}}" class="rbt-profile-row rbt-default-form row row--15">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="file" name="image" id="pfp" class="d-none">
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="rbt-form-group">
-                                                        <label for="firstname">First Name</label>
-                                                        <input id="firstname" type="text" value="{{Auth::user()->name}}">
+                                                        <label for="name">Name</label>
+                                                        <input value="{{Auth::user()->name}}" id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="rbt-form-group">
-                                                        <label for="phonenumber">Phone Number</label>
-                                                        <input id="phonenumber" type="tel" value="{{Auth::user()->phone}}">
+                                                        <label for="phone">Phone Number</label>
+                                                        <input id="phone" name="phone" type="tel" value="{{Auth::user()->phone}}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                                                     <div class="rbt-form-group">
-                                                        <label for="skill">Major</label>
-                                                        <input id="skill" type="text" value="{{Auth::user()->major}}">
+                                                        <label for="email">Email</label>
+                                                        <input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username"  value="{{Auth::user()->email}}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                                                    <div class="rbt-form-group">
+                                                        <label for="major">Major</label>
+                                                        <input id="major" name="major" type="text" value="{{Auth::user()->major}}">
                                                     </div>
                                                 </div>
 
                                                 <div class="col-12 mt--20">
                                                     <div class="rbt-form-group">
-                                                        <a class="rbt-btn btn-gradient" href="#">Update Info</a>
+                                                        <button type="submit" class="rbt-btn btn-gradient" href="#">Update Info</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -154,9 +163,6 @@
     </div>
     <!-- End Card Style -->
 
-
-
-
     <div class="rbt-separator-mid">
         <div class="container">
             <hr class="rbt-separator m-0">
@@ -166,3 +172,16 @@
 
 
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#pfp').change(function(e) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#showImage').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        })
+    });
+</script>

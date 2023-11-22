@@ -3,12 +3,13 @@
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 function uploadUserImage(Request $request)
 {
 
-    $userID = $request->userID;
+    $userID = Auth::user()->id;
     $user = User::find($userID);
 
     if ($user) {

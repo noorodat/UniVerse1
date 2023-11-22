@@ -59,9 +59,15 @@ class ProfileController extends Controller
 
         $user = auth()->user();
 
+        $imageName = uploadUserImage($request);
+
+
         $user->fill([
             'name' => $request->name,
             'email' => $request->email,
+            'phone' => $request->phone,
+            'major' => $request->major,
+            'image' => $imageName
         ]);
 
         if ($request->has('password')) {
@@ -70,7 +76,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('go-profile', Auth::user())->with('status', 'Info-updated');
     }
 
     public function showDashboard(User $user)
