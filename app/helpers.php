@@ -9,13 +9,23 @@ use Illuminate\Support\Facades\Auth;
 function uploadUserImage(Request $request)
 {
 
-    $userID = Auth::user()->id;
-    $user = User::find($userID);
+    if(isset(Auth::user()->id)) {
+        $userID = Auth::user()->id;
+        $user = User::find($userID);
+    }
 
-    if ($user) {
+    if (isset($user)) {
         $imageName = $user->image;
     } else {
         $imageName = 'defaultUserImage.png';
+    }
+
+    if (isset($user)) {
+        $oldImageName = $user->image;
+
+        if ($oldImageName !== 'defaultUserImage.png' && file_exists(public_path('images/' . $oldImageName))) {
+            unlink(public_path('images/' . $oldImageName));
+        }
     }
 
     if ($request->hasFile('image')) {

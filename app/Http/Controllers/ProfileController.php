@@ -143,11 +143,6 @@ class ProfileController extends Controller
         return view('pages.profile.settings');
     }
 
-    // public function updateUserInformation()
-    // {
-
-    // }
-
     /**
      * Delete the user's account.
      */

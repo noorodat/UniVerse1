@@ -101,27 +101,6 @@
                                         <li><a href="404.html">404 Error</a></li>
                                     </ul>
                                 </li>
-                                <li class="has-droupdown"><a href="#">Blog</a>
-                                    <ul class="submenu">
-                                        <li class="has-droupdown"><a href="#">Blog</a>
-                                            <ul class="submenu">
-                                                <li><a href="blog-grid-1.html">Blog Grid 1</a></li>
-                                                <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
-                                                <li><a href="blog-grid-3.html">Blog Grid 3</a></li>
-                                                <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
-                                                <li><a href="blog-standard.html">Blog Standard</a></li>
-                                                <li><a href="blog-carousel.html">Blog Carousel</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="has-droupdown"><a href="#">Blog Details</a>
-                                            <ul class="submenu">
-                                                <li><a href="blog-details-left-sidebar.html">Blog Details 1</a></li>
-                                                <li><a href="blog-details-right-sidebar.html">Blog Details 2</a></li>
-                                                <li><a href="blog-details.html">Blog Details 3</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
                                 <li class="has-droupdown"><a href="#">Shop</a>
                                     <ul class="submenu">
                                         <li><a href="shop.html">Shop Page</a></li>
@@ -265,27 +244,6 @@
                             <li><a href="coming-soon.html">Comming Soon</a></li>
                             <li><a href="login-register.html">Login/Register</a></li>
                             <li><a href="404.html">404 Error</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown"><a href="#">Blog</a>
-                        <ul class="submenu">
-                            <li class="has-droupdown"><a href="#">Blog</a>
-                                <ul class="submenu">
-                                    <li><a href="blog-grid-1.html">Blog Grid 1</a></li>
-                                    <li><a href="blog-grid-2.html">Blog Grid 2</a></li>
-                                    <li><a href="blog-grid-3.html">Blog Grid 3</a></li>
-                                    <li><a href="blog-grid-sidebar.html">Blog Grid Sidebar</a></li>
-                                    <li><a href="blog-standard.html">Blog Standard</a></li>
-                                    <li><a href="blog-carousel.html">Blog Carousel</a></li>
-                                </ul>
-                            </li>
-                            <li class="has-droupdown"><a href="#">Blog Details</a>
-                                <ul class="submenu">
-                                    <li><a href="blog-details-left-sidebar.html">Blog Details 1</a></li>
-                                    <li><a href="blog-details-right-sidebar.html">Blog Details 2</a></li>
-                                    <li><a href="blog-details.html">Blog Details 3</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                     <li class="has-droupdown"><a href="#">Shop</a>

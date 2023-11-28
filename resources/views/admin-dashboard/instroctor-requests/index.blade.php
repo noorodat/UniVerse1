@@ -1,6 +1,6 @@
 @extends('admin-layouts.master')
 
-@section('title', 'Courses')
+@section('title', 'Instructor requests')
 
 @section('content')
 
@@ -37,25 +37,23 @@
 							<!--column-->
 							<div class="col-xl-12 wow fadeInUp" data-wow-delay="1.5s">
 								<div class="table-responsive full-data">
-									<table class="table-responsive-lg table display dataTablesCard student-tab dataTable no-footer" id="example-student">
-										<thead>
+									<table class="text-center table-responsive-lg table display dataTablesCard student-tab dataTable no-footer" id="example-student">
+										<thead class="text-center">
 											<tr>
 												<th>
 													<input type="checkbox" class="form-check-input" id="checkAll" required="">
 												</th>
-												<th>Title</th>
-												<th>Department</th>
-												<th>Duration</th>
-												<th>Price</th>
-												<th>Created at</th>
-												<th>Instructor</th>
-												<th>Status</th>
+												<th>Name</th>
+												<th>Major</th>
+												<th>kind of cuorses?</th>
+												<th>why to accept?</th>
 												<th class="text-end">Action</th>
 											</tr>
 										</thead>
 										<tbody>
-											@foreach ($courses as $course)
+											@foreach ($requests as $request)
 											@include('admin-layouts.delete-popup')
+                                            @include('admin-layouts.make-instructor-popup')
 											<tr class="text-center">
 												<td>
 													<div class="checkbox me-0 align-self-center">
@@ -66,32 +64,19 @@
 													</div>
 												</td>
 												<td>
-													<div class="trans-list">
-														<img src="{{ url('/images/' . $course->image) }}" alt="" class="avatar avatar-sm me-3">
-														{{-- src="{{ url('/images/' . $cat->image) }}" --}}
-														<h4><a href="">{{ $course->title }}</a></h4>
+													<div>{{$request->user->name}}</div>
+												</td>
+												<td>
+													<div>{{$request->user->major}}</div>
+												</td>
+												<td>
+													<div>
+                                                        <div>{{$request->what_kind_of_courses}}</div>
 													</div>
 												</td>
 												<td>
-													<div>{{$course->department->title}}</div>
-												</td>
-												<td>
-													<div>{{$course->duration}} hrs</div>
-												</td>
-												<td>
-													<div>${{$course->price}}</div>
-												</td>
-												<td>
-													<div class="date">{{ $course->created_at->format('Y-m-d') }}</div>
-												</td>
-												<td>
-													<div class="d-flex">
-                                                        <div>{{$course->instructor->user->name}}</div>
-													</div>
-												</td>
-												<td>
-													<div class="d-flex">
-                                                        <div>{{ $course->status ? 'Active' : 'Not active' }}</div>
+													<div>
+                                                        <div>{{$request->why_to_accept}}</div>
 													</div>
 												</td>
 												<td>
@@ -102,9 +87,15 @@
 															</svg>
 														</div>
 														<div class="dropdown-menu dropdown-menu-end" style="position: fixed !important">
-                                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal3{{$course->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
-																	Delete
-															</button>
+															<form method="POST" action="{{ route('accept-instructor-request', ['userID' => $request->user->id, 'reqID' => $request->id]) }}">
+																@csrf
+																<button data-bs-toggle="modal" data-bs-target="#exampleModal1{{$request->user->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+																	Accept
+																</button>
+															</form>
+                                                            <button data-bs-toggle="modal" data-bs-target="#exampleModal3{{$request->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+                                                                Delete
+                                                        </button>
 														</div>
 													</div>
 												</td>

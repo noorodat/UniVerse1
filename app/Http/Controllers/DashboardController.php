@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Models\Department;
 use App\Models\Course;
 use App\Models\Transaction;
+use App\Models\InstructorRequest;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -310,12 +311,10 @@ class DashboardController extends Controller
         return view('admin-dashboard.instructors.index', compact('instructors'));
     }
 
-    public function makeInstructor(Request $request)
+    public function makeInstructor($userID)
     {
 
-        $studentID = $request->user_id;
-
-        $user = User::find($studentID);
+        $user = User::find($userID);
 
         $userName = $user->name;
 
@@ -334,7 +333,7 @@ class DashboardController extends Controller
 
         Instructor::create([
             'courses_number' => self::DEFAULT_NUMBER_OF_COURSES,
-            'user_id' => $studentID,
+            'user_id' => $userID,
             'restricted' => self::RESTRICTED,
             'rating' => 0,
             'earnings' => 0,
@@ -344,6 +343,25 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
+    public function showInstructorRequestsPage() {
+        $requests = InstructorRequest::all();
+        return view('admin-dashboard.instroctor-requests.index', compact('requests'));
+    }
+
+    public function acceptInstructorRequest($userID, $reqID) {
+        $instRequest = InstructorRequest::find($reqID);
+        $instRequest->delete();
+        $this->makeInstructor($userID);
+        flash()->addSuccess('Request Aceepted');
+        return redirect()->back();
+    }
+
+    public function deleteInstructorRequest($id) {
+        $instRequest = InstructorRequest::find($id);
+        $instRequest->delete();
+        flash()->addSuccess('Request Deleted');
+        return redirect()->back();
+    }
 
     /* ############################ END INSTRUCTOR FUNCTIONS ############################ */
 
@@ -356,71 +374,6 @@ class DashboardController extends Controller
         return view('admin-dashboard.courses.index', compact('courses'));
     }
 
-    public function addDashCoursePage()
-    {
-
-        $departments = Department::all();
-        $instructors = Instructor::all();
-
-        return view('admin-dashboard.courses.add-course', compact('departments', 'instructors'));
-    }
-
-    public function addCourse(Request $request)
-    {
-
-        $imageName = $this->uploadCourseImage($request);
-
-        // Validate the course inputs
-        $validator = Validator::make($request->all(), [
-            'title' => ['required', 'string', 'max:80'],
-            'department' => ['required'],
-            'instructor' => ['required'],
-        ]);
-
-        if ($validator->fails()) {
-            flash()->addError('Some error happened, Try again');
-            return redirect()->back();
-        }
-
-        $course_title = $request->input('title');
-        $instructorID = $request->input('instructor');
-
-
-        try {
-
-            $course = new Course();
-            $course::create([
-                'title' =>  $course_title,
-                'image' => $imageName,
-                'description' => "This is a default description",
-                'duration' => 0,
-                'number_of_lessons' => 0,
-                'number_of_students' => 0,
-                'price' => 1,
-                'status' => 1,
-                'rating' => 0,
-                'instructor_id' => $instructorID,
-                'department_id' => $request->input('department'),
-            ]);
-
-            // Update the number of courses column for the department
-            $department = Department::find($request->input('department'));
-            $department->number_of_courses = $department->number_of_courses + 1;
-            $department->save();
-
-            // Update the courses_number of the instructor
-            $instructor = Instructor::find($instructorID);
-            $instructor->courses_number += 1;
-
-            $instructor->save();
-        } catch (\Exception $e) {
-            flash()->addError("An error occurred: " . $e->getMessage());
-            return redirect()->back();
-        }
-
-        flash()->addSuccess($course_title . ' course added successfully');
-        return redirect()->back();
-    }
 
     public function deleteCourse($id)
     {
@@ -452,91 +405,4 @@ class DashboardController extends Controller
         return redirect()->back();
     }
 
-    public function editCourse(Course $course)
-    {
-        $currentDepartment = $course->department;
-        $currentInstructor = $course->instructor;
-        $departments = Department::all();
-        $instructors = Instructor::all();
-        return view('admin-dashboard.courses.edit-course', compact('course', 'currentDepartment', 'currentInstructor', 'departments', 'instructors'));
-    }
-
-    public function updateCourse(Request $request)
-    {
-
-        $imageName = self::uploadCourseImage($request);
-
-        $title = $request->input('title');
-        $department = $request->input('department');
-        $instructor = $request->input('instructor');
-
-        $course = Course::find($request->input('courseID'));
-
-
-        try {
-            $course->image = $imageName;
-            $course->title = $title;
-            $course->department_id = $department;
-            $course->instructor_id = $instructor;
-            $course->save();
-        } catch (\Exception $e) {
-            flash()->addError('Error while updating the course');
-            return redirect()->back();
-        }
-
-        flash()->addSuccess($course->title . ' updated successfully');
-        return redirect()->back();
-    }
-
-    //  Upload the course image
-    public function uploadCourseImage(Request $request)
-    {
-
-        $course_id = $request->CourseID;
-        $course = Course::find($course_id);
-
-        if ($course) {
-            $imageName = $course->image;
-        } else {
-            $imageName = 'defaultCourseImage.png';
-        }
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-        }
-        return $imageName;
-    }
-
-
-
-    // public function validateAddStudentInputs(Request $request) {
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => [
-    //             'required',
-    //             'string',
-    //             'email',
-    //             'max:255',
-    //             'unique:'.User::class,
-    //             function ($attribute, $value, $fail) {
-    //                 // Define the allowed domain ending
-    //                 $allowedDomainEnding = 'edu.jo';
-
-    //                 // Extract the email domain and check if it ends with 'edu.jo'
-    //                 $emailDomain = strtolower(substr(strrchr($value, "@"), 1));
-    //                 if (!str_ends_with($emailDomain, $allowedDomainEnding)) {
-    //                     $fail('Registration is limited to university students in Jordan');
-    //                 }
-    //             },
-    //         ],
-    //         'password' => ['required', 'confirmed', Rules\Password::defaults()],
-    //         'major' => 'required',
-    //         'phone' => 'required|regex:/^\d{10}$/',
-    //     ]);
-    // }
-
-
-    /* ############################ END COURSE FUNCTIONS ############################ */
 }

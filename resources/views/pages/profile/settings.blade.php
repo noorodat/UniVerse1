@@ -116,28 +116,33 @@
 
                                         <div class="tab-pane fade" id="password" role="tabpanel" aria-labelledby="password-tab">
                                             <!-- Start Profile Row  -->
-                                            <form action="#" class="rbt-profile-row rbt-default-form row row--15">
+                                            <form method="post" action="{{ route('password.update') }}" class="rbt-profile-row rbt-default-form row row--15">
+                                                @csrf
+                                                @method('PUT')
                                                 <div class="col-12">
                                                     <div class="rbt-form-group">
-                                                        <label for="currentpassword">Current Password</label>
-                                                        <input id="currentpassword" type="password" placeholder="Current Password">
+                                                        <x-input-label for="current_password" :value="__('Current Password')" />
+                                                        <x-text-input id="current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
+                                                        <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="rbt-form-group">
-                                                        <label for="newpassword">New Password</label>
-                                                        <input id="newpassword" type="password" placeholder="New Password">
+                                                        <x-input-label for="password" :value="__('New Password')" />
+                                                        <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                                                        <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="rbt-form-group">
-                                                        <label for="retypenewpassword">Re-type New Password</label>
-                                                        <input id="retypenewpassword" type="password" placeholder="Re-type New Password">
+                                                        <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                                                        <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
+                                                        <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
                                                     </div>
                                                 </div>
                                                 <div class="col-12 mt--10">
                                                     <div class="rbt-form-group">
-                                                        <a class="rbt-btn btn-gradient" href="#">Update Password</a>
+                                                        <button class="rbt-btn btn-gradient" type="submit">Update Password</button>
                                                     </div>
                                                 </div>
                                             </form>
@@ -145,11 +150,6 @@
                                         </div>
 
                                     </div>
-
-
-
-
-
                                 </div>
                             </div>
                             <!-- End Instructor Profile  -->

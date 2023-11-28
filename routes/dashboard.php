@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\InstructorRequestController;
 use App\Http\Controllers\CourseController;
 
 /* --------------------- START DASHBOARD PAGES --------------------- */
@@ -43,10 +44,6 @@ Route::middleware(["auth:admin"])->group(function () {
     // Courses page
     Route::get('/dashboard/courses', [DashboardController::class, 'indexCourse'])->name('go-dash-course');
 
-    // Add course page
-    Route::get('/dashboard/add-course', [DashboardController::class, 'addDashCoursePage'])->name('go-add-dash-course');
-
-
     /* --------------------- END DASHBOARD PAGES --------------------- */
 
     /* --------------------- START DASHBOARD FUNCTIONS --------------------- */
@@ -63,12 +60,12 @@ Route::middleware(["auth:admin"])->group(function () {
     Route::post('/students/{student}/make-instructor', [DashboardController::class, 'makeInstructor'])->name('makeInstructor');
 
     Route::resource('instructor', InstructorController::class);
+    Route::get('/dashboard/instructor-requests', [DashboardController::class, 'showInstructorRequestsPage'])->name('go-instructor-requests');
+    Route::post('/dashboard/accept-instructor-request/{userID}/{reqID}', [DashboardController::class, 'acceptInstructorRequest'])->name('accept-instructor-request');
+    Route::delete('delete/instructor-requests/{id}', [DashboardController::class, 'deleteInstructorRequest'])->name('delete-instructor-request');
 
     // course routes
-    Route::post('add-course', [DashboardController::class, 'addCourse'])->name('add-dash-course');
     Route::delete('delete-course/{id}', [DashboardController::class, 'deleteCourse'])->name('delete-dash-course');
-    Route::get('edit-course/{course}', [DashboardController::class, 'editCourse'])->name('edit-dash-course-page');
-    Route::patch('update-course', [DashboardController::class, 'updateCourse'])->name('update-dash-course');
 
     /* --------------------- END DASHBOARD FUNCTIONS --------------------- */
 });

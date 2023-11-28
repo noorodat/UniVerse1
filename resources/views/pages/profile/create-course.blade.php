@@ -38,83 +38,6 @@
                                                 <small class="d-block mt_dec--5"><i class="feather-info"></i> HTML or plain text allowed, no emoji This field is used for search, so please be descriptive!</small>
                                             </div>
 
-                                            {{-- <div class="course-field mb--15 edu-bg-gray">
-                                                <h6>Course Settings</h6>
-                                                <div class="rbt-course-settings-content">
-                                                    <div class="row g-5">
-                                                        <div class="col-lg-8">
-                                                            <div class="tab-content">
-                                                                <div class="tab-pane fade advance-tab-content-1 active show" id="general" role="tabpanel" aria-labelledby="general-tab">
-                                                                    <div class="course-field mb--20">
-                                                                        <label class="form-check-label d-inline-block" for="flexSwitchCheckDefault">Public
-                                                                            Course</label>
-                                                                        <div class="form-check form-switch mb--10">
-                                                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                                        </div>
-                                                                        <small><i class="feather-info"></i> Make
-                                                                            This Course Public. No enrollment
-                                                                            required.</small>
-                                                                    </div>
-
-                                                                </div>
-
-                                                                <div class="tab-pane fade advance-tab-content-1" id="content" role="tabpanel" aria-labelledby="content-tab">
-                                                                    <div class="rbt-content-drip-content">
-                                                                        <div class="course-field pb--20">
-                                                                            <p class="rbt-checkbox-wrapper mb--5">
-                                                                                <input id="rbt-checkbox-1" name="rbt-checkbox-1" type="checkbox" value="yes">
-                                                                                <label for="rbt-checkbox-1">Enable</label>
-                                                                            </p>
-                                                                            <small><i class="feather-info"></i>
-                                                                                Enable / Disable content
-                                                                                drip</small>
-                                                                        </div>
-                                                                        <hr class="rbt-separator m-0">
-
-                                                                        <div class="rbt-course-drip-option pt--20">
-                                                                            <h6 class="mb--10">Content Drip Type
-                                                                            </h6>
-                                                                            <p class="mb--10 b3">You can schedule your
-                                                                                course content using the above
-                                                                                content drip options.</p>
-                                                                            <div class="course-drop-option">
-                                                                                <div class="rbt-form-check">
-                                                                                    <input class="form-check-input" type="radio" name="rbt-radio" id="rbt-radio-1">
-                                                                                    <label class="form-check-label" for="rbt-radio-1"> Schedule
-                                                                                        course contents by
-                                                                                        date</label>
-                                                                                </div>
-                                                                                <div class="rbt-form-check">
-                                                                                    <input class="form-check-input" type="radio" name="rbt-radio" id="rbt-radio-2">
-                                                                                    <label class="form-check-label" for="rbt-radio-2"> Content
-                                                                                        available after X days from
-                                                                                        enrollment</label>
-                                                                                </div>
-                                                                                <div class="rbt-form-check">
-                                                                                    <input class="form-check-input" type="radio" name="rbt-radio" id="rbt-radio-3">
-                                                                                    <label class="form-check-label" for="rbt-radio-3"> Course
-                                                                                        content available
-                                                                                        sequentially</label>
-                                                                                </div>
-                                                                                <div class="rbt-form-check">
-                                                                                    <input class="form-check-input" type="radio" name="rbt-radio" id="rbt-radio-4">
-                                                                                    <label class="form-check-label" for="rbt-radio-4"> Course
-                                                                                        content unlocked after
-                                                                                        finishing
-                                                                                        prerequisites</label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                        </div>
-
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div> --}}
-
                                             <div class="course-field mb--15 edu-bg-gray">
                                                 <h6>Course Price</h6>
                                                 <div class="rbt-course-settings-content">
@@ -330,22 +253,34 @@
                             <div class="col-lg-12">
                                 <h5 class="modal-title mb--20" id="exampleModalLabel">Add Topic</h5>
                                 <div class="course-field mb--20">
-                                    <label for="modal-field-1">Topic title</label>
+                                    <label for="">Topic title</label>
                                     <input name="introTopic" id="modal-field-1" type="text">
                                     <input name="instructor" type="hidden" value="{{$instructor->id}}">
                                     <small><i class="feather-info"></i> Topic titles are displayed publicly wherever required. Each topic may contain one or more video and file</small>
                                 </div>
                                 <div class="course-field mb--20">
-                                    <label for="modal-field-2">Video</label>
+                                    <label for="">Video</label>
                                     {{-- <textarea id="modal-field-2"></textarea> --}}
                                     <input name="courseVideo" type="file">
                                     <small><i class="feather-info"></i>Add a video for the topic.</small>
+                                </div>
+                                <div class="course-field mb--20">
+                                    <label for="">Video Title</label>
+                                    {{-- <textarea id="modal-field-2"></textarea> --}}
+                                    <input name="videoTitle" type="text">
+                                    <small><i class="feather-info"></i>Add a video title.</small>
                                 </div>
                                 <div class="course-field mb--20">
                                     <label for="modal-field-2">File</label>
                                     {{-- <textarea id="modal-field-2"></textarea> --}}
                                     <input name="courseFile" type="file">
                                     <small><i class="feather-info"></i> Add a file for the topic.</small>
+                                </div>
+                                <div class="course-field mb--20">
+                                    <label for="">File Title</label>
+                                    {{-- <textarea id="modal-field-2"></textarea> --}}
+                                    <input name="fileTitle" type="text">
+                                    <small><i class="feather-info"></i>Add a file title</small>
                                 </div>
                             </div>
                         </div>

@@ -111,7 +111,8 @@
 																	Make instructor
 																</button>
 															</form>
-															<a class="dropdown-item" href="{{ route('student.edit', ['student' => $student]) }}">Edit</a>																<button data-bs-toggle="modal" data-bs-target="#exampleModal{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
+															<a class="dropdown-item" href="{{ route('student.edit', ['student' => $student]) }}">Edit</a>
+															<button data-bs-toggle="modal" data-bs-target="#exampleModal{{$student->id}}" class="w-100 dropdown-item" type="button" style="border: none; outline: none; background-color: inherit; text-align: left">
 																	Delete
 																</button>
 														</div>

@@ -7,6 +7,7 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\InstructorRequestController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -60,13 +61,15 @@ Route::get('/profile/enrolledCourses/{user}', [ProfileController::class, 'showEn
 // Create Course
 Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->name('go-create-course');
 
-Route::get('/createcourse', [ProfileController::class, 'showCreateCourse'])->name('go-create-course');
 
 // Show instructor's created courses
 Route::get('/my-courses', [ProfileController::class, 'showMyCourses'])->name('go-my-courses');
 
 // Show sttings
 Route::get('/settings', [ProfileController::class, 'showSettings'])->name('go-profile-settings');
+
+// Instructor Request Resource
+Route::resource('instructor-request', InstructorRequestController::class);
 
 /* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
 

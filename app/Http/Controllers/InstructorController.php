@@ -74,7 +74,7 @@ class InstructorController extends Controller
         $instructor = Instructor::find($instructor_id);
         $instructor->courses_number++;
         $instructor->save();
-
+        flash()->addSuccess('Course Created Successfully!');
         return redirect()->route('go-home');
     }
 
@@ -98,6 +98,8 @@ class InstructorController extends Controller
         CourseMaterial::create([
             'course_id' => $course_id,
             'video' => $videoInfo['videoName'],
+            'video_name' => $request->input('videoTitle'),
+            'file_name' => $request->input('fileTitle'),
             'video_duration' => $videoInfo['duration'],
             'file' => $this->uploadCourseFile($request),
             'curriculum_id' => $topic_id,

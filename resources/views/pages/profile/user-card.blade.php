@@ -60,7 +60,7 @@
                                         </span>
                                     </a>
                                     @else
-                                    <a class="rbt-btn btn-md hover-icon-reverse" href="create-course.html">
+                                    <a class="rbt-btn btn-md hover-icon-reverse" href="{{route('instructor-request.create')}}">
                                         <span class="icon-reverse-wrapper">
                                             <span class="btn-text">Become an instructor</span>
                                             <span class="btn-icon"><i class="feather-arrow-right"></i></span>
