@@ -101,6 +101,9 @@ Route::get('/add-content-to-topic/{course}/{courseTopic}', [CourseController::cl
 // Add course content to topic
 Route::post('/add-content-to-topic/{course}/{courseTopic}', [CourseController::class, 'addContentToTopic'])->name('add-content-to-topic');
 
+// Delete course content
+Route::post('/delete-course-content/{id}', [CourseController::class, 'deleteCourseContent'])->name('delete-course-content');
+
 // Payment success page
 Route::get('/success', function() {
     return view('pages.success');

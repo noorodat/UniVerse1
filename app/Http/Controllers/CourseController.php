@@ -236,6 +236,7 @@ class CourseController extends Controller
     // Upload the video with it's duration
     public function uploadVideo(Request $request, $video_name)
     {
+        $duration = NULL;
         $videoName = $video_name;
         if ($videoName) {
             // Get the vido duration
@@ -370,6 +371,12 @@ class CourseController extends Controller
         }
     }
 
+    public function deleteCourseContent($id) {
+        $mats = CourseMaterial::find($id);
+        $mats->delete();
+        flash()->addSuccess('Content Deleted Successfully');
+        return redirect()->back();
+    }
 
     /**
      * Remove the specified resource from storage.

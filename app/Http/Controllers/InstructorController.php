@@ -88,7 +88,11 @@ class InstructorController extends Controller
             'duration' => 0,
         ]);
 
-        $this->uploadCourseMaterials($request, $course_id, $topic->id);
+        if($this->uploadCourseMaterials($request, $course_id, $topic->id)) {
+            $topic->number_of_files = 0;
+            $topic->save();
+        }
+
     }
 
     // Can be used for intro and for usual uploading
@@ -104,6 +108,9 @@ class InstructorController extends Controller
             'file' => $this->uploadCourseFile($request),
             'curriculum_id' => $topic_id,
         ]);
+        if($this->uploadCourseFile($request) == NULL) {
+            return true;
+        }
     }
 
     public function uploadCourseVideo(Request $request)
@@ -125,6 +132,7 @@ class InstructorController extends Controller
 
     public function uploadCourseFile(Request $request)
     {
+        $fileName = NULL;
         if ($request->hasFile('courseFile')) {
             $file = $request->file('courseFile');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
@@ -145,7 +153,6 @@ class InstructorController extends Controller
 
     public function uploadCoursePreview(Request $request)
     {
-
         if ($request->hasFile('localVideo')) {
             $video = $request->file('localVideo');
             $videoName = time() . '.' . $video->getClientOriginalExtension();

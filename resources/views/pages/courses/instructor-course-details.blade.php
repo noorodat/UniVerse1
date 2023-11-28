@@ -136,22 +136,28 @@
                                                         <div class="edu-accordion-body">
                                                             <ul>
                                                                 @foreach ($topicCollection as $collection)
-                                                                @if ($collection->file_name)
+                                                                @if ($collection->file_name != NULL)
                                                                 <li>
                                                                     <div class="text">
                                                                         <i class="icon-draft-line"></i>
                                                                         {{$collection->file_name}}
                                                                     </div>
                                                                     @if (!$isEnrolled)
-                                                                    <div class="icon" style="cursor: pointer">
-                                                                        <a href="{{ route('course.edit', $course->id) }}?topicTitle={{ $topicTitle }}&collection={{ $collection->file }}&file_name={{$collection->file_name}}">
+                                                                    <div class="icon d-flex" style="cursor: pointer">
+                                                                        <a class="p-2" href="{{ route('course.edit', $course->id) }}?topicTitle={{ $topicTitle }}&collection={{ $collection->file }}&file_name={{$collection->file_name}}">
                                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                                         </a>
+                                                                        <form enctype="multipart/form-data" method="POST" action="{{ route('delete-course-content', $collection->id) }}">
+                                                                            @csrf
+                                                                            <button type="submit" style="border: none; outline: none; background:white" class="p-2">
+                                                                                <i class="fa-solid fa-trash text-danger"></i>                                                                        
+                                                                            </button>
+                                                                        </form>
                                                                     </div>
                                                                     @endif
                                                                 </li>
                                                                 @endif
-                                                                @if ($collection->video_name)
+                                                                @if ($collection->video_name != NULL)
                                                                 <li>
                                                                     <div class="text">
                                                                         <i class="fa-solid fa-video"></i>
@@ -159,9 +165,15 @@
                                                                     </div>
                                                                     @if (!$isEnrolled)
                                                                     <div class="icon" style="cursor: pointer">
-                                                                        <a href="{{ route('course.edit', $course->id) }}?topicTitle={{ $topicTitle }}&collection={{ $collection->video }}&file_name={{$collection->video_name}}">
+                                                                        <a class="p-2" href="{{ route('course.edit', $course->id) }}?topicTitle={{ $topicTitle }}&collection={{ $collection->video }}&file_name={{$collection->video_name}}">
                                                                             <i class="fa-solid fa-pen-to-square"></i>
                                                                         </a>
+                                                                        <form enctype="multipart/form-data" method="POST" action="{{ route('delete-course-content', $collection->id) }}">
+                                                                            @csrf
+                                                                            <button type="submit" style="border: none; outline: none; background:white" class="p-2">
+                                                                                <i class="fa-solid fa-trash text-danger"></i>                                                                        
+                                                                            </button>
+                                                                        </form>
                                                                     </div>
                                                                     @endif
                                                                 </li>
