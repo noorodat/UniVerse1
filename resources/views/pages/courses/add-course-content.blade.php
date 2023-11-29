@@ -42,6 +42,9 @@
                         @if (session()->has('fileErrorMessage'))
                         <div class="alert alert-danger text-center">{{ session('fileErrorMessage') }}</div>
                         @endif
+                        @if (session()->has('topicNameEmpty'))
+                        <div class="alert alert-danger text-center">{{ session('topicNameEmpty') }}</div>
+                        @endif
                         <div class="col-lg-12">
                             <button class="rn-btn edu-btn w-100" name="submit" type="submit">
                                 Add content<i class="icon-arrow-right-line-right"></i>

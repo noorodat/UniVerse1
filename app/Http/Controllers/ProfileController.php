@@ -65,6 +65,9 @@ class ProfileController extends Controller
             $imageName = updateFile($request, 'image', 'images', $user->image, 'image');
         }
 
+        if($imageName == NULL) {
+            $imageName = $user->image;
+        }
 
         $user->fill([
             'name' => $request->name,

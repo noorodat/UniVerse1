@@ -120,7 +120,7 @@
                     <!-- Start Widget Wrapper  -->
                     <div class="edu-course-widget widget-shortby mt--40">
                         <div class="inner">
-                            <h5 class="widget-title">Short By Rating</h5>
+                            <h5 class="widget-title">Sort By Rating</h5>
                             <div class="content">
                                 <div class="edu-form-check">
                                     <input type="checkbox" id="rating-check1">
@@ -190,7 +190,7 @@
                             <div class="inner">
                                 <div class="thumbnail">
                                     <a href="{{route("course.show", $course)}}">
-                                        <img class="w-100" src="{{ url('/images/' . $course->image) }}" alt="{{$course->title}} image">
+                                        <img class="w-100" src="{{ asset($course->image) }}" alt="{{$course->title}} image">
                                     </a>
                                     {{-- <div class="wishlist-top-right">
                                         <button class="wishlist-btn"><i class="icon-Heart"></i></button>

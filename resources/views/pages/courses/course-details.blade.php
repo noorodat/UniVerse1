@@ -172,8 +172,8 @@
                                 <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                                     <div class="course-tab-content">
                                         <div class="course-author-wrapper">
-                                            <div class="thumbnail w-50">
-                                                <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
+                                            <div class="thumbnail">
+                                                <img width="200px" src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
                                             </div>
                                             <div class="author-content">
                                                 <h6 class="title">
@@ -355,6 +355,7 @@
                     </div>
                 </div>
 
+                @if(count($relatedCourses) > 0)
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="edu-course-wrapper pt--65">
@@ -481,6 +482,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+
             </div>
         </div>
 

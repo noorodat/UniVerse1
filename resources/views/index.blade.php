@@ -135,7 +135,7 @@
                                                 <i class="icon-Smile"></i>
                                             </div>
                                             <div class="content">
-                                                <h6 class="title">900K</h6>
+                                                <h6 class="title">{{$counts['users']}}</h6>
                                                 <span class="subtitle">Total Students</span>
                                             </div>
                                         </div>
@@ -319,7 +319,7 @@
                                                         href="{{ route('course.show', $randomCourse) }}">{{ $randomCourse->title }}</a>
                                                 </h6>
 
-                                                <p class="description">{{ $randomCourse->description }}</p>
+                                                <p class="description desc-break">{{ $randomCourse->description }}</p>
 
                                                 <div class="price-list price-style-02">
                                                     <div class="price current-price">${{ $randomCourse->price }}</div>
@@ -718,9 +718,9 @@
                                         <img src="assets/images/icons/winner-04.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="449">00</span>
+                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['instructors']}}">00</span>
                                         </h3>
-                                        <span>Learners & counting</span>
+                                        <span>Instructors</span>
                                     </div>
                                 </div>
                             </div>
@@ -735,7 +735,7 @@
                                         <img src="assets/images/icons/winner-05.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="330">00</span>
+                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['coursesAndVideos']}}">00</span>
                                         </h3>
                                         <span>Courses & Video</span>
                                     </div>
@@ -752,9 +752,9 @@
                                         <img src="assets/images/icons/winner-06.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="275">50</span>
+                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['enrolledStudents']}}">00</span>
                                         </h3>
-                                        <span>Certified Students</span>
+                                        <span>Enrolled Students</span>
                                     </div>
                                 </div>
                             </div>
@@ -769,9 +769,9 @@
                                         <img src="assets/images/icons/winner-07.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="378">00</span>
+                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['users']}}">00</span>
                                         </h3>
-                                        <span>Winning Award</span>
+                                        <span>Users</span>
                                     </div>
                                 </div>
                             </div>

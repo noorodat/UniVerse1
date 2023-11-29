@@ -104,6 +104,13 @@ Route::post('/add-content-to-topic/{course}/{courseTopic}', [CourseController::c
 // Delete course content
 Route::post('/delete-course-content/{id}', [CourseController::class, 'deleteCourseContent'])->name('delete-course-content');
 
+// Delete course topic page
+Route::get('delete-course-topic/{course}/{topicTitle}', [CourseController::class, 'deleteCourseTopicPage'])->name('go-delete-topic');
+
+// Delete course topic with it's content
+Route::post('delete-course-topic/{course}/{topicTitle}', [CourseController::class, 'deleteCourseTopic'])->name('delete-topic');
+
+
 // Payment success page
 Route::get('/success', function() {
     return view('pages.success');

@@ -1,5 +1,7 @@
 "use strict"
 
+const { default: Swal } = require("sweetalert2");
+
 var themeOptionArr = {
 			typography: '',
 			version: '',
@@ -16,7 +18,6 @@ var themeOptionArr = {
 		};
 		
 		
-
 /* Cookies Function */
 function setCookie(cname, cvalue, exhours) 
 	{

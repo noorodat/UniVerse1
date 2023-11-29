@@ -46,7 +46,7 @@
                                                 <div class="user-content">
                                                     <div class="user-info">
                                                         <div class="user-img">
-                                                            <img src="{{ url('/images/' . $instructor->user->image) }}" alt="" class="avatar avatar-xl">
+                                                            <img src="{{ asset($instructor->user->image) }}" alt="" class="avatar avatar-xl">
                                                         </div>
                                                         <div class="user-details">
                                                             <h4 class="user-name mb-0">{{$instructor->user->name}}</h4>

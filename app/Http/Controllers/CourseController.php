@@ -10,34 +10,16 @@ use App\Models\Department;
 use App\Models\Instructor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use getID3;
 
 
 class CourseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $courses = Course::all();
-        // return view('admin-dashboard.courses.index', compact('courses'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        // return view('admin-dashboard.courses.add-course');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -178,18 +160,19 @@ class CourseController extends Controller
         if (pathinfo($file, PATHINFO_EXTENSION) == "pdf") {
             $material->file_name = $fileName;
             $pdf_name = updateFile($request, 'new_file_content', 'uploads/files', $material->file, 'file');
-            $material->file = $pdf_name;
+            $material->file = ($pdf_name == NULL ? $material->file : $pdf_name);
             $material->save();
         } else {
             $material->video_name = $fileName;
             $videoInfo = updateFile($request, 'new_file_content', 'uploads/videos', $material->video, 'video');
-            $video_name = $videoInfo["videoName"];
-            $video_duration = $videoInfo['duration'];
+            $video_name = ($videoInfo == NULL ? $material->video : $videoInfo['videoName']);
+            $video_duration = ($videoInfo == NULL ? $material->video_duration : $videoInfo['duration']);
             $material->video = $video_name;
             $material->video_duration = $video_duration;
             $material->save();
         }
 
+        flash()->addSuccess('Content updated successfully');
         return redirect()->route('course.show', $course);
     }
 
@@ -206,64 +189,18 @@ class CourseController extends Controller
         $coursePrice = $request->input('coursePrice');
         $courseDescription = $request->input('courseDescription');
 
-        $imageName = $this->uploadImage($request, $oldCourseImage);
-        $videoInfo = $this->uploadVideo($request, $oldCourseVideo);
+        $imageName = updateFile($request, 'courseImage', 'images', $oldCourseImage, 'image');
+        $videoInfo = updateFile($request, 'courseVideo', 'uploads/videos', $oldCourseVideo, 'video');
 
 
-        $course->image = $imageName;
-        $course->preview_video = $videoInfo['videoName'];
+        $course->image = ($imageName == NULL ? $oldCourseImage : $imageName);
+        $course->preview_video = ($videoInfo == NULL ? $oldCourseVideo : $videoInfo['videoName']);
         $course->price = $coursePrice;
         $course->description = $courseDescription;
 
         $course->save();
 
         return redirect()->route('course.show', $course);
-    }
-
-    public function uploadFile(Request $request, $pdfName)
-    {
-        $fileName = $pdfName;
-        if ($request->hasFile('new_file_content') || $request->hasFile('topicFile')) {
-            $file = $request->file('new_file_content') ?? $request->file('topicFile');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/files'), $fileName);
-        }
-        return $fileName;
-    }
-
-    // Upload the video with it's duration
-    // public function uploadVideo(Request $request, $video_name)
-    // {
-    //     $duration = NULL;
-    //     $videoName = $video_name;
-    //     if ($videoName) {
-    //         // Get the vido duration
-    //         $path = public_path('uploads/videos/' . $videoName);
-    //         $duration = $this->getVideoDuration($path);
-    //     }
-    //     if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content') || $request->hasFile('topicVideo')) {
-    //         $video = $request->file('courseVideo') ?? $request->file('new_file_content') ?? $request->file('topicVideo');
-    //         $videoName = time() . '.' . $video->getClientOriginalExtension();
-    //         $video->move(public_path('uploads/videos'), $videoName);
-
-    //         // Get the vido duration
-    //         $path = public_path('uploads/videos/' . $videoName);
-    //         $duration = $this->getVideoDuration($path);
-    //     }
-    //     return [
-    //         'videoName' => $videoName,
-    //         'duration' => $duration,
-    //     ];
-    // }
-    public function uploadImage(Request $request, $image_name)
-    {
-        $imageName = $image_name;
-        if ($request->hasFile('courseImage')) {
-            $image = $request->file('courseImage');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-        }
-        return $imageName;
     }
 
     public function showAddCourseContent(Course $course)
@@ -278,13 +215,17 @@ class CourseController extends Controller
         $videoTitle = $request->input('videoTitle');
         $fileTitle = $request->input('fileTitle');
 
-        $videoInfo = $this->uploadVideo($request, "");
-        $videoName = $videoInfo['videoName'];
-        $videoduration = $videoInfo['duration'];
-        $fileName = $this->uploadFile($request, "");
+        $videoInfo = uploadFile($request, 'topicVideo', 'uploads/videos', 'video');
+        if($videoInfo !== NULL) {
+            $videoName = $videoInfo['videoName'];
+            $videoDuration = $videoInfo['duration'];
+        }
+        $fileName = uploadFile($request, 'topicFile', 'uploads/files', 'file');
 
-        if ($videoName == "" && $fileName == "") {
+        if ($videoInfo == NULL && $fileName == NULL) {
             return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');
+        } else if($topicName == NULL) {
+            return redirect()->back()->with('topicNameEmpty', 'Topic name is empty');
         }
 
         $courseTopic = CourseCurriculum::create([
@@ -297,11 +238,11 @@ class CourseController extends Controller
 
 
         CourseMaterial::create([
-            'video_name' => $videoName != "" ? $videoTitle : null,
-            'video_duration' => $videoName != "" ? $videoduration : null,
-            'file_name' => $fileName != "" ? $fileTitle : null,
-            'video' => $videoName != "" ? $videoName : null,
-            'file' => $fileName != "" ? $fileName : null,
+            'video_name' => $videoInfo != NULL ? $videoTitle : NULL,
+            'video_duration' => $videoInfo != NULL ? $videoDuration : NULL,
+            'file_name' => $fileName != NULL ? $fileTitle : NULL,
+            'video' => $videoInfo != NULL ? $videoName : NULL,
+            'file' => $fileName != NULL ? $fileName : NULL,
             'course_id' => $course->id,
             'curriculum_id' => $courseTopic->id,
         ]);
@@ -327,60 +268,84 @@ class CourseController extends Controller
         $videoTitle = $request->input('videoTitle');
         $fileTitle = $request->input('fileTitle');
 
-        $videoInfo = $this->uploadVideo($request, '');
-        $videoName = $videoInfo['videoName'];
-        $videoDuration = $videoInfo['duration'];
-        $fileName = $this->uploadFile($request, '');
+        $validator = Validator::make($request->all(), [
+            'videoTitle' => $request->file('topicVideo') != NULL ? 'required' : '',
+            'fileTitle' => $request->file('topicFile') != NULL ? 'required' : '',
+        ]);
+
+        if ($validator->fails()) {
+            flash()->addError('A title must be added for the File/Video');
+            return redirect()->back();
+        }
+
+        $videoInfo = uploadFile($request, 'topicVideo', 'uploads/videos', 'video');
+        $fileName =  uploadFile($request, 'topicFile', 'uploads/files', 'file');
+
 
         // If the user didnt add anything
-        if ($videoName == '' && $fileName == '') {
-            return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');
+        if ($videoInfo == NULL && $fileName == NULL) {
+            flash()->addError('one file must be added');
+            return redirect()->back();
+        }
+
+        if($videoInfo !== NULL) {
+            $videoName = $videoInfo['videoName'];
+            $videoDuration = $videoInfo['duration'];
         }
 
         CourseMaterial::create([
-            'video_name' => $videoName != "" ? $videoTitle : null,
-            'video_duration' => $videoName != "" ? $videoDuration : null,
-            'file_name' => $fileName != "" ? $fileTitle : null,
-            'video' => $videoName != "" ? $videoName : null,
-            'file' => $fileName != "" ? $fileName : null,
+            'video_name' => $videoInfo !== NULL ? $videoTitle : null,
+            'video_duration' => $videoInfo !== NULL ? $videoDuration : null,
+            'file_name' => $fileName !== NULL ? $fileTitle : null,
+            'video' => $videoInfo !== NULL ? $videoName : null,
+            'file' => $fileName !== NULL ? $fileName : null,
             'course_id' => $courseID,
             'curriculum_id' => $topic->id,
         ]);
 
         $course = Course::find($courseID);
 
+        flash()->addSuccess('Content added successfully');
         return redirect()->route('course.show', $course);
     }
 
-    public function getVideoDuration($videoPath)
+    public function deleteCourseContent($id)
     {
-        $getID3 = new \getID3;
-        $file = $getID3->analyze($videoPath);
-
-        if (isset($file['playtime_seconds'])) {
-            $playtime_seconds = $file['playtime_seconds'];
-
-            // Format the duration as "00:00"
-            $formattedDuration = gmdate('i:s', $playtime_seconds);
-
-            return $formattedDuration;
-        } else {
-            return 'N/A';
-        }
-    }
-
-    public function deleteCourseContent($id) {
         $mats = CourseMaterial::find($id);
+        $pathToDelete = $mats->video ?? $mats->file;
+        deleteFile($pathToDelete);
         $mats->delete();
         flash()->addSuccess('Content Deleted Successfully');
         return redirect()->back();
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Course $course)
-    {
-        //
+    public function deleteCourseTopicPage($courseID, $topicTitle) {
+        return view('pages.courses.delete-topic-confirmation', compact('courseID', 'topicTitle'));
     }
+
+    public function deleteCourseTopic(Request $request, $courseID, $topicTitle) {
+        if($request->input('topicTitleConfirmation') !== $topicTitle) {
+            flash()->addError('Typo with the topic title');
+            return redirect()->back();
+        }
+        else {
+            $courseTopic = CourseCurriculum::where('title', $topicTitle)->where('course_id', $courseID)->first();
+            // dd($courseTopic);
+            $topicMats = CourseMaterial::where('curriculum_id', $courseTopic->id)->where('course_id', $courseID)->get();
+            if($topicMats) {
+                foreach($topicMats as $topicMat) {
+                    $pathToDelete = $topicMat->file ?? $topicMat->video;
+                    deleteFile($pathToDelete);
+                    $topicMat->delete();
+                }
+            }
+            $courseTopic->delete();
+            $course= Course::find($courseID);
+            $course->number_of_students--;
+            $course->save();
+            flash()->addSuccess('Topic deleted');
+            return redirect()->route('course.show', $course);
+        }
+    }
+
 }

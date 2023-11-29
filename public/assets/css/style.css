@@ -21236,8 +21236,6 @@ Gallery Item
     margin-right: 30px;
 }
 .course-author-wrapper .thumbnail img {
-    width: 100%;
-    height: 100%;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -22456,4 +22454,15 @@ Gallery Item
 
 #userName:hover {
     color: black !important;
+}
+
+a.delete-topic-hover:hover {
+    color: white !important;
+}
+
+.desc-break {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 40ch; /* Display 30 characters */
 }

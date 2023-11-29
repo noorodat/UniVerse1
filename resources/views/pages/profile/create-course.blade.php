@@ -262,13 +262,13 @@
                                     <label for="">Video</label>
                                     {{-- <textarea id="modal-field-2"></textarea> --}}
                                     <input name="courseVideo" type="file">
-                                    <small><i class="feather-info"></i>Add a video for the topic.</small>
+                                    <small class="text-danger"><i class="feather-info"></i>*Add a video for the topic.</small>
                                 </div>
                                 <div class="course-field mb--20">
                                     <label for="">Video Title</label>
                                     {{-- <textarea id="modal-field-2"></textarea> --}}
                                     <input name="videoTitle" type="text">
-                                    <small><i class="feather-info"></i>Add a video title.</small>
+                                    <small class="text-danger"><i class="feather-info"></i>*Add a video title.</small>
                                 </div>
                                 <div class="course-field mb--20">
                                     <label for="modal-field-2">File</label>

@@ -8,6 +8,7 @@ use App\Models\CourseMaterial;
 use App\Models\CourseCurriculum;
 use Illuminate\Http\Request;
 use App\Models\Department;
+use Illuminate\Support\Facades\Validator;
 
 class InstructorController extends Controller
 {
@@ -29,6 +30,18 @@ class InstructorController extends Controller
 
     public function createCourse(Request $request)
     {
+
+        // The instructor must add at least a video
+        $validator = Validator::make($request->all(), [
+            'courseVideo' => ['required'],
+            'videoTitle' => $request->file('courseVideo') != NULL ? 'required' : '',
+            'fileTitle' => $request->file('courseFile') != NULL ? 'required' : '',
+        ]);
+
+        if ($validator->fails()) {
+            flash()->addError('A title must be added for the File/Video');
+            return redirect()->back();
+        }
 
         $course_title = $request->input('courseTitle');
         $course_description = $request->input('courseDescription');
@@ -104,14 +117,25 @@ class InstructorController extends Controller
             'course_id' => $course_id,
             'video' => $videoInfo['videoName'],
             'video_name' => $request->input('videoTitle'),
-            'file_name' => $request->input('fileTitle'),
+            'file_name' => NULL,
             'video_duration' => $videoInfo['duration'],
-            'file' => $fileName,
+            'file' => NULL,
             'curriculum_id' => $topic_id,
         ]);
+
         if($fileName == NULL) {
             return true;
         }
+        // Create a file if the instructor wanted to
+        CourseMaterial::create([
+            'course_id' => $course_id,
+            'video' => NULL,
+            'video_name' => NULL,
+            'file_name' => $request->input('fileTitle'),
+            'video_duration' => NULL,
+            'file' => $fileName,
+            'curriculum_id' => $topic_id,
+        ]);
         return false;
     }
 
