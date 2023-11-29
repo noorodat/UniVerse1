@@ -25,7 +25,7 @@
 									<div class="avatar-upload">
 										<div class="avatar-preview">
 											<div id="imagePreview"
-												style="background-image: url({{ url('/images/' . $student->image) }});">
+												style="background-image: url({{ asset($student->image) }});">
 											</div>
 										</div>
 										<div class="change-btn mt-2 mb-lg-0 mb-3">

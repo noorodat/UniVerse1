@@ -4,7 +4,75 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
+function uploadFile(Request $request, $inputName, $path, $type)
+{
+    if ($request->hasFile($inputName)) {
+
+        $file = $request->{$inputName};
+        $ext = $file->getClientOriginalExtension();
+        $fileName = $type . '_' . uniqid() . '.' . $ext;
+        $file->move(public_path($path), $fileName);
+
+        if($type == 'video') {
+            $duration = getVideoDuration(public_path($path . "/" . $fileName));
+            return [
+                'videoName' => $path . "/" . $fileName,
+                'duration' => $duration
+            ];
+        }
+
+        return $path . "/" . $fileName;
+    }
+}
+
+function updateFile(Request $request, $inputName, $path, $oldPath = null, $type)
+{
+    if ($request->hasFile($inputName)) {
+        if (File::exists(public_path($oldPath))) {
+            File::delete(public_path($oldPath));
+        }
+        $file = $request->{$inputName};
+        $ext = $file->getClientOriginalExtension();
+        $fileName = $type . '_' . uniqid() . '.' . $ext;
+        $file->move(public_path($path), $fileName);
+
+        if($type == 'video') {
+            $duration = getVideoDuration(public_path($path . "/" . $fileName));
+            return [
+                'videoName' => $path . "/" . $fileName,
+                'duration' => $duration
+            ];
+        }
+
+        return $path . "/" . $fileName;
+    }
+}
+
+function deleteFile(string $path)
+{
+    if (File::exists(public_path($path))) {
+        File::delete(public_path($path));
+    }
+}
+
+function getVideoDuration($videoPath)
+{
+    $getID3 = new \getID3;
+    $file = $getID3->analyze($videoPath);
+
+    if (isset($file['playtime_seconds'])) {
+        $playtime_seconds = $file['playtime_seconds'];
+
+        // Format the duration as "00:00"
+        $formattedDuration = gmdate('i:s', $playtime_seconds);
+        
+        return $formattedDuration;
+    } else {
+        return 'N/A';
+    }
+}
 
 function uploadUserImage(Request $request)
 {
@@ -61,22 +129,5 @@ function validateAddStudentInputs(Request $request)
         'major' => 'required',
         'phone' => 'required|regex:/^\d{10}$/',
     ]);
-
-    function getVideoDuration($videoPath)
-    {
-        $getID3 = new \getID3;
-        $file = $getID3->analyze($videoPath);
-    
-        if (isset($file['playtime_seconds'])) {
-            $playtime_seconds = $file['playtime_seconds'];
-    
-            // Format the duration as "00:00"
-            $formattedDuration = gmdate('i:s', $playtime_seconds);
-            
-            return $formattedDuration;
-        } else {
-            return 'N/A';
-        }
-    }
-
 }
+

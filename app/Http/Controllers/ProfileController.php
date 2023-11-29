@@ -58,8 +58,12 @@ class ProfileController extends Controller
         ]);
 
         $user = auth()->user();
-
-        $imageName = uploadUserImage($request);
+        
+        if($user->image == 'images/defaultUserImage.png') {
+            $imageName = uploadFile($request, 'image', 'images', 'image');
+        } else {
+            $imageName = updateFile($request, 'image', 'images', $user->image, 'image');
+        }
 
 
         $user->fill([

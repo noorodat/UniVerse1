@@ -67,8 +67,7 @@
 												</td>
 												<td>
 													<div class="trans-list">
-														<img src="{{ url('/images/' . $student->image) }}" alt="" class="avatar avatar-sm me-3">
-														{{-- src="{{ url('/images/' . $cat->image) }}" --}}
+														<img src="{{ asset($student->image) }}" alt="" class="avatar avatar-sm me-3">
 														<h4><a href="{{ route('go-student-details', ['student' => $student]) }}">{{ $student->name }}</a></h4>
 													</div>
 												</td>

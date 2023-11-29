@@ -39,18 +39,18 @@ class InstructorController extends Controller
         $course_first_topic = $request->input('introTopic');
         $instructor_id = $request->input('instructor');
 
-        $imageName = $this->uploadCourseImage($request);
+        $imageName = uploadFile($request, 'courseImage', 'images', 'image');
 
         if ($course_preview_method == 'youtube') {
             $course_preview = $course_preview_youtube;
         } else {
-            $course_preview = $this->uploadCoursePreview($request);
+            $course_preview = uploadFile($request, 'localVideo', 'uploads/videos', 'video');
         }
 
         $course = Course::create([
             'title' => $course_title,
             'image' => $imageName,
-            'preview_video' => $course_preview,
+            'preview_video' => is_array($course_preview) ? $course_preview['videoName'] : $course_preview,
             'description' => $course_description,
             'duration' => 0,
             'number_of_lessons' => 1,
@@ -98,85 +98,23 @@ class InstructorController extends Controller
     // Can be used for intro and for usual uploading
     public function uploadCourseMaterials(Request $request, $course_id, $topic_id)
     {
-        $videoInfo = $this->uploadCourseVideo($request);
+        $videoInfo = uploadFile($request, 'courseVideo', 'uploads/videos', 'video');
+        $fileName = uploadFile($request, 'courseFile', 'uploads/files', 'file');
         CourseMaterial::create([
             'course_id' => $course_id,
             'video' => $videoInfo['videoName'],
             'video_name' => $request->input('videoTitle'),
             'file_name' => $request->input('fileTitle'),
             'video_duration' => $videoInfo['duration'],
-            'file' => $this->uploadCourseFile($request),
+            'file' => $fileName,
             'curriculum_id' => $topic_id,
         ]);
-        if($this->uploadCourseFile($request) == NULL) {
+        if($fileName == NULL) {
             return true;
         }
+        return false;
     }
 
-    public function uploadCourseVideo(Request $request)
-    {
-        if ($request->hasFile('courseVideo')) {
-            $video = $request->file('courseVideo');
-            $videoName = time() . '.' . $video->getClientOriginalExtension();
-            $video->move(public_path('uploads/videos'), $videoName);
-
-            // Get the vido duration
-            $path = public_path('uploads/videos/' . $videoName);
-            $duration = $this->getVideoDuration($path);
-        }
-        return [
-            'videoName' => $videoName,
-            'duration' => $duration,
-        ];
-    }
-
-    public function uploadCourseFile(Request $request)
-    {
-        $fileName = NULL;
-        if ($request->hasFile('courseFile')) {
-            $file = $request->file('courseFile');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/files'), $fileName);
-        }
-        return $fileName;
-    }
-
-    public function uploadCourseImage(Request $request)
-    {
-        if ($request->hasFile('courseImage')) {
-            $image = $request->file('courseImage');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-        }
-        return $imageName;
-    }
-
-    public function uploadCoursePreview(Request $request)
-    {
-        if ($request->hasFile('localVideo')) {
-            $video = $request->file('localVideo');
-            $videoName = time() . '.' . $video->getClientOriginalExtension();
-            $video->move(public_path('uploads/videos'), $videoName);
-        }
-        return $videoName;
-    }
-
-    public function getVideoDuration($videoPath)
-    {
-        $getID3 = new \getID3;
-        $file = $getID3->analyze($videoPath);
-    
-        if (isset($file['playtime_seconds'])) {
-            $playtime_seconds = $file['playtime_seconds'];
-    
-            // Format the duration as "00:00"
-            $formattedDuration = gmdate('i:s', $playtime_seconds);
-            
-            return $formattedDuration;
-        } else {
-            return 'N/A';
-        }
-    }
 
     /**
      * Store a newly created resource in storage.

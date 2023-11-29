@@ -59,7 +59,7 @@
                                                 <div class="rbt-tutor-information">
                                                     <div class="rbt-tutor-information-left">
                                                         <div class="thumbnail rbt-avatars size-lg position-relative">
-                                                            <img id="showImage" src="{{url('/images/' . Auth::user()->image)}}" alt="user image">
+                                                            <img id="showImage" src="{{asset(Auth::user()->image)}}" alt="user image">
                                                             <div class="rbt-edit-photo-inner">
                                                                 <label for="pfp" style="cursor: pointer" class="d-flex justify-content-center align-items-center rbt-edit-photo" title="Upload Photo">
                                                                     <i class="feather-camera"></i>

@@ -35,7 +35,7 @@
 								<div class="d-flex justify-content-between">
 									<div class="user">
 										<div class="user-media">
-											<img src="{{ url('/images/' . $student->image) }}" alt="" class="avatar avatar-xxl">
+											<img src="{{ asset($student->image) }}" alt="" class="avatar avatar-xxl">
 										</div>
 										<div>
 											<h2 class="mb-0">{{$student->name}}</h2>

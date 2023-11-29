@@ -43,7 +43,7 @@
                                                         <div class="rbt-card variation-01 rbt-hover">
                                                             <div class="rbt-card-img">
                                                                 <a href="{{route('show-unlocked-course', $course)}}">
-                                                                    <img src="{{url('/images/' . $course->image)}}"
+                                                                    <img src="{{asset($course->image)}}"
                                                                         alt="Card image">
                                                                 </a>
                                                             </div>
@@ -94,8 +94,7 @@
                                                                 <div class=" p-2 d-flex align-items-center">
                                                                     <div class="rbt-avatars">
                                                                         <img style="width: 45px; height: 45px"
-                                                                            src="{{url('/images/' . $course->instructor->user->image)}}"
-                                                                            {{-- <img draggable="false" src="{{ url('/images/' . $catagory->image) }}" alt=""> --}}
+                                                                            src="{{asset($course->instructor->user->image)}}"
                                                                             alt="Instructor">
                                                                     </div>
                                                                     <div class="tutor-content">

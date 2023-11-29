@@ -57,7 +57,7 @@
                                 <div class="author-meta">
                                     <div class="author-thumb">
                                         <a href="instructor-profile.html">
-                                            <img src="{{ url('/images/' . $course->instructor->user->image) }}" alt="Author Images">
+                                            <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
                                             <span class="author-title">By {{$course->instructor->user->name}}</span>
                                         </a>
                                     </div>
@@ -173,7 +173,7 @@
                                     <div class="course-tab-content">
                                         <div class="course-author-wrapper">
                                             <div class="thumbnail w-50">
-                                                <img src="{{ url('/images/' . $course->instructor->user->image) }}" alt="Author Images">
+                                                <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
                                             </div>
                                             <div class="author-content">
                                                 <h6 class="title">
@@ -297,8 +297,8 @@
                                 <div class="eduvibe-widget">
                                     <div class="video-area">
                                         <div class="thumbnail video-popup-wrapper">
-                                            <img class="radius-small w-100" src="{{ url('/images/' . $course->image) }}" alt="Course Images">
-                                            <a href="{{$previewType == 'youtube' ? $course->preview_video : url('uploads/videos/' . $course->preview_video)}}" class="video-play-btn position-to-top video-popup-activation">
+                                            <img class="radius-small w-100" src="{{ asset($course->image) }}" alt="Course Images">
+                                            <a href="{{$previewType == 'youtube' ? $course->preview_video : asset($course->preview_video)}}" class="video-play-btn position-to-top video-popup-activation">
                                                 <span class="play-icon course-details-video-popup"></span>
                                             </a>
                                         </div>
@@ -370,7 +370,7 @@
                                         <div class="inner">
                                             <div class="thumbnail">
                                                 <a href="course-details.html">
-                                                    <img class="w-100" src="{{ url('/images/' . $course->image) }}" alt="Course Thumb">
+                                                    <img class="w-100" src="{{ asset($course->image) }}" alt="Course Thumb">
                                                 </a>
                                                 {{-- <div class="wishlist-top-right">
                                                     <button class="wishlist-btn"><i class="icon-Heart"></i></button>
@@ -384,7 +384,7 @@
                                                     <div class="author-meta">
                                                         <div class="author-thumb">
                                                             <a href="instructor-profile.html">
-                                                                <img src="{{ url('/images/' . $course->instructor->user->image) }}" alt="Author Images">
+                                                                <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
                                                                 <span class="author-title">{{$course->instructor->user->name}}</span>
                                                             </a>
                                                         </div>
@@ -459,7 +459,7 @@
                                                     <div class="author-meta">
                                                         <div class="author-thumb">
                                                             <a href="instructor-profile.html">
-                                                                <img src="{{ url('/images/' . $course->instructor->user->image) }}" alt="Author Images">
+                                                                <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
                                                                 <span class="author-title">{{$course->instructor->user->name}}</span>
                                                             </a>
                                                         </div>

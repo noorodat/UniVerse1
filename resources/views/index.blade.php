@@ -235,7 +235,7 @@
                                         <div class="inner">
                                             <div class="thumbnail">
                                                 <a href="{{ route('course.show', $randomCourse) }}">
-                                                    <img class="w-100" src="{{ url('/images/' . $randomCourse->image) }}"
+                                                    <img class="w-100" src="{{ asset($randomCourse->image) }}"
                                                         alt="Course Meta">
                                                 </a>
 
@@ -250,7 +250,7 @@
                                                     <div class="author-meta">
                                                         <div class="author-thumb">
                                                             <a href="#">
-                                                                <img src="{{ url('/images/' . $randomCourse->instructor->user->image) }}"
+                                                                <img src="{{ asset($randomCourse->instructor->user->image) }}"
                                                                     alt="Author Images">
                                                                 <span
                                                                     class="author-title">{{ $randomCourse->instructor->user->name }}</span>
@@ -330,7 +330,7 @@
                                                     <div class="author-meta">
                                                         <div class="author-thumb">
                                                             <a href="#">
-                                                                <img src="{{ url('/images/' . $randomCourse->instructor->user->image) }}"
+                                                                <img src="{{ asset($randomCourse->instructor->user->image) }}"
                                                                     alt="Author Images">
                                                                 <span
                                                                     class="author-title">{{ $randomCourse->instructor->user->name }}</span>

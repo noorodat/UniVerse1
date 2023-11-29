@@ -174,17 +174,15 @@ class CourseController extends Controller
             })
             ->first();
 
-        $pdf_content = $file;
-        $video_content = $file;
 
         if (pathinfo($file, PATHINFO_EXTENSION) == "pdf") {
             $material->file_name = $fileName;
-            $pdf_name = $this->uploadFile($request, $pdf_content);
+            $pdf_name = updateFile($request, 'new_file_content', 'uploads/files', $material->file, 'file');
             $material->file = $pdf_name;
             $material->save();
         } else {
             $material->video_name = $fileName;
-            $videoInfo = $this->uploadVideo($request, $video_content);
+            $videoInfo = updateFile($request, 'new_file_content', 'uploads/videos', $material->video, 'video');
             $video_name = $videoInfo["videoName"];
             $video_duration = $videoInfo['duration'];
             $material->video = $video_name;
@@ -234,29 +232,29 @@ class CourseController extends Controller
     }
 
     // Upload the video with it's duration
-    public function uploadVideo(Request $request, $video_name)
-    {
-        $duration = NULL;
-        $videoName = $video_name;
-        if ($videoName) {
-            // Get the vido duration
-            $path = public_path('uploads/videos/' . $videoName);
-            $duration = $this->getVideoDuration($path);
-        }
-        if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content') || $request->hasFile('topicVideo')) {
-            $video = $request->file('courseVideo') ?? $request->file('new_file_content') ?? $request->file('topicVideo');
-            $videoName = time() . '.' . $video->getClientOriginalExtension();
-            $video->move(public_path('uploads/videos'), $videoName);
+    // public function uploadVideo(Request $request, $video_name)
+    // {
+    //     $duration = NULL;
+    //     $videoName = $video_name;
+    //     if ($videoName) {
+    //         // Get the vido duration
+    //         $path = public_path('uploads/videos/' . $videoName);
+    //         $duration = $this->getVideoDuration($path);
+    //     }
+    //     if ($request->hasFile('courseVideo') || $request->hasFile('new_file_content') || $request->hasFile('topicVideo')) {
+    //         $video = $request->file('courseVideo') ?? $request->file('new_file_content') ?? $request->file('topicVideo');
+    //         $videoName = time() . '.' . $video->getClientOriginalExtension();
+    //         $video->move(public_path('uploads/videos'), $videoName);
 
-            // Get the vido duration
-            $path = public_path('uploads/videos/' . $videoName);
-            $duration = $this->getVideoDuration($path);
-        }
-        return [
-            'videoName' => $videoName,
-            'duration' => $duration,
-        ];
-    }
+    //         // Get the vido duration
+    //         $path = public_path('uploads/videos/' . $videoName);
+    //         $duration = $this->getVideoDuration($path);
+    //     }
+    //     return [
+    //         'videoName' => $videoName,
+    //         'duration' => $duration,
+    //     ];
+    // }
     public function uploadImage(Request $request, $image_name)
     {
         $imageName = $image_name;

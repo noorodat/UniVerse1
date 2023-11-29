@@ -5,7 +5,7 @@
                         <div class="rbt-tutor-information">
                             <div class="rbt-tutor-information-left">
                                 <div class="thumbnail rbt-avatars size-lg">
-                                    <img style="width: 120px; height: 120px" src="{{url('/images/' . Auth::user()->image)}}" alt="user image">
+                                    <img style="width: 120px; height: 120px" src="{{asset(Auth::user()->image)}}" alt="user image">
                                 </div>
                                 <div class="tutor-content">
                                     <h5 class="title">{{Auth::user()->name}}</h5>

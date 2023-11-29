@@ -34,10 +34,6 @@
     <link rel="stylesheet" href="/profile-assets/assets/css/style.css">
 </head>
 
-{{-- <video id="mainVideo" width="100%" controls
- src="{{url('uploads/videos/' . $course->preview_video)}}"
-  allowfullscreen allow="autoplay"></video> --}}
-
 
 <body class="rbt-header-sticky">
 
@@ -80,7 +76,7 @@
                                             @foreach ($topicCollection as $material)
                                             @if ($material->file_name != null)
                                             <li>
-                                                <a href="{{url('uploads/files/' . $material->file)}}" target="_blank">
+                                                <a href="{{asset($material->file)}}" target="_blank">
                                                     <div class="course-content-left">
                                                         <i class="feather-file"></i>
                                                         <span class="text">
@@ -92,7 +88,7 @@
                                             @endif
                                             @if ($material->video_name)
                                             <li>
-                                                <a onclick="changeCourseVideo(this.href)" class="courseContentVideo" href="{{url('uploads/videos/' . $material->video)}}">
+                                                <a onclick="changeCourseVideo(this.href)" class="courseContentVideo" href="{{asset($material->video)}}">
                                                     <div class="course-content-left">
                                                         <i class="feather-play-circle"></i> 
                                                         <span class="text">
@@ -140,7 +136,7 @@
                 </div>
                 <div class="inner">
                     <div class="plyr__video-embed rbtplayer">
-                        <video id="mainVideo" width="100%" controls src="{{url('uploads/videos/' . $course->preview_video)}}" allowfullscreen allow="autoplay"></video>
+                        <video id="mainVideo" width="100%" controls src="{{asset($course->preview_video)}}" allowfullscreen allow="autoplay"></video>
                     </div>
                 </div>
             </div>
