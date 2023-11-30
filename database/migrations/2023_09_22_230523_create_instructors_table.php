@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('instructors', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('facebook');
-            $table->text('github');
-            $table->text('linkedin');
-            $table->text('instagram');
+            $table->text('facebook')->nullable();
+            $table->text('github')->nullable();
+            $table->text('linkedin')->nullable();
+            $table->text('instagram')->nullable();
             $table->integer('courses_number');
             $table->integer('rating');
             $table->bigInteger('earnings');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\CourseBought;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Models\Course;
@@ -9,6 +10,9 @@ use App\Models\User;
 use App\Models\CourseStudent;
 use App\Models\Instructor;
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
 
 class PaymentController extends Controller
 {
@@ -90,7 +94,11 @@ class PaymentController extends Controller
                     'course_id' => $course_id,
                     'user_id' => $student_id,
                 ]);
-                
+
+                $user = Auth::user();
+                // Send mail to the user who bought the course
+                // Mail::to(Auth::user()->email)->send(new courseBought(Auth::user()->name, $course->title, $course->price));
+                $this->sendPurchaseConfirmationEmail($user, $course);
                 return redirect()->route('go-success');
             } catch (\Exception $e) {
                 return redirect()->back();
@@ -98,6 +106,20 @@ class PaymentController extends Controller
         } else {
             return redirect()->route('go-failure');
         }
+    }
+
+    public function sendPurchaseConfirmationEmail($user, $course)
+    {
+        $emailContent = new CourseBought($user->name, $course->title, $course->price);
+
+        try {
+            Mail::to($user->email)->send($emailContent);
+        } catch (\Exception $e) {
+            // Log or handle the exception appropriately
+            return false;
+        }
+
+        return true;
     }
 
     public function cancel()

@@ -5,49 +5,36 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class courseBought extends Mailable
+class CourseBought extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    private $title = 'Payment successful';
+    private $content;
+    private $name;
+    private $courseName;
+    private $price;
+
+    public function __construct($name, $courseName, $price)
     {
-        //
+        $this->name = $name;
+        $this->courseName = $courseName;
+        $this->price = $price;
+        $this->content = 'Hello ' . $name . ', your purchase for the course ' . $courseName . ' is done and the price is ' . $price;
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
+    public function build()
     {
-        return new Envelope(
-            subject: 'Course Bought',
-        );
+        return $this->subject($this->title)
+            ->view('mails.courseBought', ['content' => $this->content]);
     }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
+    // Implement attachments logic if needed
     public function attachments(): array
     {
+        // Define logic to attach files if necessary
         return [];
     }
 }

@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Course;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\CourseBought;
+use Illuminate\Support\Facades\Auth;
+
 
 class Transaction extends Model
 {
