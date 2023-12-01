@@ -25,8 +25,8 @@
                                 <h5 class="widget-title">Explore</h5>
                                 <div class="inner">
                                     <ul class="footer-link link-hover">
-                                        <li><a href="about-us-1.html"><i class="icon-Double-arrow"></i>About Us</a></li>
-                                        <li><a href="event-list.html"><i class="icon-Double-arrow"></i>Upcoming Events</a></li>
+                                        <li><a href="{{route('go-aboutus')}}"><i class="icon-Double-arrow"></i>About Us</a></li>
+                                        <li><a href="{{route('go-courses')}}"><i class="icon-Double-arrow"></i>courses</a></li>
                                         <li><a href="blog-standard.html"><i class="icon-Double-arrow"></i>Blog & News</a></li>
                                         <li><a href="faq.html"><i class="icon-Double-arrow"></i>FAQ Question</a></li>
                                         <li><a href="testimonial.html"><i class="icon-Double-arrow"></i>Testimonial</a></li>
@@ -82,7 +82,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="inner text-center">
-                                <p>Copyright 2023 <a href="#">EduVibe</a> Designed By <a href="https://themeforest.net/user/devsvibe">DevsVibe</a>. All Rights Reserved</p>
+                                <p>Copyright 2023 <a href="{{route('go-home')}}">UniVerse</a>. All Rights Reserved</p>
                             </div>
                         </div>
                     </div>

@@ -96,14 +96,7 @@ class PaymentController extends Controller
                 ]);
 
                 /* -- -- Start Send mail to the user who bought the course -- --*/
-                $mailData = [
-                    'subject' => 'Paymnet Successful!',
-                    'title' => 'Thanks for your purchase',
-                    'body' => 'Thanks for purchasing the course ' . $course->title , ' price: ' . $course->price,
-                ];
-                
-                $mailNotifier = new MailController();
-                $mailNotifier->sendMailToStudent($mailData);
+                $this->sendPaymentEmail($course);
                 /* -- -- End Send mail to the user who bought the course -- --*/
                 
                 return redirect()->route('go-success');
@@ -118,5 +111,19 @@ class PaymentController extends Controller
     public function cancel()
     {
         return "Payment is cancelled!";
+    }
+
+    public function sendPaymentEmail($course) 
+    {
+        $mailData = [
+            'subject' => 'Paymnet Successful!',
+            'title' => 'Thanks for your purchase',
+            'body' => 'Thanks for purchasing the course ' . $course->title , ' price: ' . $course->price,
+        ];
+
+        $mailTemplate = 'courseBought';
+        
+        $mailNotifier = new MailController();
+        $mailNotifier->sendMailToStudent($mailData, $mailTemplate);
     }
 }

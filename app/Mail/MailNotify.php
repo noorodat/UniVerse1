@@ -9,21 +9,23 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
+
 class MailNotify extends Mailable
 {
     use Queueable, SerializesModels;
 
     private $data = [];
-
-    public function __construct($data)
+    private $mailTemplate;
+    public function __construct($data, $mailTemplate)
     {
         $this->data = $data;
+        $this->mailTemplate = $mailTemplate;
     }
 
     public function build()
     {
         return $this->from('universe.edu.jo@gmail.com', 'UniVerse')
         ->subject($this->data['subject'])
-        ->view('mails.index')->with('data', $this->data);
+        ->view('mails.' . $this->mailTemplate)->with('data', $this->data);
     }
 }

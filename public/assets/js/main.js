@@ -734,3 +734,5 @@
 })(window, document, jQuery)
 
 
+// custom pagination
+let paginations = document.querySelectorAll('pagination')

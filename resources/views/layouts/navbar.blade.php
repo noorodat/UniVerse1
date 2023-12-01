@@ -86,7 +86,7 @@
 
                                         <li class="has-droupdown"><a href="#">Contact</a>
                                             <ul class="submenu">
-                                                <li><a href="contact-us.html">Contact Us</a></li>
+                                                <li><a href="{{route('go-contact-us')}}">Contact Us</a></li>
                                                 <li><a href="contact-me.html">Contact Me</a></li>
                                             </ul>
                                         </li>
@@ -231,7 +231,7 @@
 
                             <li class="has-droupdown"><a href="#">Contact</a>
                                 <ul class="submenu">
-                                    <li><a href="contact-us.html">Contact Us</a></li>
+                                    <li><a href="{{route('go-contact-us')}}">Contact Us</a></li>
                                     <li><a href="contact-me.html">Contact Me</a></li>
                                 </ul>
                             </li>

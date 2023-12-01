@@ -10,7 +10,8 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-inner text-start">
                     <div class="page-title">
-                        <h3 class="title">All Courses</h3>
+                        <h3 class="title">{{isset($department) ? $department->title . ' Department' : 'All courses'}}</h3>
+                        
                     </div>
                     <nav class="edu-breadcrumb-nav">
                         <ol class="edu-breadcrumb d-flex justify-content-start liststyle">
@@ -53,22 +54,20 @@
         <div class="row g-5">
             <div class="col-lg-4 order-2 oder-lg-1">
                 <aside class="edu-course-sidebar">
+                    <form class="time-filer-post" action="{{ route('filer-courses') }}" method="GET" id="courseSorting">
+                        @csrf
                     <!-- Start Widget Wrapper  -->
                     <div class="edu-course-widget widget-shortby">
                         <div class="inner">
                             <h5 class="widget-title">Sort By</h5>
                             <div class="content">
                                 <div class="edu-form-check">
-                                    <input type="radio" id="short-check1" name="courseDateSort">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['date'] == 'newest' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-check1" name="courseDateFiler" value="newest">
                                     <label for="short-check1">Newest</label>
                                 </div>
                                 <div class="edu-form-check">
-                                    <input type="radio" id="short-check2" name="courseDateSort">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['date'] == 'oldest' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-check2" name="courseDateFiler" value="oldest">
                                     <label for="short-check2">Oldest</label>
-                                </div>
-                                <div class="edu-form-check">
-                                    <input type="radio" id="short-check3" name="courseDateSort">
-                                    <label for="short-check3">Popular Courses</label>
                                 </div>
                             </div>
                         </div>
@@ -82,10 +81,10 @@
                             <div class="content">
                                 @foreach ($departments as $department)
                                 <div class="edu-form-check">
-                                    <input type="checkbox" id="cat-check{{$department->id}}">
-                                    <label for="cat-check{{$department->id}}">{{$department->title}}<span>({{$department->number_of_courses}})</span></label>
+                                    <input {{ isset($checkedInputs) && $checkedInputs['department'] == $department->id ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-checkdep{{$department->id}}" name="courseDepartmenFilter" value="{{$department->id}}">
+                                    <label for="short-checkdep{{$department->id}}">{{$department->title}}</label>
                                 </div>
-                                @endforeach
+                            @endforeach
                             </div>
                         </div>
                     </div>
@@ -97,20 +96,16 @@
                             <h5 class="widget-title">Price</h5>
                             <div class="content">
                                 <div class="edu-form-check">
-                                    <input type="radio" id="price-check1" name="coursePriceSort">
-                                    <label for="price-check1">All Prices</label>
-                                </div>
-                                <div class="edu-form-check">
-                                    <input type="radio" id="price-check2" name="coursePriceSort">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['price'] == 'lowToHigh' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="lowToHigh" type="radio" id="price-check2" name="coursePriceFiler">
                                     <label for="price-check2">Price: Low to High</label>
                                 </div>
                                 <div class="edu-form-check">
-                                    <input type="radio" id="price-check3" name="coursePriceSort">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['price'] == 'highToLow' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="highToLow" type="radio" id="price-check3" name="coursePriceFiler">
                                     <label for="price-check3">Price: High to Low</label>
                                 </div>
                                 <div class="edu-form-check">
-                                    <input type="radio" id="price-check4" name="coursePriceSort">
-                                    <label for="price-check4">Free Paid</label>
+                                    <input {{ isset($checkedInputs) && $checkedInputs['price'] == 'free' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="free" type="radio" id="price-check4" name="coursePriceFiler">
+                                    <label for="price-check4">Free</label>
                                 </div>
                             </div>
                         </div>
@@ -178,7 +173,7 @@
                         </div>
                     </div>
                     <!-- End Widget Wrapper  -->
-
+                    </form>
                 </aside>
             </div>
             <div class="col-lg-8 order-1 oder-lg-2">
@@ -251,19 +246,9 @@
                     @endforeach
                 </div>
 
-                <div class="row">
+                <div class="row justtify-content-center">
                     <div class="col-lg-12 mt--60">
-                        <nav>
-                            <ul class="edu-pagination">
-                                <li><a href="#"><i class="ri-arrow-drop-left-line"></i></a></li>
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">...</a></li>
-                                <li><a href="#">8</a></li>
-                                <li><a href="#"><i class="ri-arrow-drop-right-line"></i></a></li>
-                            </ul>
-                        </nav>
+                        {{$courses->links('pages.pagination.index')}}
                     </div>
                 </div>
             </div>

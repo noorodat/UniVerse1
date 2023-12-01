@@ -59,7 +59,7 @@ class DepartmentController extends Controller
     {
         try {
             $departments = Department::all();
-            $courses = Course::where('department_id', $department->id)->get();
+            $courses = Course::where('department_id', $department->id)->paginate(6);
             return view('pages.courses.index', compact('courses', 'department', 'departments'));
         } catch (\Exception $e) {
             return view("Some error happened :(");

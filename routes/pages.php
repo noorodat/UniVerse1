@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\InstructorRequestController;
+use App\Http\Controllers\MailController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -107,6 +108,9 @@ Route::get('delete-course-topic/{course}/{topicTitle}', [CourseController::class
 Route::post('delete-course-topic/{course}/{topicTitle}', [CourseController::class, 'deleteCourseTopic'])->name('delete-topic');
 
 
+// File routes
+Route::get('/courses/sort', [CourseController::class, 'filterCourses'])->name('filer-courses');
+
 // Payment success page
 Route::get('/success', function() {
     return view('pages.success');
@@ -119,6 +123,14 @@ Route::get('/failure', function() {
 
 // Course resource
 Route::resource('course', CourseController::class);
+
+// Contact us page
+Route::get('/contact-us', function() {
+    return view('pages.contact-us.contact-us');
+})->name('go-contact-us');
+
+// Send contact us mail
+Route::post('/contact-us', [MailController::class, 'contactUs'])->name('send-contact-us-mail');
 
 
 /* --------------------- END WEBSITE PAGES --------------------- */

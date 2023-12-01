@@ -17,12 +17,13 @@ use getID3;
 class CourseController extends Controller
 {
 
-    public function index()
-    {
-        $courses = Course::all();
+    public function index($department = null)
+    {   
+        $courses = Course::paginate(6);
         $departments = Department::all();
         return view('pages.courses.index', compact('courses', 'departments'));
     }
+
 
     /**
      * Display the specified resource.
@@ -51,8 +52,9 @@ class CourseController extends Controller
 
         $department = $course->department;
         $relatedCourses = Course::where('department_id', $department->id)
-            ->where('id', '!=', $course->id)
-            ->get();
+        ->where('id', '!=', $course->id)
+        ->take(5)
+        ->get();
 
         $courseTopics = CourseCurriculum::where('course_id', $course->id)->get();
 
@@ -350,4 +352,63 @@ class CourseController extends Controller
         }
     }
 
+    public function filterCourses(Request $request)
+    {
+        // Initialize base query
+        $coursesQuery = Course::query();
+    
+        // Retrieve filter inputs
+        $filterByDate = $request->input('courseDateFiler');
+        $filterByDepartment = $request->input('courseDepartmenFilter');
+        $filterByPrice = $request->input('coursePriceFiler');
+
+        $checkedInputs = [
+            'date' => $filterByDate = $request->input('courseDateFiler'),
+            'department' => $filterByDepartment = $request->input('courseDepartmenFilter'),
+            'price' => $filterByPrice = $request->input('coursePriceFiler'),
+        ];
+    
+        // Apply filters based on conditions
+        if ($filterByDate == 'newest') {
+            $coursesQuery->orderBy('created_at', 'desc');
+        } elseif ($filterByDate == 'oldest') {
+            $coursesQuery->orderBy('created_at', 'asc');
+        }
+    
+        if ($filterByDepartment) {
+            $coursesQuery->where('department_id', $filterByDepartment);
+        }
+    
+        if ($filterByPrice == 'lowToHigh') {
+            $coursesQuery->orderBy('price', 'asc');
+        } elseif ($filterByPrice == 'highToLow') {
+            $coursesQuery->orderBy('price', 'desc');
+        } elseif ($filterByPrice == 'free') {
+            $coursesQuery->where('price', '=', 0);
+        }
+    
+        // Retrieve paginated results
+        $courses = $coursesQuery->paginate(6);
+        $departments = Department::all();
+    
+        return view('pages.courses.index', compact('courses', 'departments', 'checkedInputs'));
+    }
+    
+    
+
 }
+
+
+    // if ($sort === 'az') {
+    //     $query->orderBy('name', 'asc');
+    // } elseif ($sort === 'za') {
+    //     $query->orderBy('name', 'desc');
+    // } elseif ($sort === 'high_price') {
+    //     $query->orderBy('price', 'desc');
+    // } elseif ($sort === 'low_price') {
+    //     $query->orderBy('price', 'asc');
+    // } elseif ($sort === 'newest') {
+    //     $query->orderBy('created_at', 'asc');
+    // } elseif ($sort === 'oldest') {
+    //     $query->orderBy('created_at', 'desc');
+    // }

@@ -123,7 +123,7 @@
                                         <p>{{$course->description}}</p>
                                     </div>
                                 </div>
-                                @if(count($topicsWithMaterials) >0)
+                                @if(count($topicsWithMaterials) > 0)
                                 @foreach ($topicsWithMaterials as $topicWithMaterials)
                                 <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                                     <div class="course-tab-content">
