@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\CourseBought;
+use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Models\Course;
@@ -95,10 +95,17 @@ class PaymentController extends Controller
                     'user_id' => $student_id,
                 ]);
 
-                $user = Auth::user();
-                // Send mail to the user who bought the course
-                // Mail::to(Auth::user()->email)->send(new courseBought(Auth::user()->name, $course->title, $course->price));
-                $this->sendPurchaseConfirmationEmail($user, $course);
+                /* -- -- Start Send mail to the user who bought the course -- --*/
+                $mailData = [
+                    'subject' => 'Paymnet Successful!',
+                    'title' => 'Thanks for your purchase',
+                    'body' => 'Thanks for purchasing the course ' . $course->title , ' price: ' . $course->price,
+                ];
+                
+                $mailNotifier = new MailController();
+                $mailNotifier->sendMailToStudent($mailData);
+                /* -- -- End Send mail to the user who bought the course -- --*/
+                
                 return redirect()->route('go-success');
             } catch (\Exception $e) {
                 return redirect()->back();
@@ -106,20 +113,6 @@ class PaymentController extends Controller
         } else {
             return redirect()->route('go-failure');
         }
-    }
-
-    public function sendPurchaseConfirmationEmail($user, $course)
-    {
-        $emailContent = new CourseBought($user->name, $course->title, $course->price);
-
-        try {
-            Mail::to($user->email)->send($emailContent);
-        } catch (\Exception $e) {
-            // Log or handle the exception appropriately
-            return false;
-        }
-
-        return true;
     }
 
     public function cancel()
