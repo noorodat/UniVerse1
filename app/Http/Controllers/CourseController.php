@@ -20,6 +20,8 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
+        $departments = Department::all();
+        return view('pages.courses.index', compact('courses', 'departments'));
     }
 
     /**

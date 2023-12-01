@@ -216,8 +216,8 @@
             <div class="row g-5 align-items-center mb--30">
                 <div class="col-lg-12 text-center">
                     <div class="section-title" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-                        <span class="pre-title">Popular courses</span>
-                        <h3 class="title">Explore the best seller courses</h3>
+                        <span class="pre-title">courses</span>
+                        <h3 class="title">Explore Courses</h3>
                     </div>
                 </div>
             </div>
@@ -268,7 +268,7 @@
                                                 </h6>
                                                 <div class="card-bottom">
                                                     <div class="price-list price-style-02">
-                                                        <div class="price current-price">${{ $randomCourse->price }}</div>
+                                                        <div class="price current-price">{{ $randomCourse->price }} JOD</div>
                                                         {{-- <div class="price old-price">$65.99</div> --}}
                                                     </div>
                                                     <div class="edu-rating rating-default">
@@ -322,7 +322,7 @@
                                                 <p class="description desc-break">{{ $randomCourse->description }}</p>
 
                                                 <div class="price-list price-style-02">
-                                                    <div class="price current-price">${{ $randomCourse->price }}</div>
+                                                    <div class="price current-price">{{ $randomCourse->price }} JOD</div>
                                                     {{-- <div class="price old-price">$69.99</div> --}}
                                                 </div>
 

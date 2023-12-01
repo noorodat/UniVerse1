@@ -16,14 +16,20 @@ class DepartmentSeeder extends Seeder
         DB::table('departments')->insert([
             'title' => 'IT',
             'description' => 'Hello programmers',
-            'number_of_courses' => 0,
+            'number_of_courses' => 3,
             'image' => 'fa-solid fa-code',
         ]);
         DB::table('departments')->insert([
             'title' => 'Engineering',
             'description' => 'For you nerds',
-            'number_of_courses' => 0,
+            'number_of_courses' => 3,
             'image' => 'fa-solid fa-gear',
+        ]);
+        DB::table('departments')->insert([
+            'title' => 'Science',
+            'description' => 'Uni + Verse -> UniVerse',
+            'number_of_courses' => 3,
+            'image' => 'fa-solid fa-flask',
         ]);
     }
 }

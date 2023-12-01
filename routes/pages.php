@@ -31,11 +31,6 @@ require __DIR__.'/auth.php';
 // Home page
 Route::get('/', [HomePageController::class, 'index'])->name('go-home');
 
-// Courses page
-Route::get('/courses', function() {
-    return view('/pages.courses.index');
-})->name('go-courses');
-
 // About us page
 Route::get('/aboutus', function() {
     return view('/pages.about-us.index');
@@ -47,6 +42,7 @@ Route::get('/pricing', function() {
 })->name('go-pricing');
 
 Route::resource('departmnet', DepartmentController::class);
+Route::get('/courses', [CourseController::class, 'index'])->name('go-courses');
 
 /* ------------------------------------- START USER PROFILE ROUTES ------------------------------------- */
 // Show instructor dashboard

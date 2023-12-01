@@ -5,6 +5,8 @@
 @section('content')
 
 
+<div class="main-wrapper">
+
         <div class="edu-breadcrumb-area breadcrumb-style-1 ptb--60 ptb_md--40 ptb_sm--40 bg-image">
             <div class="container eduvibe-animated-shape">
                 <div class="row">
@@ -121,6 +123,7 @@
                                         <p>{{$course->description}}</p>
                                     </div>
                                 </div>
+                                @if(count($topicsWithMaterials) >0)
                                 @foreach ($topicsWithMaterials as $topicWithMaterials)
                                 <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
                                     <div class="course-tab-content">
@@ -169,6 +172,13 @@
                                     </div>
                                 </div>
                                 @endforeach
+                                @else
+                                <div class="tab-pane fade" id="curriculum" role="tabpanel" aria-labelledby="curriculum-tab">
+                                    <div class="course-tab-content">
+                                        <div>This course has no data</div>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="tab-pane fade" id="instructor" role="tabpanel" aria-labelledby="instructor-tab">
                                     <div class="course-tab-content">
                                         <div class="course-author-wrapper">
@@ -330,7 +340,7 @@
                                             </div>
                                             @else
                                             <div class="read-more-btn mt--45">
-                                                <a class="edu-btn btn-bg-alt w-100 text-center" href="#">Price: ${{$course->price}}</a>
+                                                <a class="edu-btn btn-bg-alt w-100 text-center" href="#">Price: {{$course->price}} JOD</a>
                                             </div>
                                             <div class="read-more-btn mt--15">
                                                 @if (Auth::user())
@@ -356,138 +366,131 @@
                 </div>
 
                 @if(count($relatedCourses) > 0)
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="edu-course-wrapper pt--65">
-                            <div class="section-title text-start mb--20">
-                                <span class="pre-title">Related Courses</span>
-                                <h3 class="title">Courses You May Like</h3>
-                            </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="edu-course-wrapper pt--65">
+                                <div class="section-title text-start mb--20">
+                                    <span class="pre-title">Related Courses</span>
+                                    <h3 class="title">Courses You May Like</h3>
+                                </div>
 
-                            <div class="mt--40 edu-slick-button slick-activation-wrapper eduvibe-course-one-carousel eduvibe-course-details-related-course-carousel">
-                                @foreach ($relatedCourses as $course)
-                                                                    <div class="single-slick-card">
-                                    <div class="edu-card card-type-3 radius-small">
-                                        <div class="inner">
-                                            <div class="thumbnail">
-                                                <a href="course-details.html">
-                                                    <img class="w-100" src="{{ asset($course->image) }}" alt="Course Thumb">
-                                                </a>
-                                                {{-- <div class="wishlist-top-right">
-                                                    <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                </div> --}}
-                                                <div class="top-position status-group left-bottom">
-                                                    <span class="eduvibe-status status-03">{{$course->department->title}}</span>
+                                <div class="mt--40 edu-slick-button slick-activation-wrapper eduvibe-course-one-carousel eduvibe-course-details-related-course-carousel">
+                                    @foreach ($relatedCourses as $relatedCourse)
+                                    <div class="single-slick-card">
+                                        <div class="edu-card card-type-3 radius-small">
+                                            <div class="inner">
+                                                <div class="thumbnail">
+                                                    <a href="{{ route('course.show', $relatedCourse) }}">
+                                                        <img class="w-100" src="{{asset($relatedCourse->image)}}" alt="Course Thumb">
+                                                    </a>
+                                                    <div class="top-position status-group left-bottom">
+                                                        <span class="eduvibe-status status-03">{{$relatedCourse->department->title}}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="card-top">
-                                                    <div class="author-meta">
-                                                        <div class="author-thumb">
-                                                            <a href="instructor-profile.html">
-                                                                <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
-                                                                <span class="author-title">{{$course->instructor->user->name}}</span>
-                                                            </a>
+                                                <div class="content">
+                                                    <div class="card-top">
+                                                        <div class="author-meta">
+                                                            <div class="author-thumb">
+                                                                <a href="instructor-profile.html">
+                                                                    <img src="{{asset($relatedCourse->instructor->user->image)}}" alt="Author Images">
+                                                                    <span class="author-title">{{$relatedCourse->instructor->user->name}}</span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <ul class="edu-meta meta-02">
+                                                            <li><i class="icon-file-list-3-line"></i>{{$relatedCourse->number_of_lessons}}</li>
+                                                        </ul>
+                                                    </div>
+                                                    <h6 class="title"><a href="#">{{$relatedCourse->title}}</a>
+                                                    </h6>
+                                                    <div class="card-bottom">
+                                                        <div class="price-list price-style-02">
+                                                            <div class="price current-price">{{$relatedCourse->price}} JOD</div>
+                                                        </div>
+                                                        <div class="edu-rating rating-default">
+                                                            <div class="rating">
+                                                                @if ($relatedCourse->rating === 0)
+                                                                    <i class="fa-regular fa-star"></i>
+                                                                    <i class="fa-regular fa-star"></i>
+                                                                    <i class="fa-regular fa-star"></i>
+                                                                    <i class="fa-regular fa-star"></i>
+                                                                    <i class="fa-regular fa-star"></i>
+                                                                @elseif ($relatedCourse->rating === 1)
+                                                                    <i class="icon-Star"></i>
+                                                                @elseif ($relatedCourse->rating === 2)
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                @elseif ($relatedCourse->rating === 3)
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                @elseif ($relatedCourse->rating === 4)
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                @elseif ($relatedCourse->rating === 5)
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                    <i class="icon-Star"></i>
+                                                                @endif
+                                                            </div>
+                                                            <span class="rating-count">(0)</span>
                                                         </div>
                                                     </div>
-                                                    <ul class="edu-meta meta-02">
-                                                        <li><i class="icon-file-list-3-line"></i>{{$course->number_of_lessons}} Lessons</li>
-                                                    </ul>
                                                 </div>
-                                                <h6 class="title"><a href="{{route('course.show', $course)}}">{{$course->title}}</a>
-                                                </h6>
-                                                <div class="card-bottom">
+                                            </div>
+
+                                            <div class="card-hover-action">
+                                                <div class="hover-content">
+                                                    <div class="content-top">
+                                                        <div class="top-status-bar">
+                                                            <span class="eduvibe-status status-03">{{$relatedCourse->department->title}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <h6 class="title"><a href="{{ route('course.show', $relatedCourse) }}">{{$relatedCourse->title}}</a></h6>
+
+                                                    <p class="description desc-break">{{$relatedCourse->description}}</p>
+
                                                     <div class="price-list price-style-02">
-                                                        <div class="price current-price">${{$course->price}}</div>
+                                                        <div class="price current-price">{{$relatedCourse->price}} JOD</div>
                                                         {{-- <div class="price old-price">$39.99</div> --}}
                                                     </div>
-                                                    <div class="edu-rating rating-default">
-                                                        <div class="rating">
-                                                            @if ($course->rating === 0)
-                                                            <i class="fa-regular fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
-                                                            <i class="fa-regular fa-star"></i>
-                                                        @elseif ($course->rating === 1)
-                                                            <i class="icon-Star"></i>
-                                                        @elseif ($course->rating === 2)
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                        @elseif ($course->rating === 3)
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                        @elseif ($course->rating === 4)
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                        @elseif ($course->rating === 5)
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                            <i class="icon-Star"></i>
-                                                        @endif
+
+                                                    <div class="hover-bottom-content">
+                                                        <div class="author-meta">
+                                                            <div class="author-thumb">
+                                                                <a href="instructor-profile.html">
+                                                                    <img src="{{asset($relatedCourse->instructor->user->image)}}" alt="Author Images">
+                                                                    <span class="author-title">{{$relatedCourse->instructor->user->name}}</span>
+                                                                </a>
+                                                            </div>
                                                         </div>
-                                                        <span class="rating-count">(0)</span>
+                                                        <ul class="edu-meta meta-02">
+                                                            <li><i class="icon-file-list-3-line"></i>{{$relatedCourse->number_of_lessons}} Lessons</li>
+                                                        </ul>
                                                     </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="card-hover-action">
-                                            <div class="hover-content">
-                                                <div class="content-top">
-                                                    <div class="top-status-bar">
-                                                        <span class="eduvibe-status status-03">{{$course->department->title}}</span>
+                                                    <div class="read-more-btn">
+                                                        <a class="edu-btn btn-medium btn-white" href="{{ route('course.show', $relatedCourse) }}">Enroll Now<i class="icon-arrow-right-line-right"></i></a>
                                                     </div>
-                                                    {{-- <div class="top-wishlist-bar">
-                                                        <button class="wishlist-btn"><i class="icon-Heart"></i></button>
-                                                    </div> --}}
-                                                </div>
 
-                                                <h6 class="title"><a href="{{route('course.show', $course)}}">{{$course->title}}</a></h6>
-
-                                                <p class="description" style="word-wrap: break-word;">{{$course->description}}</p>
-                                                <div class="price-list price-style-02">
-                                                    <div class="price current-price">${{$course->price}}
-                                                    {{-- <div class="price old-price">$39.99</div> --}}
                                                 </div>
-
-                                                <div class="hover-bottom-content">
-                                                    <div class="author-meta">
-                                                        <div class="author-thumb">
-                                                            <a href="instructor-profile.html">
-                                                                <img src="{{ asset($course->instructor->user->image) }}" alt="Author Images">
-                                                                <span class="author-title">{{$course->instructor->user->name}}</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <ul class="edu-meta meta-02">
-                                                        <li><i class="icon-file-list-3-line"></i>{{$course->number_of_lessons}}</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="read-more-btn">
-                                                    <a class="edu-btn btn-medium btn-white" href="{{route('course.show', $course)}}">Enroll Now<i class="icon-arrow-right-line-right"></i></a>
-                                                </div>
-
                                             </div>
                                         </div>
                                     </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
                             </div>
                         </div>
                     </div>
-                </div>
                 @endif
-
-            </div>
         </div>
+    </div>
+</div>
 
-
-        @endsection
+@endsection
 
  

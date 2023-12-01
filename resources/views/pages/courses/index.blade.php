@@ -2,7 +2,7 @@
 
 @section('title', 'UniVerse')
 
-@section('content')
+@section('content') 
 
 <div class="edu-breadcrumb-area breadcrumb-style-1 ptb--60 ptb_md--40 ptb_sm--40 bg-image">
     <div class="container eduvibe-animated-shape">
@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                 <div class="breadcrumb-inner text-start">
                     <div class="page-title">
-                        <h3 class="title">{{$department->title}} Courses</h3>
+                        <h3 class="title">All Courses</h3>
                     </div>
                     <nav class="edu-breadcrumb-nav">
                         <ol class="edu-breadcrumb d-flex justify-content-start liststyle">
