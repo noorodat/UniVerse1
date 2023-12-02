@@ -188,7 +188,7 @@
             </div>
         </div>
 
-        <div class="edu-contact-map-area edu-section-gapBottom">
+        {{-- <div class="edu-contact-map-area edu-section-gapBottom">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
@@ -198,7 +198,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
 @endsection

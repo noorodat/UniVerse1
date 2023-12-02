@@ -3,14 +3,14 @@
             <div class="footer-top">
                 <div class="container eduvibe-animated-shape">
                     <div class="row g-5">
-                        <div class="col-lg-3 col-md-6 col-sm-12 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-12 col-12">
                             <div class="edu-footer-widget">
                                 <div class="logo">
                                     <a href="index.html">
-                                        <img class="logo-light" src="/assets/images/logo/logo-white.png" alt="Site Logo">
+                                        <img width="250px" class="logo-light" src="{{asset('images/UniVerse-logo_transparent.png')}}" alt="Site Logo">
                                     </a>
                                 </div>
-                                <p class="description">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum.</p>
+                                <p class="description">Take a tour on our social media accounts</p>
                                 <ul class="social-share">
                                     <li><a href="#"><i class="icon-Fb"></i></a></li>
                                     <li><a href="#"><i class="icon-linkedin"></i></a></li>
@@ -20,23 +20,26 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="edu-footer-widget explore-widget">
                                 <h5 class="widget-title">Explore</h5>
                                 <div class="inner">
                                     <ul class="footer-link link-hover">
                                         <li><a href="{{route('go-aboutus')}}"><i class="icon-Double-arrow"></i>About Us</a></li>
-                                        <li><a href="{{route('go-courses')}}"><i class="icon-Double-arrow"></i>courses</a></li>
-                                        <li><a href="blog-standard.html"><i class="icon-Double-arrow"></i>Blog & News</a></li>
-                                        <li><a href="faq.html"><i class="icon-Double-arrow"></i>FAQ Question</a></li>
-                                        <li><a href="testimonial.html"><i class="icon-Double-arrow"></i>Testimonial</a></li>
-                                        <li><a href="privacy-policy.html"><i class="icon-Double-arrow"></i>Privacy Policy</a></li>
+                                        <li><a href="contact-us.html"><i class="icon-Double-arrow"></i>Contact Us</a></li>
+                                        <li><a href="{{route('go-courses')}}"><i class="icon-Double-arrow"></i>Courses</a></li>
+                                        <li><a href="{{route('login')}}"><i class="icon-Double-arrow"></i>Login</a></li>
+                                        <li><a href="{{route('register')}}"><i class="icon-Double-arrow"></i>Register</a></li>
+                                        {{-- <li><a href="blog-standard.html"><i class="icon-Double-arrow"></i>Blog & News</a></li> --}}
+                                        {{-- <li><a href="faq.html"><i class="icon-Double-arrow"></i>FAQ Question</a></li> --}}
+                                        {{-- <li><a href="testimonial.html"><i class="icon-Double-arrow"></i>Testimonial</a></li> --}}
+                                        {{-- <li><a href="privacy-policy.html"><i class="icon-Double-arrow"></i>Privacy Policy</a></li> --}}
                                     </ul>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        {{-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                             <div class="edu-footer-widget quick-link-widget">
                                 <h5 class="widget-title">Useful Links</h5>
                                 <div class="inner">
@@ -50,19 +53,18 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+                        <div class="col-lg-4 col-md-6 col-sm-6 col-12">
                             <div class="edu-footer-widget">
                                 <h5 class="widget-title">Contact Info</h5>
                                 <div class="inner">
                                     <div class="widget-information">
                                         <ul class="information-list">
-                                            <li><i class="icon-map-pin-line"></i>275 Quadra Street Victoria Road, New York
+                                            <li><i class="icon-map-pin-line"></i>Jordan / Irbid
                                             </li>
-                                            <li><i class="icon-phone-fill"></i><a href="tel:+1(237)382-2839">+ 1 (237) 382-2839</a></li>
-                                            <li><i class="icon-phone-fill"></i><a href="tel:+1(237)382-2840">+ 1 (237) 382-2840</a></li>
-                                            <li><i class="icon-mail-line-2"></i><a target="_blank" href="mailto:yourmailaddress@example.com">yourmailaddress@example.com</a></li>
+                                            <li><i class="icon-phone-fill"></i><a href="tel:+962776795866">+962776795866</a></li>
+                                            <li><i class="icon-mail-line-2"></i><a target="_blank" href="mailto:yourmailaddress@example.com">universe.edu.jo@gmail.com</a></li>
                                         </ul>
                                     </div>
                                 </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\InstructorController;
 use App\Http\Controllers\InstructorRequestController;
 use App\Http\Controllers\MailController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/welcome', function () {
     return view('welcome');
@@ -33,9 +34,7 @@ require __DIR__.'/auth.php';
 Route::get('/', [HomePageController::class, 'index'])->name('go-home');
 
 // About us page
-Route::get('/aboutus', function() {
-    return view('/pages.about-us.index');
-})->name('go-aboutus');
+Route::get('/about-us', [HomePageController::class, 'showAboutUsPage'])->name('go-aboutus');
 
 // Pricing page
 Route::get('/pricing', function() {
@@ -71,7 +70,7 @@ Route::resource('instructor-request', InstructorRequestController::class);
 /* ------------------------------------- END USER PROFILE ROUTES ------------------------------------- */
 
 // Buy course function
-Route::post('/buyCourse', [UserController::class,'buyCourse'])->name('buy-course');
+Route::post('/buyCourse', [PaymentController::class,'buyCourse'])->name('buy-course')->middleware('auth', 'verified');
 
 Route::get('/courseDetials/{course}', [HomePageController::class,'showSingleCourse'])->name('course-details');
 // Create course by instructor

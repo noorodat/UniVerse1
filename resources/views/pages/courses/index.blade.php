@@ -232,10 +232,10 @@
                                     </div>
                                     <div class="card-bottom">
                                         <div class="price-list price-style-03">
-                                            <div class="price current-price">${{$course->price}}</div>
+                                            <div class="price current-price">{{$course->price}} JOD</div>
                                         </div>
                                         <ul class="edu-meta meta-01">
-                                            <li><i class="icon-account-circle-line"></i>0 Students</li>
+                                            <li><i class="icon-account-circle-line"></i>{{$course->number_of_students}} Students</li>
                                         </ul>
                                     </div>
                                 </div>

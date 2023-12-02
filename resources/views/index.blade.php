@@ -12,16 +12,28 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="inner">
                         <div class="content">
-                            <span class="pre-title" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">Better
-                                Learning Future With Us</span>
-                            <h1 class="title" data-sal-delay="200" data-sal="slide-up" data-sal-duration="800">
-                                Committed To Learn Excellence In Education</h1>
+                            <span class="pre-title" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">From
+                                Students to Students</span>
+                            <h2 class="title" data-sal-delay="200" data-sal="slide-up" data-sal-duration="800">
+                                Students teaching students for better education.</h2>
                             <p class="description" data-sal-delay="250" data-sal="slide-up" data-sal-duration="800">
-                                It is long established that a reader will be distracted by the <br /> readable popular and
-                                best content.</p>
+                                Discover captivating content without distractions. Dive into
+                                <br />
+                                the best and most engaging reads effortlessly.
+                            </p>
                             <div class="read-more-btn" data-sal-delay="300" data-sal="slide-up" data-sal-duration="800">
-                                <a class="edu-btn" href="#">Get Started Today <i
-                                        class="icon-arrow-right-line-right"></i></a>
+                                @if (isset(Auth::user()->role))
+                                    @if (Auth::user()->role == 'student')
+                                        <a class="edu-btn" href="{{ route('instructor-request.create') }}">Create your
+                                            course<i class="icon-arrow-right-line-right"></i></a>
+                                    @else
+                                        <a class="edu-btn" href="{{ route('go-create-course') }}">Create a course<i
+                                                class="icon-arrow-right-line-right"></i></a>
+                                    @endif
+                                @else
+                                    <a class="edu-btn" href="{{ route('go-aboutus') }}">Explore more<i
+                                            class="icon-arrow-right-line-right"></i></a>
+                                @endif
                             </div>
                             <div class="arrow-sign d-lg-block d-none">
                                 <img src="assets/images/banner/banner-02/arrow.png" alt="Banner Images" data-sal-delay="150"
@@ -135,7 +147,7 @@
                                                 <i class="icon-Smile"></i>
                                             </div>
                                             <div class="content">
-                                                <h6 class="title">{{$counts['users']}}</h6>
+                                                <h6 class="title">{{ $counts['users'] }}</h6>
                                                 <span class="subtitle">Total Students</span>
                                             </div>
                                         </div>
@@ -150,13 +162,14 @@
                         <div class="section-title text-start" data-sal-delay="200" data-sal="slide-up"
                             data-sal-duration="800">
                             <span class="pre-title">About Us</span>
-                            <h3 class="title">The highest result of education is tolerance</h3>
+                            <h3 class="title">Inspiring impactful student lives.</h3>
 
                         </div>
                         <p class="description mt--40" data-sal-delay="200" data-sal="slide-up" data-sal-duration="800">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec nunc null liobortis nibh
-                            porttitor. Facilisi arcu, nibh vel risus, morbi pharetra. Facilisi sit miam mauris non iaculis
-                            elit fusce amet nunc in odio molestie.</p>
+                            Empowering student engagement in academic pursuits by enabling them to become instructors and
+                            publish their own courses on our platform. We also foster learning by providing a marketplace
+                            for students to access a wide range of courses tailored to their needs.
+                        </p>
                         <div class="feature-style-5 row g-5">
                             <div class="col-lg-12 col-xl-6" data-sal-delay="200" data-sal="slide-up"
                                 data-sal-duration="800">
@@ -166,8 +179,7 @@
                                     </div>
                                     <div class="content">
                                         <h6 class="title">Flexible Classes</h6>
-                                        <p class="description">There are many variations of passages of the Ipsum available
-                                            for now</p>
+                                        <p class="description">Rewatch, learn, and thrive at your pace.</p>
                                     </div>
                                 </div>
                             </div>
@@ -178,16 +190,15 @@
                                         <i class="icon-Bag"></i>
                                     </div>
                                     <div class="content">
-                                        <h6 class="title">Educator Support</h6>
-                                        <p class="description">There are many variations of passages of the Ipsum available
-                                            for now</p>
+                                        <h6 class="title">Learning by Teaching</h6>
+                                        <p class="description">Students as Teachers, Learners, Leaders.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="read-more-btn mt--60 mt_lg--30 mt_md--30 mt_sm--30" data-sal-delay="200"
                             data-sal="slide-up" data-sal-duration="800">
-                            <a class="edu-btn" href="about-us-1.html">Learn More <i
+                            <a class="edu-btn" href="{{ route('go-aboutus') }}">Learn More <i
                                     class="icon-arrow-right-line-right"></i></a>
                         </div>
                     </div>
@@ -268,7 +279,8 @@
                                                 </h6>
                                                 <div class="card-bottom">
                                                     <div class="price-list price-style-02">
-                                                        <div class="price current-price">{{ $randomCourse->price }} JOD</div>
+                                                        <div class="price current-price">{{ $randomCourse->price }} JOD
+                                                        </div>
                                                         {{-- <div class="price old-price">$65.99</div> --}}
                                                     </div>
                                                     <div class="edu-rating rating-default">
@@ -519,15 +531,17 @@
                     <div class="inner">
                         <div class="client-info">
                             <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-03.png" alt="Client Images">
+                                <img src="{{ asset('images/Omarmig.jpg') }}" alt="Client Images">
                             </div>
                             <div class="content">
-                                <h6 class="title">Stive Marlone</h6>
-                                <span class="designation">Web Developer</span>
+                                <h6 class="title">Omar migdady</h6>
+                                <span class="designation">Computer Science</span>
                             </div>
                         </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
+                        <p class="description">
+                            Im glad the im an instructor on this great platform, ive learned so much through teaching
+                            students.
+                        </p>
                         <div class="rating">
                             <i class="on icon-Star"></i>
                             <i class="on icon-Star"></i>
@@ -544,15 +558,16 @@
                     <div class="inner">
                         <div class="client-info">
                             <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-04.png" alt="Client Images">
+                                <img src="{{ asset('images/QasemQZ.jpg') }}" alt="Client Images">
                             </div>
                             <div class="content">
-                                <h6 class="title">James Carlson</h6>
-                                <span class="designation">UI/UX Designer</span>
+                                <h6 class="title">Qasem Alzoubi</h6>
+                                <span class="designation">Computer Science</span>
                             </div>
                         </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
+                        <p class="description">
+                            Glad that this website exists, it was a must for all university students in Jordan
+                        </p>
                         <div class="rating">
                             <i class="on icon-Star"></i>
                             <i class="on icon-Star"></i>
@@ -569,15 +584,17 @@
                     <div class="inner">
                         <div class="client-info">
                             <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-01.png" alt="Client Images">
+                                <img src="{{ asset('images/MohammadGHZ.jpg') }}" alt="Client Images">
                             </div>
                             <div class="content">
-                                <h6 class="title">Nancy Phipps</h6>
-                                <span class="designation">Digital Marketer</span>
+                                <h6 class="title">Mohammad Ghzawi</h6>
+                                <span class="designation">Agricultural Engineering</span>
                             </div>
                         </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
+                        <p class="description">
+                            This website helped me through my university journey, im glad for all the instructors who i
+                            learned a lot from
+                        </p>
                         <div class="rating">
                             <i class="on icon-Star"></i>
                             <i class="on icon-Star"></i>
@@ -594,15 +611,17 @@
                     <div class="inner">
                         <div class="client-info">
                             <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-02.png" alt="Client Images">
+                                <img src="{{ asset('images/yousufHaf.jpg') }}" alt="Client Images">
                             </div>
                             <div class="content">
-                                <h6 class="title">Adam Smith</h6>
-                                <span class="designation">Web Developer</span>
+                                <h6 class="title">Yousuf Hafnawi</h6>
+                                <span class="designation">Computer Engineering</span>
                             </div>
                         </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
+                        <p class="description">
+                            This site solved my issue of rewatching university lectures, making learning more accessible and
+                            convenient for me.
+                        </p>
                         <div class="rating">
                             <i class="on icon-Star"></i>
                             <i class="on icon-Star"></i>
@@ -619,15 +638,16 @@
                     <div class="inner">
                         <div class="client-info">
                             <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-05.png" alt="Client Images">
+                                <img src="{{ asset('images/MjdMalkawi.jpg') }}" alt="Client Images">
                             </div>
                             <div class="content">
-                                <h6 class="title">Jhaniel Devora</h6>
-                                <span class="designation">Digital Marketer</span>
+                                <h6 class="title">Mjd Malkawi</h6>
+                                <span class="designation">Computer Engineering</span>
                             </div>
                         </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
+                        <p class="description">
+                            I love the idea how this website is designed for only for university students
+                        </p>
                         <div class="rating">
                             <i class="on icon-Star"></i>
                             <i class="on icon-Star"></i>
@@ -644,40 +664,16 @@
                     <div class="inner">
                         <div class="client-info">
                             <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-06.png" alt="Client Images">
+                                <img src="{{ asset('images/hashemKhazaleh.jpg') }}" alt="Client Images">
                             </div>
                             <div class="content">
-                                <h6 class="title">Jhamina Diva</h6>
-                                <span class="designation">Web Developer</span>
+                                <h6 class="title">Hashem Khazaleh</h6>
+                                <span class="designation">Computer Engineeing</span>
                             </div>
                         </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
-                        <div class="rating">
-                            <i class="on icon-Star"></i>
-                            <i class="on icon-Star"></i>
-                            <i class="on icon-Star"></i>
-                            <i class="on icon-Star"></i>
-                            <i class="on icon-Star"></i>
-                        </div>
-                    </div>
-                </div>
-                <!-- End Tastimonial Card  -->
-
-                <!-- Start Tastimonial Card  -->
-                <div class="testimonial-card-box">
-                    <div class="inner">
-                        <div class="client-info">
-                            <div class="thumbnail">
-                                <img src="assets/images/testimonial/testimonial-04/client-01.png" alt="Client Images">
-                            </div>
-                            <div class="content">
-                                <h6 class="title">Mark Ronson</h6>
-                                <span class="designation">Digital Marketer</span>
-                            </div>
-                        </div>
-                        <p class="description">“ There are many variations of passages of Lorem Ipsum available, but the
-                            majority on have suffered alteration in some form, by a injected humour, or randomised. ”</p>
+                        <p class="description">
+                            Great website!, I'd definitely recommend it for my classmates
+                        </p>
                         <div class="rating">
                             <i class="on icon-Star"></i>
                             <i class="on icon-Star"></i>
@@ -718,7 +714,8 @@
                                         <img src="assets/images/icons/winner-04.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['instructors']}}">00</span>
+                                        <h3 class="counter"><span class="odometer"
+                                                data-count="{{ $counts['instructors'] }}">00</span>
                                         </h3>
                                         <span>Instructors</span>
                                     </div>
@@ -735,7 +732,8 @@
                                         <img src="assets/images/icons/winner-05.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['coursesAndVideos']}}">00</span>
+                                        <h3 class="counter"><span class="odometer"
+                                                data-count="{{ $counts['coursesAndVideos'] }}">00</span>
                                         </h3>
                                         <span>Courses & Video</span>
                                     </div>
@@ -752,7 +750,8 @@
                                         <img src="assets/images/icons/winner-06.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['enrolledStudents']}}">00</span>
+                                        <h3 class="counter"><span class="odometer"
+                                                data-count="{{ $counts['enrolledStudents'] }}">00</span>
                                         </h3>
                                         <span>Enrolled Students</span>
                                     </div>
@@ -769,7 +768,8 @@
                                         <img src="assets/images/icons/winner-07.png" alt="Icons Images">
                                     </div>
                                     <div class="content">
-                                        <h3 class="counter"><span class="odometer" data-count="{{$counts['users']}}">00</span>
+                                        <h3 class="counter"><span class="odometer"
+                                                data-count="{{ $counts['users'] }}">00</span>
                                         </h3>
                                         <span>Users</span>
                                     </div>
@@ -789,19 +789,20 @@
                                     data-sal-duration="800">Why Choose Us</span>
                                 <h3 class="title">Creating A Community Of Life Long Learners</h3>
                             </div>
-                            <p class="description mt--40 mb--30">There are many variations of passages of the
+                            {{-- <p class="description ">There are many variations of passages of the
                                 Ipsum available, but the majority have suffered alteration in some form, by
-                                injected humour.</p>
-                            <div class="feature-style-4">
+                                injected humour.</p> --}}
+                            <div class=" mt--40 mb--30 feature-style-4">
                                 <div class="edu-feature-list" data-sal-delay="150" data-sal="slide-up"
                                     data-sal-duration="800">
                                     <div class="icon">
                                         <i class="icon-Smile"></i>
                                     </div>
                                     <div class="content">
-                                        <h6 class="title">Trusted By Thousands</h6>
-                                        <p>There are many variations of passages of the Ipsum available, but the majority
-                                            have suffered alteration</p>
+                                        <h6 class="title">Trusted By Students</h6>
+                                        <p>Where Friendship Meets Expertise: Your instructors here aren't just teachers,
+                                            they could be your fellow students-turned-friends!
+                                        </p>
                                     </div>
                                 </div>
 
@@ -812,8 +813,8 @@
                                     </div>
                                     <div class="content">
                                         <h6 class="title">Unlimited Resources With Strong Support</h6>
-                                        <p>There are many variations of passages of the Ipsum available, but the majority
-                                            have suffered alteration</p>
+                                        <p>Explore countless resources with solid support. Find diverse, quality content
+                                            tailored for your success.</p>
                                     </div>
                                 </div>
                             </div>
@@ -843,7 +844,7 @@
                         <div class="section-title text-white text-start" data-sal-delay="150" data-sal="slide-up"
                             data-sal-duration="800">
                             <span class="pre-title">Let Us Help</span>
-                            <h3 class="title">Finding Your Right Courses</h3>
+                            <h3 class="title">Let us Help, Contact us:</h3>
                         </div>
                     </div>
                 </div>
@@ -851,11 +852,11 @@
                     <div
                         class="newsletter-right-content d-block d-sm-flex align-items-center justify-content-start justify-content-lg-end">
                         <div class="contact-btn">
-                            <a class="edu-btn btn-white" href="#">Get Started Now<i
+                            <a class="edu-btn btn-white" href="{{route('go-contact-us')}}">Cotnact us<i
                                     class="icon-arrow-right-line-right"></i></a>
                         </div>
                         <div class="contact-info">
-                            <a href="tel:+728-238-399-200"><i class="icon-phone-line"></i> +728-238-399-200</a>
+                            <a href="tel:+962776795866"><i class="icon-phone-line"></i> +962776795866</a>
                         </div>
                     </div>
                 </div>

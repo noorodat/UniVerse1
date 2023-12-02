@@ -28,4 +28,16 @@ class HomePageController extends Controller
 
         return view('index', compact('departments', 'randomCourses', 'counts'));
     }
+
+    public function showAboutUsPage() 
+    {
+        $counts = [
+            'users' => User::all()->count(),
+            'courses' => Course::all()->count(),
+            'videos' => CourseMaterial::whereNull('file')->count(),
+            'instructors' => Instructor::all()->count(),
+            'enrolledStudents' => CourseStudent::all()->count(),
+        ];
+        return view('pages.about-us.index', compact('counts'));
+    }
 }
