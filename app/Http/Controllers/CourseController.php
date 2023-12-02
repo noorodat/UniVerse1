@@ -371,20 +371,18 @@ class CourseController extends Controller
         $coursesQuery = Course::query();
     
         // Retrieve filter inputs
-        $filterByDate = $request->input('courseDateFiler');
+        $courseFiler = $request->input('courseFiler');
         $filterByDepartment = $request->input('courseDepartmenFilter');
-        $filterByPrice = $request->input('coursePriceFiler');
 
         $checkedInputs = [
-            'date' => $filterByDate = $request->input('courseDateFiler'),
+            'filter' => $filterByDate = $request->input('courseFiler'),
             'department' => $filterByDepartment = $request->input('courseDepartmenFilter'),
-            'price' => $filterByPrice = $request->input('coursePriceFiler'),
         ];
     
         // Apply filters based on conditions
-        if ($filterByDate == 'newest') {
+        if ($courseFiler == 'newest') {
             $coursesQuery->orderBy('created_at', 'desc');
-        } elseif ($filterByDate == 'oldest') {
+        } elseif ($courseFiler == 'oldest') {
             $coursesQuery->orderBy('created_at', 'asc');
         }
     
@@ -392,11 +390,11 @@ class CourseController extends Controller
             $coursesQuery->where('department_id', $filterByDepartment);
         }
     
-        if ($filterByPrice == 'lowToHigh') {
+        if ($courseFiler == 'lowToHigh') {
             $coursesQuery->orderBy('price', 'asc');
-        } elseif ($filterByPrice == 'highToLow') {
+        } elseif ($courseFiler == 'highToLow') {
             $coursesQuery->orderBy('price', 'desc');
-        } elseif ($filterByPrice == 'free') {
+        } elseif ($courseFiler == 'free') {
             $coursesQuery->where('price', '=', 0);
         }
     

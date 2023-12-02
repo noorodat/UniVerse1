@@ -88,7 +88,7 @@ class InstructorController extends Controller
         $instructor->courses_number++;
         $instructor->save();
         flash()->addSuccess('Course Created Successfully!');
-        return redirect()->route('go-home');
+        return redirect()->route('go-my-courses');
     }
 
     public function uploadCourseIntroTopic($request, $course_id, $course_first_topic)

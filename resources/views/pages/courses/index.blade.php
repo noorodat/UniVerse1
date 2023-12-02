@@ -62,11 +62,11 @@
                             <h5 class="widget-title">Sort By</h5>
                             <div class="content">
                                 <div class="edu-form-check">
-                                    <input {{ isset($checkedInputs) && $checkedInputs['date'] == 'newest' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-check1" name="courseDateFiler" value="newest">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['filter'] == 'newest' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-check1" name="courseFiler" value="newest">
                                     <label for="short-check1">Newest</label>
                                 </div>
                                 <div class="edu-form-check">
-                                    <input {{ isset($checkedInputs) && $checkedInputs['date'] == 'oldest' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-check2" name="courseDateFiler" value="oldest">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['filter'] == 'oldest' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" type="radio" id="short-check2" name="courseFiler" value="oldest">
                                     <label for="short-check2">Oldest</label>
                                 </div>
                             </div>
@@ -96,15 +96,15 @@
                             <h5 class="widget-title">Price</h5>
                             <div class="content">
                                 <div class="edu-form-check">
-                                    <input {{ isset($checkedInputs) && $checkedInputs['price'] == 'lowToHigh' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="lowToHigh" type="radio" id="price-check2" name="coursePriceFiler">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['filter'] == 'lowToHigh' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="lowToHigh" type="radio" id="price-check2" name="courseFiler">
                                     <label for="price-check2">Price: Low to High</label>
                                 </div>
                                 <div class="edu-form-check">
-                                    <input {{ isset($checkedInputs) && $checkedInputs['price'] == 'highToLow' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="highToLow" type="radio" id="price-check3" name="coursePriceFiler">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['filter'] == 'highToLow' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="highToLow" type="radio" id="price-check3" name="courseFiler">
                                     <label for="price-check3">Price: High to Low</label>
                                 </div>
                                 <div class="edu-form-check">
-                                    <input {{ isset($checkedInputs) && $checkedInputs['price'] == 'free' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="free" type="radio" id="price-check4" name="coursePriceFiler">
+                                    <input {{ isset($checkedInputs) && $checkedInputs['filter'] == 'free' ? 'checked' : '' }} onchange="document.getElementById('courseSorting').submit();" value="free" type="radio" id="price-check4" name="courseFiler">
                                     <label for="price-check4">Free</label>
                                 </div>
                             </div>
@@ -113,7 +113,7 @@
                     <!-- End Widget Wrapper  -->
 
                     <!-- Start Widget Wrapper  -->
-                    <div class="edu-course-widget widget-shortby mt--40">
+                    {{-- <div class="edu-course-widget widget-shortby mt--40">
                         <div class="inner">
                             <h5 class="widget-title">Sort By Rating</h5>
                             <div class="content">
@@ -171,7 +171,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- End Widget Wrapper  -->
                     </form>
                 </aside>
