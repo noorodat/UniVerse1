@@ -197,6 +197,7 @@
                                         <li><i class="icon-time-line"></i>{{$course->duration}} Hours</li>
                                     </ul>
                                     <h6 class="title"><a href="{{route("course.show", $course)}}">{{$course->title}}</a>
+                                        <small>({{$course->department->title}})</small>
                                     </h6>
                                     <div class="edu-rating rating-default">
                                         <div class="rating">

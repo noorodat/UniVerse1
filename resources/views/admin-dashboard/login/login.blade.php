@@ -24,7 +24,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Page Title Here -->
-    <title>Akademi : School and Education Management Admin Dashboard Template</title>
+    <title>UniVerse - Dashboard</title>
 
     <!-- FAVICONS ICON -->
     <link rel="shortcut icon" type="image/png" href="{{ asset('dash-assets/images/favicon.png') }}">
@@ -40,10 +40,10 @@
         <div class="login-aside text-center  d-flex flex-column flex-row-auto">
             <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
                 <div class="text-center mb-lg-4 mb-2 pt-5 logo">
-                    <img src="{{ asset('dash-assets/images/logo-white.png') }}" alt="">
+                    <h2 class="text-white">Admin Dashboard</h2>
+                    {{-- <img src="{{ asset('dash-assets/images/logo-white.png') }}" alt=""> --}}
                 </div>
                 <h3 class="mb-2 text-white">Welcome back!</h3>
-                <p class="mb-4">User Experience & Interface Design <br>Strategy SaaS Solutions</p>
             </div>
             <div class="aside-image position-relative" style="background-image:url(images/background/pic-2.png);">
                 <img class="img1 move-1" src="{{ asset('dash-assets/images/background/pic3.png') }}" alt="">
