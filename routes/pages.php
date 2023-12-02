@@ -106,6 +106,12 @@ Route::get('delete-course-topic/{course}/{topicTitle}', [CourseController::class
 // Delete course topic with it's content
 Route::post('delete-course-topic/{course}/{topicTitle}', [CourseController::class, 'deleteCourseTopic'])->name('delete-topic');
 
+// Show delete coruse confirmation
+Route::get('/delete-course/{id}', [CourseController::class, 'showCourseDeletionPage'])->name('go-delete-course');
+
+// Delete course
+Route::post('delete-coruse/{id}', [CourseController::class, 'deleteCourse'])->name('delete-course');
+
 
 // File routes
 Route::get('/courses/sort', [CourseController::class, 'filterCourses'])->name('filer-courses');

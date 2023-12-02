@@ -49,9 +49,6 @@ Route::middleware(["auth:admin"])->group(function () {
     /* --------------------- START DASHBOARD FUNCTIONS --------------------- */
 
     // NOTE:: ADD INDEX PAGE TO SHOW THE DASHBOARD HOME PAGE
-    Route::resource('student', DashboardController::class);
-
-    Route::resource('department', DepartmentController::class);
 
     // Update image coming from AJAX
     Route::post('/api/update-image', [DashboardController::class, 'removeImage']);
@@ -59,7 +56,6 @@ Route::middleware(["auth:admin"])->group(function () {
     // Make instructor
     Route::post('/students/{student}/make-instructor', [DashboardController::class, 'makeInstructor'])->name('makeInstructor');
 
-    Route::resource('instructor', InstructorController::class);
     Route::get('/dashboard/instructor-requests', [DashboardController::class, 'showInstructorRequestsPage'])->name('go-instructor-requests');
     Route::post('/dashboard/accept-instructor-request/{userID}/{reqID}', [DashboardController::class, 'acceptInstructorRequest'])->name('accept-instructor-request');
     Route::delete('delete/instructor-requests/{id}', [DashboardController::class, 'deleteInstructorRequest'])->name('delete-instructor-request');
@@ -69,5 +65,11 @@ Route::middleware(["auth:admin"])->group(function () {
 
     /* --------------------- END DASHBOARD FUNCTIONS --------------------- */
 });
+
+Route::resource('student', DashboardController::class);
+
+Route::resource('department', DepartmentController::class);
+
+Route::resource('instructor', InstructorController::class);
 
 Route::resource('department', DepartmentController::class);

@@ -79,6 +79,7 @@ class DashboardController extends Controller
                 'message' => 'Incorrect credentials!',
                 'alert-type' => 'error',
             );
+            flash()->addError('Invalid information');
             return redirect()->route('go-admin-login')->with($notification);
         }
     }

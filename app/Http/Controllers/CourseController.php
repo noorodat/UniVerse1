@@ -255,7 +255,7 @@ class CourseController extends Controller
 
         $course->save();
 
-
+        flash()->addSuccess('Topic added');
         return redirect()->route('course.show', $course);
     }
 
@@ -395,6 +395,52 @@ class CourseController extends Controller
     }
     
     
+    public function showCourseDeletionPage($id) 
+    {
+        $course = Course::find($id);
+        return view('pages.profile.delete-course-confirmation', compact('course'));
+    }
+ 
+    public function deleteCourse(Request $requset, $id)
+    {
+        $course = Course::find($id);
+
+        $courseName = $requset->input('courseNameConfirmation');
+
+        // If the input is true
+        if($courseName == $course->title) {
+            // Get course mats
+            $courseMats = CourseMaterial::where('course_id', $course->id)->get();
+            // Get course topics
+            $courseTopics = CourseCurriculum::where('course_id', $id)->get();
+
+            // Delete mats
+            foreach($courseMats as $mat) {
+                $pathToDelete = $mat->file ?? $mat->video;
+                deleteFile($pathToDelete);
+                $mat->delete();
+            }
+            // Delete topics
+            foreach($courseTopics as $courseTopic) {
+                $courseTopic->delete();
+            }
+
+            // Delete course files
+            deleteFile($course->preview_video);
+            deleteFile($course->image);
+
+            // Delete course
+            $course->delete();
+
+            flash()->addSuccess('Course Delete successfully!');
+            return redirect()->route('go-my-courses');
+
+        } else {
+            flash()->addError('Course name invalid');
+            return redirect()->back();
+        }
+
+    }
 
 }
 

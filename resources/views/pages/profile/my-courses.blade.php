@@ -105,6 +105,10 @@
                                                                     <a class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
                                                                         href="{{route('course.show', $course)}}">View Course</a>
                                                                 </div>
+                                                                <div class="rbt-card-bottom mt--5">
+                                                                    <a style="color: rgb(220, 125, 0) !important" class="rbt-btn btn-sm bg-primary-opacity w-100 text-center"
+                                                                        href="{{route('go-delete-course', $course->id)}}">Delete course</a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
