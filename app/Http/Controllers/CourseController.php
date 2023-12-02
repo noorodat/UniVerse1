@@ -240,16 +240,29 @@ class CourseController extends Controller
             'number_of_files' => 1,
         ]);
 
+        if($videoInfo != NULL) {
+            CourseMaterial::create([
+                'video_name' => $videoInfo != NULL ? $videoTitle : NULL,
+                'video_duration' => $videoInfo != NULL ? $videoDuration : NULL,
+                'file_name' => NULL,
+                'video' => $videoInfo != NULL ? $videoName : NULL,
+                'file' => NULL,
+                'course_id' => $course->id,
+                'curriculum_id' => $courseTopic->id,
+            ]);
+        }
 
-        CourseMaterial::create([
-            'video_name' => $videoInfo != NULL ? $videoTitle : NULL,
-            'video_duration' => $videoInfo != NULL ? $videoDuration : NULL,
-            'file_name' => $fileName != NULL ? $fileTitle : NULL,
-            'video' => $videoInfo != NULL ? $videoName : NULL,
-            'file' => $fileName != NULL ? $fileName : NULL,
-            'course_id' => $course->id,
-            'curriculum_id' => $courseTopic->id,
-        ]);
+        if($fileName != NULL) {
+            CourseMaterial::create([
+                'video_name' => NULL,
+                'video_duration' => NULL,
+                'file_name' => $fileName != NULL ? $fileTitle : NULL,
+                'video' => NULL,
+                'file' => $fileName != NULL ? $fileName : NULL,
+                'course_id' => $course->id,
+                'curriculum_id' => $courseTopic->id,
+            ]);
+        }
 
         $course->number_of_lessons++;
 
@@ -334,7 +347,7 @@ class CourseController extends Controller
         }
         else {
             $courseTopic = CourseCurriculum::where('title', $topicTitle)->where('course_id', $courseID)->first();
-            // dd($courseTopic);
+
             $topicMats = CourseMaterial::where('curriculum_id', $courseTopic->id)->where('course_id', $courseID)->get();
             if($topicMats) {
                 foreach($topicMats as $topicMat) {
