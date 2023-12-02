@@ -32,10 +32,10 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
 
+
+        $imageName = uploadFile($request, 'image', 'images', 'image') ?? 'images/defaultUserImage.png';
+
         // Helper function i created to validate the add student inputs
-
-        $imageName = uploadUserImage($request);
-
         validateAddStudentInputs($request);
 
         $role = 'student';

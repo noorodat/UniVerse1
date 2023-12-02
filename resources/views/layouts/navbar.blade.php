@@ -3,6 +3,7 @@
 
 
 <!-- Mirrored from eduvibe.html.devsvibe.com/index-two.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Sep 2023 08:16:33 GMT -->
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -14,7 +15,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
 
     <!-- CSS
-	============================================ -->
+ ============================================ -->
     <link rel="stylesheet" href="/assets/css/vendor/remixicon.css">
     <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css">
     <link rel="stylesheet" href="/assets/css/vendor/eduvibe-font.css">
@@ -26,8 +27,8 @@
     <link rel="stylesheet" href="/assets/css/vendor/jqueru-ui-min.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 
-        <!-- Font Awesome
-	============================================ -->
+    <!-- Font Awesome
+ ============================================ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
@@ -40,24 +41,19 @@
                 <div class="row align-items-center">
                     <div class="col-lg-6 col-xl-2 col-md-6 col-6">
                         <div class="logo">
-                            <a href="{{route('go-home')}}">
-                                <img class="logo-light" src="/assets/images/logo/logo.png" alt="Site Logo">
+                            <a href="{{ route('go-home') }}">
+                                <img class="logo-light" src="{{asset('images/UniVerse-logo_transparent.png')}}" alt="Site Logo">
                             </a>
                         </div>
                     </div>
                     <div class="col-lg-8 d-none d-xl-block">
                         <nav class="mainmenu-nav d-none d-lg-block">
                             <ul class="mainmenu">
-                                <li class=""><a href="{{route('go-home')}}">Home</a>
-
-                                </li>
-                                <li class=""><a href="{{route('go-aboutus')}}">About</a>
-
-                                </li>
-
-                                <li class=""><a href="{{route('go-courses')}}">Courses</a>
-                                </li>
-                                <li class="has-droupdown"><a href="#">Pages</a>
+                                <li class=""><a href="{{ route('go-home') }}">Home</a></li>
+                                <li class=""><a href="{{ route('go-courses') }}">Courses</a></li>
+                                <li class=""><a href="{{ route('go-aboutus') }}">About</a></li>
+                                <li><a href="{{ route('go-contact-us') }}">Contact Us</a></li>
+                                {{-- <li class="has-droupdown"><a href="#">Pages</a>
                                     <ul class="submenu">
                                         <li class="has-droupdown"><a href="#">Event</a>
                                             <ul class="submenu">
@@ -100,15 +96,15 @@
                                         <li><a href="{{route('login')}}">Login/Register</a></li>
                                         <li><a href="404.html">404 Error</a></li>
                                     </ul>
-                                </li>
-                                <li class="has-droupdown"><a href="#">Shop</a>
+                                </li> --}}
+                                {{-- <li class="has-droupdown"><a href="#">Shop</a>
                                     <ul class="submenu">
                                         <li><a href="shop.html">Shop Page</a></li>
                                         <li><a href="product-details.html">Product Details</a></li>
                                         <li><a href="cart.html">Cart Page</a></li>
                                         <li><a href="checkout.html">Checkout</a></li>
                                     </ul>
-                                </li>
+                                </li> --}}
                             </ul>
                         </nav>
                     </div>
@@ -122,18 +118,21 @@
                                     <nav class="mainmenu-nav d-none d-lg-block">
                                         <ul class="mainmenu">
                                             <li class="has-droupdown">
-                                                <a href="{{route('go-profile', Auth::user())}}"><i class="ri-user-line"></i></a>
+                                                <a href="{{ route('go-profile', Auth::user()) }}"><i
+                                                        class="ri-user-line"></i></a>
                                                 <ul class="submenu">
                                                     <li>
-                                                        <a id="userName">{{Auth::user()->name}}</a>
+                                                        <a id="userName">{{ Auth::user()->name }}</a>
                                                     </li>
                                                     <li>
-                                                        <a href="{{route('go-profile', Auth::user())}}">Profile</a>
+                                                        <a href="{{ route('go-profile', Auth::user()) }}">Profile</a>
                                                     </li>
                                                     <li>
-                                                        <form action="{{route('logout')}}" method="POST">
+                                                        <form action="{{ route('logout') }}" method="POST">
                                                             @csrf
-                                                            <a href="" style="text-align: left"><button class="logoutBtn w-100" type="submit">Logout</button></a>
+                                                            <a href="" style="text-align: left"><button
+                                                                    class="logoutBtn w-100"
+                                                                    type="submit">Logout</button></a>
                                                         </form>
                                                     </li>
                                                 </ul>
@@ -142,7 +141,7 @@
                                     </nav>
                                 @else
                                     <div class="quote-icon quote-user">
-                                        <a href="{{route('login')}}">Login</a>
+                                        <a href="{{ route('login') }}">Login</a>
                                         {{-- <i class="ri-user-line"></i> --}}
                                     </div>
                                 @endif
@@ -160,7 +159,7 @@
                 <div class="header-top">
                     <div class="logo">
                         <a href="index.html">
-                            <img src="/assets/images/logo/logo.png" alt="Site Logo">
+                            <img src="{{asset('images/UniVerse-logo_transparent.png')}}" alt="Site Logo">
                         </a>
                     </div>
                     <div class="close-menu">
@@ -170,39 +169,11 @@
                     </div>
                 </div>
                 <ul class="mainmenu">
-                    <li class="has-droupdown"><a href="#">Home</a>
-                        <ul class="submenu">
-                            <li><a href="index-one.html">Home 1</a></li>
-                            <li><a href="index-two.html">Home 2</a></li>
-                            <li><a href="index-three.html">Home 3</a></li>
-                            <li><a href="index-four.html">Home 4</a></li>
-                            <li><a href="index-five.html">Home 5</a></li>
-                            <li><a href="index.html">Landing Demo</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown"><a href="#">About</a>
-                        <ul class="submenu">
-                            <li><a href="about-us-1.html">About Us 1</a></li>
-                            <li><a href="about-us-2.html">About Us 2</a></li>
-                            <li><a href="about-us-3.html">About Us 3</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="has-droupdown"><a href="#">Courses</a>
-                        <ul class="submenu">
-                            <li><a href="course-style-1.html">Course Style 1</a></li>
-                            <li><a href="course-style-2.html">Course Style 2</a></li>
-                            <li><a href="course-style-3.html">Course Style 3</a></li>
-                            <li><a href="course-style-4.html">Course Style 4</a></li>
-                            <li><a href="course-style-5.html">Course Style 5</a></li>
-                            <li><a href="course-filter.html">Course Filter</a></li>
-                            <li><a href="course-carousel.html">Course Carousel</a></li>
-                            <li><a href="course-sidebar.html">Course With Sidebar</a></li>
-                            <li><a href="course-details.html">Course Details 1</a></li>
-                            <li><a href="course-details-2.html">Course Details 2</a></li>
-                        </ul>
-                    </li>
-                    <li class="has-droupdown"><a href="#">Pages</a>
+                    <li><a href="{{route('go-home')}}">Home</a></li>
+                    <li><a href="{{route('go-courses')}}">Courses</a></li>
+                    <li><a href="{{route('go-aboutus')}}">About</a></li>
+                    <li><a href="{{route('go-contact-us')}}">Contact us</a></li>
+                    {{-- <li class="has-droupdown"><a href="#">Pages</a>
                         <ul class="submenu">
                             <li class="has-droupdown"><a href="#">Event</a>
                                 <ul class="submenu">
@@ -231,7 +202,7 @@
 
                             <li class="has-droupdown"><a href="#">Contact</a>
                                 <ul class="submenu">
-                                    <li><a href="{{route('go-contact-us')}}">Contact Us</a></li>
+                                    <li><a href="{{ route('go-contact-us') }}">Contact Us</a></li>
                                     <li><a href="contact-me.html">Contact Me</a></li>
                                 </ul>
                             </li>
@@ -245,15 +216,15 @@
                             <li><a href="login-register.html">Login/Register</a></li>
                             <li><a href="404.html">404 Error</a></li>
                         </ul>
-                    </li>
-                    <li class="has-droupdown"><a href="#">Shop</a>
+                    </li> --}}
+                    {{-- <li class="has-droupdown"><a href="#">Shop</a>
                         <ul class="submenu">
                             <li><a href="shop.html">Shop Page</a></li>
                             <li><a href="product-details.html">Product Details</a></li>
                             <li><a href="cart.html">Cart Page</a></li>
                             <li><a href="checkout.html">Checkout</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </div>

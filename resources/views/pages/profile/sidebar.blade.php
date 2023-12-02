@@ -22,9 +22,9 @@
                                                 <li><a href="{{ route('go-enrolled-courses', Auth::user()) }}"><i
                                                             class="feather-book-open"></i><span>Enrolled
                                                             Courses</span></a></li>
-                                                <li><a href="instructor-order-history.html"><i
+                                                {{-- <li><a href="instructor-order-history.html"><i
                                                             class="feather-shopping-bag"></i><span>Order
-                                                            History</span></a></li>
+                                                            History</span></a></li> --}}
                                             </ul>
                                         </nav>
 

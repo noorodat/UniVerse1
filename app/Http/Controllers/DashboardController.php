@@ -112,7 +112,7 @@ class DashboardController extends Controller
 
         $this->validateAddStudentInputs($request);
 
-        $imageName = $this->uploadUserImage($request);
+        $imageName = uploadFile($request, 'image', 'images', 'image');
 
         $role = 'student';
 
@@ -163,7 +163,7 @@ class DashboardController extends Controller
         // dd($studentPassword);
 
         $this->validateUpdateStudentInputs($request);
-        $imageName = $this->uploadUserImage($request);
+        $imageName = updateFile($request, 'image', 'images', $student->image, 'image');
 
         $student->name = $request->input('name');
         $student->major = $request->input('major');
@@ -258,37 +258,21 @@ class DashboardController extends Controller
 
 
     // Upload user image
-    public function uploadUserImage(Request $request)
-    {
-
-        $userID = $request->userID;
-        $user = User::find($userID);
-
-        if ($user) {
-            $imageName = $user->image;
-        } else {
-            $imageName = 'defaultUserImage.png';
-        }
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('images'), $imageName);
-        }
-        return $imageName;
-    }
 
     // Remove image through AJAX request
     public function removeImage(Request $request)
     {
         // Retrieve the user ID and default image name from the request JSON data
         $userId = $request->input('userId');
-        $defaultImage = $request->input('defaultImage');
+
+        $defaultImage = 'images/defaultUserImage.png';
 
         // Update the image for the user with the provided user ID
         // You would typically use Laravel's Eloquent ORM to update the database
         // Example assuming you have a 'users' table with an 'image' column:
         $user = User::find($userId);
+        deleteFile($user->image);
+
         if ($user) {
             $user->image = $defaultImage;
             $user->save();

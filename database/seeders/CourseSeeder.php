@@ -43,7 +43,7 @@ class CourseSeeder extends Seeder
             'status' => 1,
             'instructor_id' => 1,
             'department_id' => 1,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::create(2020, 11, 1),
         ]);
         DB::table('courses')->insert([
             'title' => 'Data structures and Algorithms',
@@ -58,7 +58,7 @@ class CourseSeeder extends Seeder
             'status' => 1,
             'instructor_id' => 1,
             'department_id' => 1,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::create(2023, 5, 4),
         ]);
         // Science Courses
         DB::table('courses')->insert([
@@ -74,7 +74,7 @@ class CourseSeeder extends Seeder
             'status' => 1,
             'instructor_id' => 4,
             'department_id' => 3,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::create(2023, 9, 20),
         ]);
         DB::table('courses')->insert([
             'title' => 'Linear Algebra',
@@ -89,7 +89,7 @@ class CourseSeeder extends Seeder
             'status' => 1,
             'instructor_id' => 4,
             'department_id' => 3,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::create(2022, 11, 1),
         ]);
         DB::table('courses')->insert([
             'title' => 'Organic Chemistry',
@@ -120,7 +120,7 @@ class CourseSeeder extends Seeder
             'status' => 1,
             'instructor_id' => 2,
             'department_id' => 2,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::create(2023, 10, 1),
         ]);
         DB::table('courses')->insert([
             'title' => 'Computer Architecture',
@@ -135,7 +135,7 @@ class CourseSeeder extends Seeder
             'status' => 1,
             'instructor_id' => 7,
             'department_id' => 2,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::create(2023, 11, 1),
         ]);
     }
 }

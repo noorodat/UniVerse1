@@ -30,9 +30,7 @@ function uploadFile(Request $request, $inputName, $path, $type)
 function updateFile(Request $request, $inputName, $path, $oldPath = null, $type)
 {
     if ($request->hasFile($inputName)) {
-        if (File::exists(public_path($oldPath))) {
-            File::delete(public_path($oldPath));
-        }
+        deleteFile($oldPath);
         $file = $request->{$inputName};
         $ext = $file->getClientOriginalExtension();
         $fileName = $type . '_' . uniqid() . '.' . $ext;
@@ -52,8 +50,10 @@ function updateFile(Request $request, $inputName, $path, $oldPath = null, $type)
 
 function deleteFile(string $path)
 {
-    if (File::exists(public_path($path))) {
-        File::delete(public_path($path));
+    if($path !== 'images/defaultUserImage.png' && $path !== 'uploads/videos/preview.mp4') {
+        if (File::exists(public_path($path))) {
+            File::delete(public_path($path));
+        }
     }
 }
 
