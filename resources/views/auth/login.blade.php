@@ -28,10 +28,10 @@
                                     required autocomplete="current-password" />
                                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                 </div>
-                                <div class="comment-form-consent input-box mb--30">
+                                {{-- <div class="comment-form-consent input-box mb--30">
                                     <input id="remember_me" type="checkbox" name="remember">
                                     <label for="remember_me">Remember Me</label>
-                                </div>
+                                </div> --}}
                                 <button class="rn-btn edu-btn w-100 mb--30" type="submit">
                                     <span>Login</span>
                                 </button>
