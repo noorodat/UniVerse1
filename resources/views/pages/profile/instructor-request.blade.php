@@ -11,6 +11,7 @@
                         <span class="pre-title">Request</span>
                         <h3 class="title">Request to be an Instructor</h3>
                         <p>Your request will be sent to the admin, and we will reach out with you ASAP</p>
+                        <p class="text-danger">Keep in mind, we deduct 20% from each course's price when it's purchased.</p>
                     </div>
                 </div>
             </div>

@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Mail;
 
 class PaymentController extends Controller
 {
+    private $DECUT_VALUE = 0.20;
     public function buyCourse(Request $request)
     {
-
         session()->flash('course_id', $request->input('courseID'));
         session()->flash('instructor_id', $request->input('instructorID'));
         session()->flash('student_id', $request->input('studentID'));
@@ -83,7 +83,7 @@ class PaymentController extends Controller
                 $instructor = Instructor::findOrFail($instructor_id);
                 $course = Course::findOrFail($course_id);
                 $course->number_of_students++;
-                $instructor->earnings += $course->price;
+                $instructor->earnings += ($course->price - $course->price * $this->DECUT_VALUE);
                 $instructor->save();
                 $course->save();
 
