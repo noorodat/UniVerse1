@@ -8,6 +8,7 @@ use App\Models\CourseCurriculum;
 use App\Models\CourseMaterial;
 use App\Models\Department;
 use App\Models\Instructor;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -18,7 +19,7 @@ class CourseController extends Controller
 {
 
     public function index($department = null)
-    {   
+    {
         $courses = Course::paginate(6);
         $departments = Department::all();
         return view('pages.courses.index', compact('courses', 'departments'));
@@ -52,9 +53,9 @@ class CourseController extends Controller
 
         $department = $course->department;
         $relatedCourses = Course::where('department_id', $department->id)
-        ->where('id', '!=', $course->id)
-        ->take(5)
-        ->get();
+            ->where('id', '!=', $course->id)
+            ->take(5)
+            ->get();
 
         $courseTopics = CourseCurriculum::where('course_id', $course->id)->get();
 
@@ -69,10 +70,12 @@ class CourseController extends Controller
         }
 
         if (Auth::check()) {
-            $instructor = Instructor::where('user_id', Auth::user()->id)->first();
 
-            if ($instructor !== null) {
-                return view('pages.courses.instructor-course-details', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));
+            $instructor = Instructor::where('user_id', Auth::user()->id)->first();
+            if ($course->instructor_id == $instructor->id) {
+                if ($instructor !== null) {
+                    return view('pages.courses.instructor-course-details', compact('course', 'relatedCourses', 'isEnrolled', 'previewType', 'courseTopics', 'topicsWithMaterials'));
+                }
             }
         }
 
@@ -204,6 +207,8 @@ class CourseController extends Controller
 
         $course->save();
 
+        flash()->addSuccess('Course Edited Successfully!');
+
         return redirect()->route('course.show', $course);
     }
 
@@ -220,7 +225,7 @@ class CourseController extends Controller
         $fileTitle = $request->input('fileTitle');
 
         $videoInfo = uploadFile($request, 'topicVideo', 'uploads/videos', 'video');
-        if($videoInfo !== NULL) {
+        if ($videoInfo !== NULL) {
             $videoName = $videoInfo['videoName'];
             $videoDuration = $videoInfo['duration'];
         }
@@ -228,7 +233,7 @@ class CourseController extends Controller
 
         if ($videoInfo == NULL && $fileName == NULL) {
             return redirect()->back()->with('fileErrorMessage', 'One file at least must be added');
-        } else if($topicName == NULL) {
+        } else if ($topicName == NULL) {
             return redirect()->back()->with('topicNameEmpty', 'Topic name is empty');
         }
 
@@ -240,7 +245,7 @@ class CourseController extends Controller
             'number_of_files' => 1,
         ]);
 
-        if($videoInfo != NULL) {
+        if ($videoInfo != NULL) {
             CourseMaterial::create([
                 'video_name' => $videoInfo != NULL ? $videoTitle : NULL,
                 'video_duration' => $videoInfo != NULL ? $videoDuration : NULL,
@@ -252,7 +257,7 @@ class CourseController extends Controller
             ]);
         }
 
-        if($fileName != NULL) {
+        if ($fileName != NULL) {
             CourseMaterial::create([
                 'video_name' => NULL,
                 'video_duration' => NULL,
@@ -305,7 +310,7 @@ class CourseController extends Controller
             return redirect()->back();
         }
 
-        if($videoInfo !== NULL) {
+        if ($videoInfo !== NULL) {
             $videoName = $videoInfo['videoName'];
             $videoDuration = $videoInfo['duration'];
         }
@@ -336,29 +341,30 @@ class CourseController extends Controller
         return redirect()->back();
     }
 
-    public function deleteCourseTopicPage($courseID, $topicTitle) {
+    public function deleteCourseTopicPage($courseID, $topicTitle)
+    {
         return view('pages.courses.delete-topic-confirmation', compact('courseID', 'topicTitle'));
     }
 
-    public function deleteCourseTopic(Request $request, $courseID, $topicTitle) {
-        if($request->input('topicTitleConfirmation') !== $topicTitle) {
+    public function deleteCourseTopic(Request $request, $courseID, $topicTitle)
+    {
+        if ($request->input('topicTitleConfirmation') !== $topicTitle) {
             flash()->addError('Typo with the topic title');
             return redirect()->back();
-        }
-        else {
+        } else {
             $courseTopic = CourseCurriculum::where('title', $topicTitle)->where('course_id', $courseID)->first();
 
             $topicMats = CourseMaterial::where('curriculum_id', $courseTopic->id)->where('course_id', $courseID)->get();
-            if($topicMats) {
-                foreach($topicMats as $topicMat) {
+            if ($topicMats) {
+                foreach ($topicMats as $topicMat) {
                     $pathToDelete = $topicMat->file ?? $topicMat->video;
                     deleteFile($pathToDelete);
                     $topicMat->delete();
                 }
             }
             $courseTopic->delete();
-            $course= Course::find($courseID);
-            $course->number_of_students--;
+            $course = Course::find($courseID);
+            $course->number_of_lessons--;
             $course->save();
             flash()->addSuccess('Topic deleted');
             return redirect()->route('course.show', $course);
@@ -369,7 +375,7 @@ class CourseController extends Controller
     {
         // Initialize base query
         $coursesQuery = Course::query();
-    
+
         // Retrieve filter inputs
         $courseFiler = $request->input('courseFiler');
         $filterByDepartment = $request->input('courseDepartmenFilter');
@@ -378,18 +384,18 @@ class CourseController extends Controller
             'filter' => $filterByDate = $request->input('courseFiler'),
             'department' => $filterByDepartment = $request->input('courseDepartmenFilter'),
         ];
-    
+
         // Apply filters based on conditions
         if ($courseFiler == 'newest') {
             $coursesQuery->orderBy('created_at', 'desc');
         } elseif ($courseFiler == 'oldest') {
             $coursesQuery->orderBy('created_at', 'asc');
         }
-    
+
         if ($filterByDepartment) {
             $coursesQuery->where('department_id', $filterByDepartment);
         }
-    
+
         if ($courseFiler == 'lowToHigh') {
             $coursesQuery->orderBy('price', 'asc');
         } elseif ($courseFiler == 'highToLow') {
@@ -397,21 +403,21 @@ class CourseController extends Controller
         } elseif ($courseFiler == 'free') {
             $coursesQuery->where('price', '=', 0);
         }
-    
+
         // Retrieve paginated results
         $courses = $coursesQuery->paginate(6);
         $departments = Department::all();
-    
+
         return view('pages.courses.index', compact('courses', 'departments', 'checkedInputs'));
     }
-    
-    
-    public function showCourseDeletionPage($id) 
+
+
+    public function showCourseDeletionPage($id)
     {
         $course = Course::find($id);
         return view('pages.profile.delete-course-confirmation', compact('course'));
     }
- 
+
     public function deleteCourse(Request $requset, $id)
     {
         $course = Course::find($id);
@@ -419,20 +425,20 @@ class CourseController extends Controller
         $courseName = $requset->input('courseNameConfirmation');
 
         // If the input is true
-        if($courseName == $course->title) {
+        if ($courseName == $course->title) {
             // Get course mats
             $courseMats = CourseMaterial::where('course_id', $course->id)->get();
             // Get course topics
             $courseTopics = CourseCurriculum::where('course_id', $id)->get();
 
             // Delete mats
-            foreach($courseMats as $mat) {
+            foreach ($courseMats as $mat) {
                 $pathToDelete = $mat->file ?? $mat->video;
                 deleteFile($pathToDelete);
                 $mat->delete();
             }
             // Delete topics
-            foreach($courseTopics as $courseTopic) {
+            foreach ($courseTopics as $courseTopic) {
                 $courseTopic->delete();
             }
 
@@ -440,19 +446,29 @@ class CourseController extends Controller
             deleteFile($course->preview_video);
             deleteFile($course->image);
 
+            // Delete the students in the course
+            $studentsEnrolled = CourseStudent::where('course_id', $course->id)->get();
+            foreach ($studentsEnrolled as $studentEnrolled) {
+                $studentEnrolled->delete();
+            }
+
+            // Delete transactions
+            $transactions = Transaction::where('course_id', $course->id)->get();
+            foreach ($transactions as $transaction) {
+                $transaction->delete();
+            }
+
+
             // Delete course
             $course->delete();
 
             flash()->addSuccess('Course Delete successfully!');
             return redirect()->route('go-my-courses');
-
         } else {
             flash()->addError('Course name invalid');
             return redirect()->back();
         }
-
     }
-
 }
 
 
